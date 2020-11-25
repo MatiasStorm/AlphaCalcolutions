@@ -1,0 +1,13 @@
+package easyon.alphacalcolutions;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+
+@SpringBootTest
+class AlphacalcolutionsApplicationTests {
+
+    @Test
+    void contextLoads() {
+    }
+
+}
