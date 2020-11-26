@@ -14,5 +14,35 @@ public class Employee {
         this.hourlySalary = hourlySalary;
     }
 
+    public String getFirstName() {
+        return firstName;
+    }
 
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public int getTitleId() {
+        return titleId;
+    }
+
+    public void setTitleId(int titleId) {
+        this.titleId = titleId;
+    }
+
+    public int getHourlySalary() {
+        return hourlySalary;
+    }
+
+    public void setHourlySalary(int hourlySalary) {
+        this.hourlySalary = hourlySalary;
+    }
 }
