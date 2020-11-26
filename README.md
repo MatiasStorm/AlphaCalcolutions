@@ -18,7 +18,9 @@ Replace `[username]` and `[password]` with the username and password of the MySQ
 
 3. Run the application
 Navigate to `AlphaCalcolutions/alphaCalcolutions` and execute:
+
 `./mvn spring-boot:run` - Linux
+
 `./mvnw spring-boot:run` - Windows
  
 Finally navigate to [localhost:8080](http://localhost:8080) to use the website.
@@ -27,7 +29,9 @@ The admin page, where one can delete users, is located at [localhost:8080/admin]
 
 ## Test
 Navigate to `AlphaCalcolutions/alphaCalcolutions` and execute:
+
 `./mvn test` - Linux
+
 `./mvnw test` - Windows
 
 
