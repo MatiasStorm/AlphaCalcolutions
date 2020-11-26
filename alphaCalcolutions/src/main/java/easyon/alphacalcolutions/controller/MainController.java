@@ -31,7 +31,7 @@ public class MainController {
     @PostMapping("/createEmployee/submit")
     public String createUserSubmit(Employee employee) {
 
-//       employeeService.createEmployee(employee);
+       employeeService.createEmployee(employee);
 
         return "redirect:/index";
     }
