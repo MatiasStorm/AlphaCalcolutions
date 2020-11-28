@@ -22,6 +22,11 @@ public class MainController {
         return "index";
     }
 
+    @GetMapping("loginForm")
+    public String loginForm(){
+        return "loginForm";
+    }
+
     @GetMapping("/createEmployee")
     public String createUser(Model model, Employee employee) {
         model.addAttribute("employee", employee);
