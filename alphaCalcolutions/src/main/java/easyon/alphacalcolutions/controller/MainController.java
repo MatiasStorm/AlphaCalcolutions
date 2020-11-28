@@ -63,6 +63,6 @@ public class MainController {
 
        employeeService.createEmployee(employee);
 
-        return "redirect:/index";
+        return "redirect:/employees";
     }
 }
