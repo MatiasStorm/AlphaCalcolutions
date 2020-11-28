@@ -27,6 +27,21 @@ public class MainController {
         return "loginForm";
     }
 
+    @PostMapping("loginForm/submit")
+    public String loginFormSubmit(){
+        return "redirect:/userPage";
+    }
+
+    @GetMapping("userPage")
+    public String userPage(){
+        return "userPage";
+    }
+
+    @GetMapping("createProject")
+    public String createProject(){
+        return "createProject";
+    }
+
     @GetMapping("/createEmployee")
     public String createUser(Model model, Employee employee) {
         model.addAttribute("employee", employee);
