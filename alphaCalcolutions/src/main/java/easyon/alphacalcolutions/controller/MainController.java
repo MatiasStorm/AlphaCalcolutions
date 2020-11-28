@@ -42,6 +42,16 @@ public class MainController {
         return "createProject";
     }
 
+    @GetMapping("seeProjects")
+    public String seeProjects(){
+        return "seeProjects";
+    }
+
+    @GetMapping("employees")
+    public String employees(){
+        return "employees";
+    }
+
     @GetMapping("/createEmployee")
     public String createUser(Model model, Employee employee) {
         model.addAttribute("employee", employee);
