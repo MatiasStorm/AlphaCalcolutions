@@ -6,17 +6,28 @@ public class Employee {
     private String lastName;
     private int titleId;
     private int hourlySalary;
+    ////////// Test på at joine //////////////
+    private String title;
 
 
-    public Employee(int employeeId, String firstName, String lastName, int titleId, int hourlySalary) {
+    public Employee(int employeeId, String firstName, String lastName, int titleId, int hourlySalary, String title) {
         this.employeeId = employeeId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.titleId = titleId;
         this.hourlySalary = hourlySalary;
+        this.title = title;
     }
 
     public Employee() {
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public int getEmployeeId() {

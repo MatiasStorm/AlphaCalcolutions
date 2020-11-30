@@ -34,7 +34,8 @@ public class EmployeeDAO {
         ArrayList<Employee> employeeList = new ArrayList<>();
         try {
             Connection con = DBManager.getConnection();
-            String SQL = "SELECT * FROM employees ";
+            String SQL = "SELECT * FROM employees " +
+                    "INNER JOIN employee_title ON employees.employee_title_id = employee_title.employee_title_id";
             PreparedStatement ps = con.prepareStatement(SQL);
             ResultSet rs = ps.executeQuery();
 
@@ -44,7 +45,8 @@ public class EmployeeDAO {
                     String lastName = rs.getString("employee_last_name");
                     int titleId = rs.getInt("employee_title_id");
                     int hourlySalary = rs.getInt("employee_hourly_salary");
-                    Employee employee = new Employee(employeeId, firstName, lastName, titleId, hourlySalary);
+                    String title = rs.getString("employee_title");
+                    Employee employee = new Employee(employeeId, firstName, lastName, titleId, hourlySalary, title);
                     employeeList.add(employee);
                 }
 
@@ -57,7 +59,8 @@ public class EmployeeDAO {
     public Employee getEmployee(int employeeId){
         try {
             Connection con = DBManager.getConnection();
-            String SQL = "SELECT * FROM employees "
+            String SQL = "SELECT * FROM employees " +
+                    "INNER JOIN employee_title ON employees.employee_title_id = employee_title.employee_title_id "
                     + "WHERE employee_id=?";
             PreparedStatement ps = con.prepareStatement(SQL);
             ps.setInt(1, employeeId);
@@ -69,7 +72,8 @@ public class EmployeeDAO {
                 String lastName = rs.getString("employee_last_name");
                 int titleId = rs.getInt("employee_title_id");
                 int hourlySalary = rs.getInt("employee_hourly_salary");
-                Employee employee = new Employee(id, firstName, lastName, titleId, hourlySalary);
+                String title = rs.getString("employee_title");
+                Employee employee = new Employee(employeeId, firstName, lastName, titleId, hourlySalary, title);
                 return employee;
             }
 
