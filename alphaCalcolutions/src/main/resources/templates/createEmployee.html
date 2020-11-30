@@ -13,7 +13,10 @@
     <label>Last Name:</label>
     <input type="text" th:field="*{lastName}" required>
     <label>Title:</label>
-    <input type="number" th:field="*{titleId}" required>
+    <select type="number" th:field="*{titleId}" required>
+        <option th:each="employeeTitle : ${employeeTitleList}" th:value="${employeeTitle.employeeTitleId}"
+                th:text="${employeeTitle.employeeTitle}"></option>
+    </select>
     <label>Hourly Salary:</label>
     <input type="number" th:field="*{hourlySalary}" required>
     <button type="submit">Create</button>

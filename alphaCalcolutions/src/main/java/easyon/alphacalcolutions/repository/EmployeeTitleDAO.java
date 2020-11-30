@@ -1,7 +1,6 @@
 package easyon.alphacalcolutions.repository;
 
 import easyon.alphacalcolutions.data.DBManager;
-import easyon.alphacalcolutions.model.Employee;
 import easyon.alphacalcolutions.model.EmployeeTitle;
 
 import java.sql.Connection;

@@ -1,7 +1,6 @@
 package easyon.alphacalcolutions.service;
 
 import easyon.alphacalcolutions.data.DataFacade;
-import easyon.alphacalcolutions.model.Employee;
 import easyon.alphacalcolutions.model.EmployeeTitle;
 import org.springframework.stereotype.Service;
 
