@@ -3,17 +3,17 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Create project</title>
+    <title>Create task</title>
     <link rel="stylesheet" type="text/css" href="/static/topPart.css">
 </head>
 <body>
 
 <div th:replace="/includes/topPart :: topPart"></div>
 
-<form action="/createProject/submit" method="post">
+<form action="/createTask/submit" method="post">
     <label>Titel:</label>
     <input type="text" required>
-    <label>Projekt leder:</label>
+    <label>Task leder:</label>
     <input type="text" required>
     <label>Tildel ansatte:</label>
     <select type="number">
@@ -25,6 +25,8 @@
     </select>
     <label>Deadline:</label>
     <input type="date" required>
+    <label>Afhængighed:</label>
+    <input type="number">
     <button type="submit">Create</button>
 </form>
 

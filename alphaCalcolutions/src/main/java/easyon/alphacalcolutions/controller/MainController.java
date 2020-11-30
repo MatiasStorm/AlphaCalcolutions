@@ -25,27 +25,27 @@ public class MainController {
         return "index";
     }
 
-    @GetMapping("loginForm")
+    @GetMapping("/loginForm")
     public String loginForm(){
         return "loginForm";
     }
 
-    @PostMapping("loginForm/submit")
+    @PostMapping("/loginForm/submit")
     public String loginFormSubmit(){
         return "redirect:/userPage";
     }
 
-    @GetMapping("userPage")
+    @GetMapping("/userPage")
     public String userPage(){
         return "userPage";
     }
 
-    @GetMapping("createProject")
+    @GetMapping("/createProject")
     public String createProject(){
         return "createProject";
     }
 
-    @GetMapping("seeProjects")
+    @GetMapping("/seeProjects")
     public String seeProjects(){
         return "seeProjects";
     }
@@ -56,7 +56,17 @@ public class MainController {
         return "redirect:/seeProjects";
     }
 
-    @GetMapping("employees")
+    @GetMapping("/createTask")
+    public String createTask(){
+        return "createTask";
+    }
+
+    @PostMapping("/createTask/submit")
+    public String createTaskSubmit(){
+        return "redirect:/createTask";
+    }
+
+    @GetMapping("/employees")
     public String employees(Model model){
         model.addAttribute("employeeList" ,employeeService.getEmployeeList());
         model.addAttribute("singleEmployee", employeeService.getEmployee(1));
