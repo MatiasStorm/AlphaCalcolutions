@@ -15,5 +15,12 @@ show list of employees and create new employees.
     <button type="submit">Opret ny medarbejder</button>
 </form>
 
+
+
+<div th:each="employee : ${employeeList}">
+   <p th:text="${employee.firstName}"></p>
+   <p th:text="${employee.lastName}"></p>
+</div>
+
 </body>
 </html>

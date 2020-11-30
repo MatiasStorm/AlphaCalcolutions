@@ -48,7 +48,8 @@ public class MainController {
     }
 
     @GetMapping("employees")
-    public String employees(){
+    public String employees(Model model){
+        model.addAttribute("employeeList" ,employeeService.getEmployeeList());
         return "employees";
     }
 

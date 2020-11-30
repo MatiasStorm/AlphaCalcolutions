@@ -8,6 +8,17 @@ public class Employee {
     private int hourlySalary;
 
 
+    public Employee(int employeeId, String firstName, String lastName, int titleId, int hourlySalary) {
+        this.employeeId = employeeId;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.titleId = titleId;
+        this.hourlySalary = hourlySalary;
+    }
+
+    public Employee() {
+    }
+
     public int getEmployeeId() {
         return employeeId;
     }

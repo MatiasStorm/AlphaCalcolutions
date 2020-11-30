@@ -4,6 +4,8 @@ import easyon.alphacalcolutions.model.Employee;
 import easyon.alphacalcolutions.repository.EmployeeDAO;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+
 @Component
 public class DataFacade implements IDataFacade{
 
@@ -11,6 +13,10 @@ public class DataFacade implements IDataFacade{
 
     public void createEmployee(Employee employee){
         employeeDAO.createEmployee(employee);
+    }
+
+    public ArrayList<Employee> getEmployeeList(){
+       return employeeDAO.getEmployeeList();
     }
 
 }
