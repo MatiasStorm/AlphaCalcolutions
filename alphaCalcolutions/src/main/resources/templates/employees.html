@@ -16,10 +16,12 @@ show list of employees and create new employees.
 
 
 <div th:each="employee : ${employeeList}">
+    <br>
     <p th:text="${employee.firstName}"></p>
     <p th:text="${employee.lastName}"></p>
     <p th:text="${employee.hourlySalary}"></p>
     <p th:text="${employee.title}"></p>
+    <br>
 </div>
 
 <br>
