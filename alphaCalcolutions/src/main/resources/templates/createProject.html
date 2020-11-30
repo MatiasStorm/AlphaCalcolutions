@@ -10,6 +10,23 @@
 
 <div th:replace="/includes/topPart :: topPart"></div>
 
-Create Project
+<form action="/createEmployee/submit" method="post">
+    <label>Titel:</label>
+    <input type="text" required>
+    <label>Projekt leder:</label>
+    <input type="text" required>
+    <label>Ansatte på projektet:</label>
+    <select type="number" required>
+        <option>Phillip</option>
+        <option>Jens</option>
+        <option>Jørgen</option>
+        <option>Matias</option>
+        <option>Jytte</option>
+    </select>
+    <label>Deadline:</label>
+    <input type="date" required>
+    <button type="submit">Create</button>
+</form>
+
 </body>
 </html>

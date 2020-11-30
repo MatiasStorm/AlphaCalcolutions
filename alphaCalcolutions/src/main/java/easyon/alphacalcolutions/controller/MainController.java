@@ -50,6 +50,12 @@ public class MainController {
         return "seeProjects";
     }
 
+    @PostMapping("/createProject/submit")
+    public String createProjectSubmit(){
+
+        return "redirect:/seeProjects";
+    }
+
     @GetMapping("employees")
     public String employees(Model model){
         model.addAttribute("employeeList" ,employeeService.getEmployeeList());
