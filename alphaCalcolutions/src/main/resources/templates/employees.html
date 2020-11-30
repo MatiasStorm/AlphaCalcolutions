@@ -6,7 +6,6 @@
     <title>User Page</title>
     <link rel="stylesheet" type="text/css" href="/static/topPart.css">
 </head>
-<body>
 
 <div th:replace="/includes/topPart :: topPart"></div>
 show list of employees and create new employees.
@@ -16,10 +15,22 @@ show list of employees and create new employees.
 </form>
 
 
-
 <div th:each="employee : ${employeeList}">
-   <p th:text="${employee.firstName}"></p>
-   <p th:text="${employee.lastName}"></p>
+    <p th:text="${employee.firstName}"></p>
+    <p th:text="${employee.lastName}"></p>
+</div>
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<div th:object="${singleEmployee}">
+    <p th:text="*{firstName}"></p>
+    <p th:text="*{lastName}"></p>
 </div>
 
 </body>

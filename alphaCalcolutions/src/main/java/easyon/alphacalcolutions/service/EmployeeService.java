@@ -21,4 +21,8 @@ public class EmployeeService {
     public ArrayList<Employee> getEmployeeList(){
         return dataFacade.getEmployeeList();
     }
+
+    public Employee getEmployee(int employeeId){
+        return dataFacade.getEmployee(employeeId);
+    }
 }

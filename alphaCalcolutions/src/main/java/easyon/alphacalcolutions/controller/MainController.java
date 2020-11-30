@@ -50,6 +50,7 @@ public class MainController {
     @GetMapping("employees")
     public String employees(Model model){
         model.addAttribute("employeeList" ,employeeService.getEmployeeList());
+        model.addAttribute("singleEmployee", employeeService.getEmployee(1));
         return "employees";
     }
 

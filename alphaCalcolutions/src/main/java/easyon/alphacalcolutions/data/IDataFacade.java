@@ -10,4 +10,6 @@ public interface IDataFacade {
 
     public ArrayList<Employee> getEmployeeList();
 
+    public Employee getEmployee(int employeeId);
+
 }

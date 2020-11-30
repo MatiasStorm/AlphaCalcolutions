@@ -19,4 +19,8 @@ public class DataFacade implements IDataFacade{
        return employeeDAO.getEmployeeList();
     }
 
+    public Employee getEmployee(int employeeId){
+        return employeeDAO.getEmployee(employeeId);
+    }
+
 }
