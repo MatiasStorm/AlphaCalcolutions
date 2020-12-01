@@ -5,10 +5,20 @@ import java.util.Date;
 
 public class Project {
 
+    private int projectId;
     private String title;
-    private String projectLeader;
+    private int projectLeaderId;
     private ArrayList<User> assignedUsers;
-    private Date deadline;
+    private Date startDate;
+    private Date endDate;
+
+    public int getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(int projectId) {
+        this.projectId = projectId;
+    }
 
     public String getTitle() {
         return title;
@@ -18,12 +28,12 @@ public class Project {
         this.title = title;
     }
 
-    public String getProjectLeader() {
-        return projectLeader;
+    public int getProjectLeaderId() {
+        return projectLeaderId;
     }
 
-    public void setProjectLeader(String projectLeader) {
-        this.projectLeader = projectLeader;
+    public void setProjectLeaderId(int projectLeaderId) {
+        this.projectLeaderId = projectLeaderId;
     }
 
     public ArrayList<User> getAssignedUsers() {
@@ -34,11 +44,19 @@ public class Project {
         this.assignedUsers = assignedUsers;
     }
 
-    public Date getDeadline() {
-        return deadline;
+    public Date getStartDate() {
+        return startDate;
     }
 
-    public void setDeadline(Date deadline) {
-        this.deadline = deadline;
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
     }
 }
