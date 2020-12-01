@@ -1,9 +1,8 @@
 package easyon.alphacalcolutions.data;
 
-import easyon.alphacalcolutions.model.Employee;
-import easyon.alphacalcolutions.model.EmployeeTitle;
-import easyon.alphacalcolutions.repository.EmployeeDAO;
-import easyon.alphacalcolutions.repository.EmployeeTitleDAO;
+import easyon.alphacalcolutions.model.UserTitle;
+import easyon.alphacalcolutions.model.User;
+import easyon.alphacalcolutions.repository.UserDAO;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -11,27 +10,27 @@ import java.util.ArrayList;
 @Component
 public class DataFacade implements IDataFacade{
 
-    private static final EmployeeDAO employeeDAO = new EmployeeDAO();
-    private static final EmployeeTitleDAO employeeTitleDAO = new EmployeeTitleDAO();
+    private static final UserDAO USER_DAO = new UserDAO();
 
-    //----------------------------- EMPLOYEE -------------------------------------
 
-    public void createEmployee(Employee employee){
-        employeeDAO.createEmployee(employee);
+    //----------------------------- USER -------------------------------------
+
+    public void createUser(User user){
+        USER_DAO.createUser(user);
     }
 
-    public ArrayList<Employee> getEmployeeList(){
-       return employeeDAO.getEmployeeList();
+    public ArrayList<User> getUserList(){
+       return USER_DAO.getUserList();
     }
 
-    public Employee getEmployee(int employeeId){
-        return employeeDAO.getEmployee(employeeId);
+    public User getUser(int userId){
+        return USER_DAO.getUser(userId);
     }
 
-    //----------------------------- EMPLOYEE TITLE -------------------------------------
+    //----------------------------- USER TITLE -------------------------------------
 
-    public ArrayList<EmployeeTitle> getEmployeeTitleList(){
-        return employeeTitleDAO.getEmployeeTitleList();
+    public ArrayList<UserTitle> getUserTitleList(){
+        return USER_DAO.getUserTitleList();
     }
 
 
