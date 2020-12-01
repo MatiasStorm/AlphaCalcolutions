@@ -10,8 +10,8 @@ public class UserTitleMapper {
 
         public UserTitle mapRow(ResultSet rs) throws SQLException {
             UserTitle userTitle = new UserTitle();
-            userTitle.setUserTitleId(rs.getInt("employee_title_id"));
-            userTitle.setUserTitle(rs.getString("employee_title"));
+            userTitle.setUserTitleId(rs.getInt("user_title_id"));
+            userTitle.setUserTitle(rs.getString("user_title"));
             return userTitle;
         }
 }
