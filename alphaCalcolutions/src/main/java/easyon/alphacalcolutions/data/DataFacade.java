@@ -3,7 +3,6 @@ package easyon.alphacalcolutions.data;
 import easyon.alphacalcolutions.model.Employee;
 import easyon.alphacalcolutions.model.EmployeeTitle;
 import easyon.alphacalcolutions.repository.EmployeeDAO;
-import easyon.alphacalcolutions.repository.EmployeeTitleDAO;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -12,7 +11,7 @@ import java.util.ArrayList;
 public class DataFacade implements IDataFacade{
 
     private static final EmployeeDAO employeeDAO = new EmployeeDAO();
-    private static final EmployeeTitleDAO employeeTitleDAO = new EmployeeTitleDAO();
+
 
     //----------------------------- EMPLOYEE -------------------------------------
 
@@ -31,7 +30,7 @@ public class DataFacade implements IDataFacade{
     //----------------------------- EMPLOYEE TITLE -------------------------------------
 
     public ArrayList<EmployeeTitle> getEmployeeTitleList(){
-        return employeeTitleDAO.getEmployeeTitleList();
+        return employeeDAO.getEmployeeTitleList();
     }
 
 

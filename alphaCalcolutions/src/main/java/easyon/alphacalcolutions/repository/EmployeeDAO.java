@@ -1,7 +1,11 @@
 package easyon.alphacalcolutions.repository;
 
 import easyon.alphacalcolutions.data.DBManager;
+import easyon.alphacalcolutions.mapper.UserMapper;
+import easyon.alphacalcolutions.mapper.UserTitleMapper;
 import easyon.alphacalcolutions.model.Employee;
+import easyon.alphacalcolutions.model.EmployeeTitle;
+import org.apache.catalina.User;
 import org.springframework.stereotype.Component;
 
 import java.sql.*;
@@ -10,6 +14,11 @@ import java.util.List;
 
 
 public class EmployeeDAO {
+    UserMapper userMapper = new UserMapper();
+    UserTitleMapper userTitleMapper = new UserTitleMapper();
+
+    String selectStatement = "SELECT * FROM employees " +
+            "INNER JOIN employee_title ON employees.employee_title_id = employee_title.employee_title_id";
 
     public void createEmployee(Employee employee){
         try {
@@ -18,7 +27,7 @@ public class EmployeeDAO {
             PreparedStatement ps = con.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, employee.getFirstName());
             ps.setString(2, employee.getLastName());
-            ps.setInt(3, employee.getTitleId());
+            ps.setInt(3, employee.getTitle().getEmployeeTitleId());
             ps.setInt(4, employee.getHourlySalary());
             ps.executeUpdate();
             ResultSet ids = ps.getGeneratedKeys();
@@ -34,21 +43,15 @@ public class EmployeeDAO {
         ArrayList<Employee> employeeList = new ArrayList<>();
         try {
             Connection con = DBManager.getConnection();
-            String SQL = "SELECT * FROM employees " +
-                    "INNER JOIN employee_title ON employees.employee_title_id = employee_title.employee_title_id";
+            String SQL = selectStatement;
             PreparedStatement ps = con.prepareStatement(SQL);
             ResultSet rs = ps.executeQuery();
 
-                while (rs.next()) {
-                    int employeeId = rs.getInt("employee_id");
-                    String firstName = rs.getString("employee_first_name");
-                    String lastName = rs.getString("employee_last_name");
-                    int titleId = rs.getInt("employee_title_id");
-                    int hourlySalary = rs.getInt("employee_hourly_salary");
-                    String title = rs.getString("employee_title");
-                    Employee employee = new Employee(employeeId, firstName, lastName, titleId, hourlySalary, title);
-                    employeeList.add(employee);
-                }
+            while (rs.next()) {
+                Employee user = userMapper.mapRow(rs);
+                user.setTitle(userTitleMapper.mapRow(rs));
+                employeeList.add(user);
+            }
 
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -59,28 +62,38 @@ public class EmployeeDAO {
     public Employee getEmployee(int employeeId){
         try {
             Connection con = DBManager.getConnection();
-            String SQL = "SELECT * FROM employees " +
-                    "INNER JOIN employee_title ON employees.employee_title_id = employee_title.employee_title_id "
-                    + "WHERE employee_id=?";
+            String SQL = selectStatement
+                    + " WHERE employee_id=?";
             PreparedStatement ps = con.prepareStatement(SQL);
             ps.setInt(1, employeeId);
             ResultSet rs = ps.executeQuery();
-
-            if (rs.next()) {
-                int id = rs.getInt("employee_id");
-                String firstName = rs.getString("employee_first_name");
-                String lastName = rs.getString("employee_last_name");
-                int titleId = rs.getInt("employee_title_id");
-                int hourlySalary = rs.getInt("employee_hourly_salary");
-                String title = rs.getString("employee_title");
-                Employee employee = new Employee(employeeId, firstName, lastName, titleId, hourlySalary, title);
-                return employee;
+            Employee user = userMapper.mapRow(rs);
+            if(rs.next()){
+                user.setTitle(userTitleMapper.mapRow(rs));
             }
 
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
         return null;
+    }
+
+    public ArrayList<EmployeeTitle> getEmployeeTitleList(){
+        ArrayList<EmployeeTitle> employeeTitleList = new ArrayList<>();
+        try {
+            Connection con = DBManager.getConnection();
+            String SQL = "SELECT * FROM employee_title";
+            PreparedStatement ps = con.prepareStatement(SQL);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                employeeTitleList.add( userTitleMapper.mapRow(rs));
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return employeeTitleList;   //Hvordan kan Tine slippe afsted med return højere oppe ?
     }
 
 

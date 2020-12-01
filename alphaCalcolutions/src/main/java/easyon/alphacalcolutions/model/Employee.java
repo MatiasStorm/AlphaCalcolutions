@@ -4,29 +4,18 @@ public class Employee {
     private int employeeId;
     private String firstName;
     private String lastName;
-    private int titleId;
+//    private int titleId;
     private int hourlySalary;
     ////////// Test på at joine //////////////
-    private String title;
+//    private String title;
+    private EmployeeTitle title;
 
 
-    public Employee(int employeeId, String firstName, String lastName, int titleId, int hourlySalary, String title) {
-        this.employeeId = employeeId;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.titleId = titleId;
-        this.hourlySalary = hourlySalary;
-        this.title = title;
-    }
-
-    public Employee() {
-    }
-
-    public String getTitle() {
+    public EmployeeTitle getTitle() {
         return title;
     }
 
-    public void setTitle(String title) {
+    public void setTitle(EmployeeTitle title) {
         this.title = title;
     }
 
@@ -52,14 +41,6 @@ public class Employee {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
-    }
-
-    public int getTitleId() {
-        return titleId;
-    }
-
-    public void setTitleId(int titleId) {
-        this.titleId = titleId;
     }
 
     public int getHourlySalary() {
