@@ -11,7 +11,7 @@ public class ProjectMapper {
         Project project = new Project();
         project.setProjectId(rs.getInt("project_id"));
         project.setTitle(rs.getString("project_title"));
-        project.setProjectLeader(rs.getInt("project_leader_id"));
+//        project.setProjectLeader(rs.getInt("project_leader_id"));
 //        project.setAssignedUsers();
 //        project.setDeadline();
 
