@@ -17,16 +17,16 @@
     <input type="text" th:field="*{projectLeaderId}" required>
     <label>Assign project members:</label>
     <select type="text" th:field="*{assignedUsers}">
-        <option value="">Phillip</option>
-        <option>Jens</option>
-        <option>Jørgen</option>
-        <option>Matias</option>
-        <option>Jytte</option>
+        <option value="1">Phillip</option>
+        <option value="2">Jens</option>
+        <option value="3">Jørgen</option>
+        <option value="4">Matias</option>
+        <option value="5">Jytte</option>
     </select>
-<!--    <label>Project start date:</label>-->
-<!--    <input type="date" th:field="*{startDate}" required>-->
-<!--    <label>Project end date:</label>-->
-<!--    <input type="date" th:field="*{endDate}" required>-->
+    <label>Project start date:</label>
+    <input type="date" th:field="*{startDate}" required>
+    <label>Project end date:</label>
+    <input type="date" th:field="*{endDate}" required>
     <button type="submit">Create</button>
 </form>
 
