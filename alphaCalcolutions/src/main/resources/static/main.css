@@ -64,9 +64,25 @@
     margin: 5rem ;
 }
 
+.border {
+    border: 1px solid
+}
+
+.border-black {
+    border-color: black;
+}
+
+.border-light-grey {
+    border-color: lightgrey;
+}
 
 /* Multiple Select */
 .multipleSelect {
-    border-radius: 5px;
+    border: 1px solid lightgrey;
+    border-radius: 10px;
+}
+
+.multipleSelect option:checked {
+    background-color: rgba(0, 0, 255, 0.4);
 
 }
