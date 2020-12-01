@@ -1,18 +1,18 @@
 package easyon.alphacalcolutions.mapper;
 
-import easyon.alphacalcolutions.model.Employee;
+import easyon.alphacalcolutions.model.User;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class UserMapper {
-    public Employee mapRow(ResultSet rs) throws SQLException {
-        Employee employee = new Employee();
-        employee.setEmployeeId(rs.getInt("employee_id"));
-        employee.setFirstName(rs.getString("employee_first_name"));
-        employee.setLastName(rs.getString("employee_last_name"));
-        employee.setHourlySalary(rs.getInt("employee_hourly_salary"));
-        return employee;
+    public User mapRow(ResultSet rs) throws SQLException {
+        User user = new User();
+        user.setUserId(rs.getInt("employee_id"));
+        user.setFirstName(rs.getString("employee_first_name"));
+        user.setLastName(rs.getString("employee_last_name"));
+        user.setHourlySalary(rs.getInt("employee_hourly_salary"));
+        return user;
     }
 
 }

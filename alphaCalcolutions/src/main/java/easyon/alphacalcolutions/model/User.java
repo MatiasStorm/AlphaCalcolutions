@@ -1,30 +1,30 @@
 package easyon.alphacalcolutions.model;
 
-public class Employee {
-    private int employeeId;
+public class User {
+    private int userId;
     private String firstName;
     private String lastName;
 //    private int titleId;
     private int hourlySalary;
     ////////// Test på at joine //////////////
 //    private String title;
-    private EmployeeTitle title;
+    private UserTitle title;
 
 
-    public EmployeeTitle getTitle() {
+    public UserTitle getTitle() {
         return title;
     }
 
-    public void setTitle(EmployeeTitle title) {
+    public void setTitle(UserTitle title) {
         this.title = title;
     }
 
-    public int getEmployeeId() {
-        return employeeId;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setEmployeeId(int employeeId) {
-        this.employeeId = employeeId;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public String getFirstName() {

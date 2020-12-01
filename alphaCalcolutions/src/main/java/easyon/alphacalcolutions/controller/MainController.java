@@ -1,23 +1,20 @@
 package easyon.alphacalcolutions.controller;
 
-import easyon.alphacalcolutions.model.Employee;
-import easyon.alphacalcolutions.service.EmployeeService;
-import easyon.alphacalcolutions.service.EmployeeTitleService;
+import easyon.alphacalcolutions.model.User;
+import easyon.alphacalcolutions.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.context.request.WebRequest;
 
 @Controller
 public class MainController {
 
-     private final EmployeeService employeeService;
-     private final EmployeeTitleService employeeTitleService;
+     private final UserService userService;
 
-    public MainController(EmployeeService employeeService, EmployeeTitleService employeeTitleService) {
-        this.employeeService = employeeService;
-        this.employeeTitleService = employeeTitleService;
+
+    public MainController(UserService userService) {
+        this.userService = userService;
     }
 
     @GetMapping("/index")
@@ -68,22 +65,22 @@ public class MainController {
 
     @GetMapping("/employees")
     public String employees(Model model){
-        model.addAttribute("employeeList" ,employeeService.getEmployeeList());
-        model.addAttribute("singleEmployee", employeeService.getEmployee(1));
+        model.addAttribute("userList" , userService.getUserList());
+        model.addAttribute("singleUser", userService.getUser(1));
         return "employees";
     }
 
     @GetMapping("/createEmployee")
-    public String createUser(Model model, Employee employee) {
-        model.addAttribute("employee", employee);
-        model.addAttribute("employeeTitleList", employeeTitleService.getEmployeeTitleList());
+    public String createUser(Model model, User user) {
+        model.addAttribute("user", user);
+        model.addAttribute("userTitleList", userService.getUserTitleList());
         return "createEmployee";
     }
 
     @PostMapping("/createEmployee/submit")
-    public String createUserSubmit(Employee employee) {
+    public String createUserSubmit(User user) {
 
-       employeeService.createEmployee(employee);
+       userService.createUser(user);
 
         return "redirect:/employees";
     }

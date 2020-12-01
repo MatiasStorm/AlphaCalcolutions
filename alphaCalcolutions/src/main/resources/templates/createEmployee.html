@@ -7,15 +7,15 @@
 </head>
 <body>
 
-<form action="/createEmployee/submit" th:object="${employee}" method="post">
+<form action="/createEmployee/submit" th:object="${user}" method="post">
     <label>First Name:</label>
     <input type="text" th:field="*{firstName}" required>
     <label>Last Name:</label>
     <input type="text" th:field="*{lastName}" required>
     <label>Title:</label>
-    <select type="number" th:field="*{title.employeeTitleId}" required>
-        <option th:each="employeeTitle : ${employeeTitleList}" th:value="${employeeTitle.employeeTitleId}"
-                th:text="${employeeTitle.employeeTitle}"></option>
+    <select type="number" th:field="*{title.userTitleId}" required>
+        <option th:each="userTitle : ${userTitleList}" th:value="${userTitle.userTitleId}"
+                th:text="${userTitle.userTitle}"></option>
     </select>
     <label>Hourly Salary:</label>
     <input type="number" th:field="*{hourlySalary}" required>

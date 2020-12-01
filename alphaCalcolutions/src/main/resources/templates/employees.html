@@ -15,12 +15,12 @@ show list of employees and create new employees.
 </form>
 
 
-<div th:each="employee : ${employeeList}">
+<div th:each="user : ${userList}">
     <br>
-    <p th:text="${employee.firstName}"></p>
-    <p th:text="${employee.lastName}"></p>
-    <p th:text="${employee.hourlySalary}"></p>
-    <p th:text="${employee.title.employeeTitle}"></p>
+    <p th:text="${user.firstName}"></p>
+    <p th:text="${user.lastName}"></p>
+    <p th:text="${user.hourlySalary}"></p>
+    <p th:text="${user.title.userTitle}"></p>
     <br>
 </div>
 
@@ -32,10 +32,10 @@ show list of employees and create new employees.
 <br>
 <br>
 
-<!--<div th:object="${singleEmployee}">-->
-<!--    <p th:text="*{firstName}"></p>-->
-<!--    <p th:text="*{lastName}"></p>-->
-<!--</div>-->
+<div th:object="${singleUser}">
+    <p th:text="*{firstName}"></p>
+    <p th:text="*{lastName}"></p>
+</div>
 
 </body>
 </html>
