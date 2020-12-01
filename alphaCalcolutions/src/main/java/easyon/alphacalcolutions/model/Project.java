@@ -8,7 +8,8 @@ public class Project {
     private int projectId;
     private String title;
     private int projectLeaderId;
-    private ArrayList<User> assignedUsers;
+//    private ArrayList<User> assignedUsers;
+    private int assignedUsers;
     private Date startDate;
     private Date endDate;
 
@@ -36,11 +37,20 @@ public class Project {
         this.projectLeaderId = projectLeaderId;
     }
 
-    public ArrayList<User> getAssignedUsers() {
+//    public ArrayList<User> getAssignedUsers() {
+//        return assignedUsers;
+//    }
+//
+//    public void setAssignedUsers(ArrayList<User> assignedUsers) {
+//        this.assignedUsers = assignedUsers;
+//    }
+
+
+    public int getAssignedUsers() {
         return assignedUsers;
     }
 
-    public void setAssignedUsers(ArrayList<User> assignedUsers) {
+    public void setAssignedUsers(int assignedUsers) {
         this.assignedUsers = assignedUsers;
     }
 

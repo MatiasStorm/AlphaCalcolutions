@@ -1,6 +1,8 @@
 package easyon.alphacalcolutions.controller;
 
+import easyon.alphacalcolutions.model.Project;
 import easyon.alphacalcolutions.model.User;
+import easyon.alphacalcolutions.service.ProjectService;
 import easyon.alphacalcolutions.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,10 +13,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class MainController {
 
      private final UserService userService;
+     private final ProjectService projectService;
 
 
-    public MainController(UserService userService) {
+    public MainController(UserService userService, ProjectService projectService) {
         this.userService = userService;
+        this.projectService = projectService;
     }
 
     @GetMapping("/index")
@@ -38,7 +42,9 @@ public class MainController {
     }
 
     @GetMapping("/createProject")
-    public String createProject(){
+    public String createProject(Model model, Project project){
+        model.addAttribute("project", project);
+
         return "createProject";
     }
 
@@ -48,8 +54,8 @@ public class MainController {
     }
 
     @PostMapping("/createProject/submit")
-    public String createProjectSubmit(){
-
+    public String createProjectSubmit(Project project){
+        projectService.createProject(project);
         return "redirect:/seeProjects";
     }
 
