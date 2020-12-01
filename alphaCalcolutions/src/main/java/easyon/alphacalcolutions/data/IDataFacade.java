@@ -1,5 +1,6 @@
 package easyon.alphacalcolutions.data;
 
+import easyon.alphacalcolutions.model.Project;
 import easyon.alphacalcolutions.model.UserTitle;
 import easyon.alphacalcolutions.model.User;
 
@@ -7,7 +8,7 @@ import java.util.ArrayList;
 
 public interface IDataFacade {
 
-    //----------------------------- EMPLOYEE -------------------------------------
+    //----------------------------- USER -------------------------------------
 
 
     public void createUser(User user);
@@ -16,8 +17,13 @@ public interface IDataFacade {
 
     public User getUser(int employeeId);
 
-    //----------------------------- EMPLOYEE TITLE -------------------------------------
+    //----------------------------- USER TITLE -------------------------------------
 
     public ArrayList<UserTitle> getUserTitleList();
 
+    //----------------------------- PROJECT -------------------------------------
+
+    public void createProject(Project project);
+
 }
+

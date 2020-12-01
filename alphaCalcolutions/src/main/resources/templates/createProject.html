@@ -10,21 +10,23 @@
 
 <div th:replace="/includes/topPart :: topPart"></div>
 
-<form action="/createProject/submit" method="post">
-    <label>Titel:</label>
-    <input type="text" required>
-    <label>Projekt leder:</label>
-    <input type="text" required>
-    <label>Tildel ansatte:</label>
-    <select type="number">
+<form action="/createProject/submit" th:object="${project}" method="post">
+    <label>Title:</label>
+    <input type="text" th:field="*{title}" required>
+    <label>Project leader:</label>
+    <input type="text" th:field="*{projectLeaderId}" required>
+    <label>Assign project members:</label>
+    <select type="text" th:field="*{assignedUsers}">
         <option>Phillip</option>
         <option>Jens</option>
         <option>Jørgen</option>
         <option>Matias</option>
         <option>Jytte</option>
     </select>
-    <label>Deadline:</label>
-    <input type="date" required>
+<!--    <label>Project start date:</label>-->
+<!--    <input type="date" th:field="*{startDate}" required>-->
+<!--    <label>Project end date:</label>-->
+<!--    <input type="date" th:field="*{endDate}" required>-->
     <button type="submit">Create</button>
 </form>
 

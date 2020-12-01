@@ -1,7 +1,9 @@
 package easyon.alphacalcolutions.data;
 
+import easyon.alphacalcolutions.model.Project;
 import easyon.alphacalcolutions.model.UserTitle;
 import easyon.alphacalcolutions.model.User;
+import easyon.alphacalcolutions.repository.ProjectDAO;
 import easyon.alphacalcolutions.repository.UserDAO;
 import org.springframework.stereotype.Component;
 
@@ -11,6 +13,8 @@ import java.util.ArrayList;
 public class DataFacade implements IDataFacade{
 
     private static final UserDAO USER_DAO = new UserDAO();
+    private static final ProjectDAO PROJECT_DAO = new ProjectDAO();
+
 
 
     //----------------------------- USER -------------------------------------
@@ -31,6 +35,12 @@ public class DataFacade implements IDataFacade{
 
     public ArrayList<UserTitle> getUserTitleList(){
         return USER_DAO.getUserTitleList();
+    }
+
+    //----------------------------- PROJECT -------------------------------------
+
+    public void createProject(Project project) {
+        PROJECT_DAO.createProject(project);
     }
 
 
