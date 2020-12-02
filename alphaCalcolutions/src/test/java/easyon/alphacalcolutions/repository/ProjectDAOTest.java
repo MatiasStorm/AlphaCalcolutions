@@ -43,10 +43,10 @@ class ProjectDAOTest {
         projectDAO = new ProjectDAO(con);
     }
 
-//    @AfterAll
-//    static void tearDown() throws SQLException {
-//        con.close();
-//    }
+    @AfterAll
+    static void tearDown() throws SQLException {
+        con.close();
+    }
 
 
 
