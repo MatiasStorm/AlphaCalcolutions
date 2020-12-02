@@ -64,9 +64,6 @@ public class ProjectDAO {
 
             while (rs.next()) {
                 Project project = projectMapper.mapRow(rs);
-                PreparedStatement psUserIds = con.prepareStatement("SELECT * FROM user_has_project WHERE project_id = ?");
-                psUserIds.setInt(1, project.getProjectId());
-                ResultSet rsUserIds = ps.executeQuery();
                 projectList.add(project);
             }
 
