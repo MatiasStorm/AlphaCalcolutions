@@ -61,7 +61,9 @@ class ProjectDAOTest {
         assertEquals(1, projects.size());
     }
 
-//    @Test
-//    void getProject() {
-//    }
+    @Test
+    void getProject() {
+        Project project = projectDAO.getProject(1);
+        assertNotNull(project);
+    }
 }
