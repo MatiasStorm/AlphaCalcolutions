@@ -14,13 +14,13 @@ import java.util.ArrayList;
 
 public class ProjectDAO {
     ProjectMapper projectMapper = new ProjectMapper();
+    Connection con = DBManager.getConnection();
     String selectStatement = "select project.*, GROUP_CONCAT(user_has_project.user_id SEPARATOR ',') as assigned_user_ids from project "
                             + " JOIN user_has_project on project.project_id = user_has_project.project_id "
                             + " GROUP BY project.project_id";
 
     public void createProject(Project project) {
         try {
-            Connection con = DBManager.getConnection();
             con.setAutoCommit(false);
             String SQL = "INSERT INTO project (project_title, project_start_date, project_end_date, project_leader_id) VALUES (?, ?, ?, ?)";
             PreparedStatement ps = con.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
@@ -59,7 +59,6 @@ public class ProjectDAO {
     public ArrayList<Project> getProjectList(){
         ArrayList<Project> projectList = new ArrayList<>();
         try{
-            Connection con = DBManager.getConnection();
             PreparedStatement ps = con.prepareStatement(selectStatement);
             ResultSet rs = ps.executeQuery();
 
@@ -79,9 +78,8 @@ public class ProjectDAO {
 
     public Project getProject (int projectId){
         try{
-            Connection con = DBManager.getConnection();
             String SQL = selectStatement
-                    + "WHERE project_id=?";
+                    + " WHERE project_id=?";
             PreparedStatement ps = con.prepareStatement(SQL);
             ps.setInt(1, projectId);
             ResultSet rs = ps.executeQuery();
