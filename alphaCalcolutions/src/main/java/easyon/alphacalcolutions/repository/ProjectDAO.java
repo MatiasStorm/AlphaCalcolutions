@@ -16,8 +16,8 @@ public class ProjectDAO {
     ProjectMapper projectMapper = new ProjectMapper();
     private final Connection con;
     String selectStatement = "select project.*, GROUP_CONCAT(user_has_project.user_id SEPARATOR ',') as assigned_user_ids from project "
-                            + " JOIN user_has_project on project.project_id = user_has_project.project_id "
-                            + " GROUP BY project.project_id";
+                           + " JOIN user_has_project on project.project_id = user_has_project.project_id ";
+
     public ProjectDAO(Connection con){
         this.con = con;
     }
@@ -66,7 +66,7 @@ public class ProjectDAO {
     public ArrayList<Project> getProjectList(){
         ArrayList<Project> projectList = new ArrayList<>();
         try{
-            PreparedStatement ps = con.prepareStatement(selectStatement);
+            PreparedStatement ps = con.prepareStatement(createSelect(" "));
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
@@ -80,10 +80,13 @@ public class ProjectDAO {
         return projectList;
     }
 
+    private String createSelect(String where){
+        return selectStatement + where + " GROUP BY project.project_id";
+    }
+
     public Project getProject (int projectId){
         try{
-            String SQL = selectStatement
-                    + " WHERE project_id=?";
+            String SQL =  createSelect(" WHERE project.project_id=?");
             PreparedStatement ps = con.prepareStatement(SQL);
             ps.setInt(1, projectId);
             ResultSet rs = ps.executeQuery();
