@@ -13,17 +13,13 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 public class ProjectDAO {
-    ProjectMapper projectMapper = new ProjectMapper();
+    private ProjectMapper projectMapper = new ProjectMapper();
     private final Connection con;
-    String selectStatement = "select project.*, GROUP_CONCAT(user_has_project.user_id SEPARATOR ',') as assigned_user_ids from project "
+    private String selectStatement = "select project.*, GROUP_CONCAT(user_has_project.user_id SEPARATOR ',') as assigned_user_ids from project "
                            + " JOIN user_has_project on project.project_id = user_has_project.project_id ";
 
     public ProjectDAO(Connection con){
         this.con = con;
-    }
-
-    public ProjectDAO(){
-        this(DBManager.getConnection());
     }
 
     public void createProject(Project project) {

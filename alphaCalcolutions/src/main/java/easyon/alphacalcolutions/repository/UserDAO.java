@@ -11,15 +11,19 @@ import java.util.ArrayList;
 
 
 public class UserDAO {
-    UserMapper userMapper = new UserMapper();
-    UserTitleMapper userTitleMapper = new UserTitleMapper();
+    private final Connection con;
+    private UserMapper userMapper = new UserMapper();
+    private UserTitleMapper userTitleMapper = new UserTitleMapper();
 
-    String selectStatement = "SELECT * FROM user " +
+    private String selectStatement = "SELECT * FROM user " +
             "INNER JOIN user_title ON user.user_title_id = user_title.user_title_id";
+
+    public UserDAO(Connection con){
+        this.con = con;
+    }
 
     public void createUser(User user){
         try {
-            Connection con = DBManager.getConnection();
             String SQL = "INSERT INTO user (user_first_name, user_last_name, user_title_id, user_hourly_salary, user_username, user_password, is_admin) VALUES (?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement ps = con.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, user.getFirstName());
@@ -42,7 +46,6 @@ public class UserDAO {
     public ArrayList<User> getUserList(){
         ArrayList<User> userList = new ArrayList<>();
         try {
-            Connection con = DBManager.getConnection();
             String SQL = selectStatement;
             PreparedStatement ps = con.prepareStatement(SQL);
             ResultSet rs = ps.executeQuery();
@@ -61,7 +64,6 @@ public class UserDAO {
 
     public User getUser(int userId){
         try {
-            Connection con = DBManager.getConnection();
             String SQL = selectStatement
                     + " WHERE user_id=?";
             PreparedStatement ps = con.prepareStatement(SQL);
@@ -82,7 +84,6 @@ public class UserDAO {
     public ArrayList<UserTitle> getUserTitleList(){
         ArrayList<UserTitle> userTitleList = new ArrayList<>();
         try {
-            Connection con = DBManager.getConnection();
             String SQL = "SELECT * FROM user_title";
             PreparedStatement ps = con.prepareStatement(SQL);
             ResultSet rs = ps.executeQuery();
