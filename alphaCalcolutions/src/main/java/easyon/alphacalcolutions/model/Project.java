@@ -10,8 +10,7 @@ public class Project {
     private int projectId;
     private String title;
     private int projectLeaderId;
-//    private ArrayList<User> assignedUsers;
-    private int assignedUsers;
+    private int[] assignedUserIds;
     private Date startDate;
     private Date endDate;
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -40,21 +39,12 @@ public class Project {
         this.projectLeaderId = projectLeaderId;
     }
 
-//    public ArrayList<User> getAssignedUsers() {
-//        return assignedUsers;
-//    }
-//
-//    public void setAssignedUsers(ArrayList<User> assignedUsers) {
-//        this.assignedUsers = assignedUsers;
-//    }
-
-
-    public int getAssignedUsers() {
-        return assignedUsers;
+    public int[] getAssignedUserIds() {
+        return assignedUserIds;
     }
 
-    public void setAssignedUsers(int assignedUsers) {
-        this.assignedUsers = assignedUsers;
+    public void setAssignedUserIds(int[] assignedUserIds) {
+        this.assignedUserIds = assignedUserIds;
     }
 
     public Date getStartDate() {

@@ -32,6 +32,8 @@ public class ProjectDAO {
             ids.next();
             int id  = ids.getInt(1);
             project.setProjectId(id);
+
+
         }catch (SQLException ex) {
             ex.printStackTrace();
         }

@@ -2,6 +2,7 @@ package easyon.alphacalcolutions.controller;
 
 import easyon.alphacalcolutions.model.Project;
 import easyon.alphacalcolutions.model.User;
+import easyon.alphacalcolutions.model.UserTitle;
 import easyon.alphacalcolutions.service.ProjectService;
 import easyon.alphacalcolutions.service.UserService;
 import org.springframework.stereotype.Controller;
@@ -48,6 +49,7 @@ public class MainController {
     @GetMapping("/createProject")
     public String createProject(Model model, Project project){
         model.addAttribute("project", project);
+        model.addAttribute("userList", userService.getUserList());
 
         return "createProject";
     }
