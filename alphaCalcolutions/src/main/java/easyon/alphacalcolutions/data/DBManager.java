@@ -27,11 +27,13 @@ public class DBManager {
             password = properties.getProperty("password");
         } catch (IOException ex) {
             ex.printStackTrace();
+            System.err.println("Cannot find you application.properties file - Is it placed under 'templates'?");
         }
         try {
             connection = DriverManager.getConnection(url,user, password);
         } catch (SQLException e) {
             e.printStackTrace();
+            System.err.println("\nYou have a problem with your applications.properties file - Are you sure you don't have a typo?");
         }
         return connection;
     }
