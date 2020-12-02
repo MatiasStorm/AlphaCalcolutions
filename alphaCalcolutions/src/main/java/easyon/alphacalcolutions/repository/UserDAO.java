@@ -22,7 +22,7 @@ public class UserDAO {
         this.con = con;
     }
 
-    public void createUser(User user){
+    public User createUser(User user){
         try {
             String SQL = "INSERT INTO user (user_first_name, user_last_name, user_title_id, user_hourly_salary, user_username, user_password, is_admin) VALUES (?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement ps = con.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
@@ -41,6 +41,7 @@ public class UserDAO {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
+        return user;
     }
 
     public ArrayList<User> getUserList(){
