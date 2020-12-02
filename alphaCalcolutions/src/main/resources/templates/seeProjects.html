@@ -9,8 +9,16 @@
 
 <div th:replace="/includes/topPart :: topPart"></div>
 
-all projects will be shown here
 
+<div th:each="project : ${projectList}">
+    <p th:text="${project.projectId}"></p>
+    <p th:text="${project.title}"></p>
+
+</div>
+
+<div>
+<p th:text="${singleProject.title}"> </p>
+</div>
 
 
 </body>
