@@ -19,6 +19,18 @@
     </select>
     <label>Hourly Salary:</label>
     <input type="number" th:field="*{hourlySalary}" required>
+    <label>Username:</label>
+    <input type="text" th:field="*{username}" required>
+    <label>Password:</label>
+    <input type="text" th:field="*{password}" required>
+    <label>Create as admin?:</label>
+
+    <select th:field="*{admin}" required>
+        <option th:value="0">No</option>
+        <option th:value="1">Yes</option>
+    </select>
+
+
     <button type="submit">Create</button>
 </form>
 

@@ -82,7 +82,7 @@ public class MainController {
     @GetMapping("/employees")
     public String employees(Model model){
         model.addAttribute("userList" , userService.getUserList());
-        model.addAttribute("singleUser", userService.getUser(1));
+//        model.addAttribute("singleUser", userService.getUser(1));
         return "employees";
     }
 
