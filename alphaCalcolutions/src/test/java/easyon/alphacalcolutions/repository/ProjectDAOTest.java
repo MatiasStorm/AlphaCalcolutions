@@ -37,6 +37,7 @@ class ProjectDAOTest {
     @BeforeEach
     void setup() throws FileNotFoundException {
         ScriptRunner sr = new ScriptRunner(con);
+        sr.setLogWriter(null);
         Reader reader = new BufferedReader(new FileReader("src/test/resources/alpha_calcolutions.sql"));
         sr.runScript(reader);
         projectDAO = new ProjectDAO(con);
