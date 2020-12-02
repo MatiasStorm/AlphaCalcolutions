@@ -39,10 +39,12 @@ public class DataFacade implements IDataFacade{
 
     //----------------------------- PROJECT -------------------------------------
 
-    public void createProject(Project project) {
-        PROJECT_DAO.createProject(project);
+    public void createProject(Project project) {PROJECT_DAO.createProject(project);
     }
 
+    public ArrayList<Project> getProjectList() {return PROJECT_DAO.getProjectList();}
+
+    public Project getProject (int projectId) {return PROJECT_DAO.getProject(projectId);}
 
 
 }

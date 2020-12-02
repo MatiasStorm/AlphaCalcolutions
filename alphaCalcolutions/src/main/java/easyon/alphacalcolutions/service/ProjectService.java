@@ -4,6 +4,8 @@ import easyon.alphacalcolutions.data.DataFacade;
 import easyon.alphacalcolutions.model.Project;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+
 @Service
 public class ProjectService {
 
@@ -16,5 +18,9 @@ public class ProjectService {
     public void createProject(Project project){
         dataFacade.createProject(project);
     }
+
+    public ArrayList<Project> getProjectList() {return dataFacade.getProjectList();}
+
+    public Project getProject(int projectId) {return dataFacade.getProject(projectId);}
 
 }

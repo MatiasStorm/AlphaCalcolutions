@@ -32,6 +32,8 @@ public class ProjectDAO {
             ids.next();
             int id  = ids.getInt(1);
             project.setProjectId(id);
+
+
         }catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -48,12 +50,32 @@ public class ProjectDAO {
 //
 //            while (rs.next()) {
 //                Project project = projectMapper.mapRow(rs);
+//                projectList.add(project);
 //            }
 //
 //        }catch (SQLException ex) {
 //            ex.printStackTrace();
 //        }
 //        return projectList;
+//    }
+//
+//    public Project getProject (int projectId){
+//        try{
+//            Connection con = DBManager.getConnection();
+//            String SQL = INDSÆT SELCTSTATEMENT
+//                    + "WHERE project_id=?";
+//            PreparedStatement ps = con.prepareStatement(SQL);
+//            ps.setInt(1, projectId);
+//            ResultSet rs = ps.executeQuery();
+//            if(rs.next()){
+//                Project project = projectMapper.mapRow(rs);
+//                return project;
+//            }
+//        }catch (SQLException ex) {
+//            ex.printStackTrace();
+//        }
+//        return null;
+//
 //    }
 
 }
