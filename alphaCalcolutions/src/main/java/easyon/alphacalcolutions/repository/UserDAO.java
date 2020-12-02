@@ -14,13 +14,13 @@ public class UserDAO {
     UserMapper userMapper = new UserMapper();
     UserTitleMapper userTitleMapper = new UserTitleMapper();
 
-    String selectStatement = "SELECT * FROM users " +
-            "INNER JOIN user_title ON users.user_title_id = user_title.user_title_id";
+    String selectStatement = "SELECT * FROM user " +
+            "INNER JOIN user_title ON user.user_title_id = user_title.user_title_id";
 
     public void createUser(User user){
         try {
             Connection con = DBManager.getConnection();
-            String SQL = "INSERT INTO users (user_first_name, user_last_name, user_title_id, user_hourly_salary) VALUES (?, ?, ?, ?)";
+            String SQL = "INSERT INTO user (user_first_name, user_last_name, user_title_id, user_hourly_salary) VALUES (?, ?, ?, ?)";
             PreparedStatement ps = con.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, user.getFirstName());
             ps.setString(2, user.getLastName());
