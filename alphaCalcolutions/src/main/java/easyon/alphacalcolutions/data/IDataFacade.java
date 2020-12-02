@@ -25,5 +25,8 @@ public interface IDataFacade {
 
     public void createProject(Project project);
 
+    public ArrayList<Project> getProjectList();
+
+    public Project getProject(int projectId);
 }
 

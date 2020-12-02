@@ -55,7 +55,9 @@ public class MainController {
     }
 
     @GetMapping("/seeProjects")
-    public String seeProjects(){
+    public String seeProjects(Model model){
+        model.addAttribute("projectList", projectService.getProjectList());
+        model.addAttribute("singleProject", projectService.getProject(1));
         return "seeProjects";
     }
 
