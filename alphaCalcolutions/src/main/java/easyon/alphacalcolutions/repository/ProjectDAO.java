@@ -4,11 +4,8 @@ import easyon.alphacalcolutions.data.DBManager;
 import easyon.alphacalcolutions.mapper.ProjectMapper;
 import easyon.alphacalcolutions.model.Project;
 
-<<<<<<< HEAD
 import javax.xml.transform.Result;
-=======
 import java.lang.reflect.Array;
->>>>>>> aaae87dc29380bf1518f745758b13f4da2eb8188
 import java.sql.*;
 import java.text.DateFormat;
 import java.text.ParseException;
