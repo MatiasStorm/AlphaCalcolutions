@@ -16,6 +16,7 @@ import java.io.Reader;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -51,9 +52,19 @@ class ProjectDAOTest {
 
 
 
-//    @Test
-//    void createProject() {
-//    }
+    @Test
+    void createProject() throws ParseException {
+        Project project = new Project();
+        project.setTitle("Project2");
+        project.setProjectLeaderId(2);
+        project.setAssignedUserIds(new int[]{1,2});
+        project.setStartDate("2020-12-12");
+        project.setEndDate("2020-12-21");
+        projectDAO.createProject(project);
+        Project actualProject = projectDAO.getProject(2);
+        assertNotNull(actualProject);
+        assertEquals(project.getAssignedUserIds().length, actualProject.getAssignedUserIds().length);
+    }
 
     @Test
     void getProjectList() {
