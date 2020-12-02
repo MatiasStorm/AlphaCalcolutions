@@ -13,11 +13,9 @@ public class ProjectMapper {
         project.setProjectId(rs.getInt("project_id"));
         project.setTitle(rs.getString("project_title"));
         project.setStartDate(rs.getString("project_start_date"));
-//        project.setProjectLeader(rs.getInt("project_leader_id"));
-//        project.setAssignedUsers();
-//        project.setDeadline();
-
-
+        project.setEndDate(rs.getString("project_end_date"));
+        project.setProjectLeaderId(rs.getInt("project_leader_id"));
+        project.setAssignedUserIds(rs.getString("assigned_user_ids").split(","));
         return project;
     }
 }

@@ -4,17 +4,19 @@ import easyon.alphacalcolutions.data.DBManager;
 import easyon.alphacalcolutions.mapper.ProjectMapper;
 import easyon.alphacalcolutions.model.Project;
 
+import javax.xml.transform.Result;
 import java.sql.*;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 public class ProjectDAO {
     ProjectMapper projectMapper = new ProjectMapper();
 
-    String selectStatement = "SELECT * FROM projects" + "INNER JOIN users ON projects.project_leader_id = users.user_id";
-
-
+    String selectStatement = "select project.*, GROUP_CONCAT(user_has_project.user_id SEPARATOR ',') as assigned_user_ids from project "
+                            + " JOIN user_has_project on project.project_id = user_has_project.project_id "
+                            + " GROUP BY project.project_id";
 
     public void createProject(Project project) {
         try {
@@ -40,24 +42,26 @@ public class ProjectDAO {
 
     }
 
-//    public ArrayList<Project> getProjectList(){
-//        ArrayList<Project> projectList = new ArrayList<>();
-//        try{
-//            Connection con = DBManager.getConnection();
-//            String SQL = INDSÆT SELCTSTATEMENT
-//              PreparedStatement ps = con.prepareStatement(SQL);
-//            ResultSet rs = ps.executeQuery();
-//
-//            while (rs.next()) {
-//                Project project = projectMapper.mapRow(rs);
-//                projectList.add(project);
-//            }
-//
-//        }catch (SQLException ex) {
-//            ex.printStackTrace();
-//        }
-//        return projectList;
-//    }
+    public ArrayList<Project> getProjectList(){
+        ArrayList<Project> projectList = new ArrayList<>();
+        try{
+            Connection con = DBManager.getConnection();
+            PreparedStatement ps = con.prepareStatement(selectStatement);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Project project = projectMapper.mapRow(rs);
+                PreparedStatement psUserIds = con.prepareStatement("SELECT * FROM user_has_project WHERE project_id = ?");
+                psUserIds.setInt(1, project.getProjectId());
+                ResultSet rsUserIds = ps.executeQuery();
+                projectList.add(project);
+            }
+
+        }catch (SQLException | ParseException ex) {
+            ex.printStackTrace();
+        }
+        return projectList;
+    }
 //
 //    public Project getProject (int projectId){
 //        try{

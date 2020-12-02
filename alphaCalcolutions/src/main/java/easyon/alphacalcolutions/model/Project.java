@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class Project {
-
     private int projectId;
     private String title;
     private int projectLeaderId;
@@ -45,6 +44,15 @@ public class Project {
 
     public void setAssignedUserIds(int[] assignedUserIds) {
         this.assignedUserIds = assignedUserIds;
+    }
+
+    public void setAssignedUserIds(String[] assignedUserIdStrings) {
+        this.assignedUserIds = new int[assignedUserIdStrings.length];
+        int id;
+        for(int i = 0; i < assignedUserIdStrings.length; i++){
+            id = Integer.parseInt(assignedUserIdStrings[i]);
+            this.assignedUserIds[i] = id;
+        }
     }
 
     public Date getStartDate() {
