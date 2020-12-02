@@ -21,36 +21,8 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ProjectDAOTest {
-    private static Connection con;
-    private ProjectDAO projectDAO;
-
-    @BeforeAll
-    static void setupAll() throws SQLException, ClassNotFoundException {
-        String jdbcDriver = "org.h2.Driver";
-        Class.forName(jdbcDriver);
-        String dbUrl = "jdbc:h2:~/alpha_calcolutions";
-        String user = "sa";
-        String pass = "";
-        con = DriverManager.getConnection(dbUrl, user, pass);
-    }
-
-    @BeforeEach
-    void setup() throws FileNotFoundException {
-        ScriptRunner sr = new ScriptRunner(con);
-        sr.setLogWriter(null);
-        Reader reader = new BufferedReader(new FileReader("src/test/resources/alpha_calcolutions.sql"));
-        sr.runScript(reader);
-        projectDAO = new ProjectDAO(con);
-    }
-
-    @AfterAll
-    static void tearDown() throws SQLException {
-        con.close();
-    }
-
-
-
+class ProjectDAOTest extends AbstractDAOTest{
+    private ProjectDAO projectDAO = new ProjectDAO(con);
 
     @Test
     void createProject() throws ParseException {
