@@ -38,22 +38,22 @@ public class ProjectDAO {
 
     }
 
-    public ArrayList<Project> getProjectList(){
-        ArrayList<Project> projectList = new ArrayList<>();
-        try{
-            Connection con = DBManager.getConnection();
+//    public ArrayList<Project> getProjectList(){
+//        ArrayList<Project> projectList = new ArrayList<>();
+//        try{
+//            Connection con = DBManager.getConnection();
 //            String SQL = INDSÆT SELCTSTATEMENT
 //              PreparedStatement ps = con.prepareStatement(SQL);
-            ResultSet rs = ps.executeQuery();
-
-            while (rs.next()) {
-                Project project = projectMapper.mapRow(rs);
-            }
-
-        }catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        return projectList;
-    }
+//            ResultSet rs = ps.executeQuery();
+//
+//            while (rs.next()) {
+//                Project project = projectMapper.mapRow(rs);
+//            }
+//
+//        }catch (SQLException ex) {
+//            ex.printStackTrace();
+//        }
+//        return projectList;
+//    }
 
 }
