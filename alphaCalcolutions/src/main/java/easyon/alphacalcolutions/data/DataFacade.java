@@ -12,8 +12,8 @@ import java.util.ArrayList;
 @Component
 public class DataFacade implements IDataFacade{
 
-    private static final UserDAO USER_DAO = new UserDAO(DBManager.getConnection());
-    private static final ProjectDAO PROJECT_DAO = new ProjectDAO(DBManager.getConnection());
+    private final UserDAO USER_DAO = new UserDAO(DBManager.getConnection());
+    private final ProjectDAO PROJECT_DAO = new ProjectDAO(DBManager.getConnection());
 
 
 
