@@ -19,8 +19,8 @@ public class ProjectService {
         dataFacade.createProject(project);
     }
 
-    public ArrayList<Project> getProjectList() {return dataFacade.getProjectList();}
-
-    public Project getProject(int projectId) {return dataFacade.getProject(projectId);}
+//    public ArrayList<Project> getProjectList() {return dataFacade.getProjectList();}
+//
+//    public Project getProject(int projectId) {return dataFacade.getProject(projectId);}
 
 }
