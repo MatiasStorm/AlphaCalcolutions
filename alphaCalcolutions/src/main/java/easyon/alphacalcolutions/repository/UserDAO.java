@@ -20,12 +20,15 @@ public class UserDAO {
     public void createUser(User user){
         try {
             Connection con = DBManager.getConnection();
-            String SQL = "INSERT INTO user (user_first_name, user_last_name, user_title_id, user_hourly_salary) VALUES (?, ?, ?, ?)";
+            String SQL = "INSERT INTO user (user_first_name, user_last_name, user_title_id, user_hourly_salary, user_username, user_password, is_admin) VALUES (?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement ps = con.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, user.getFirstName());
             ps.setString(2, user.getLastName());
             ps.setInt(3, user.getTitle().getUserTitleId());
             ps.setInt(4, user.getHourlySalary());
+            ps.setString(5, user.getUsername());
+            ps.setString(6, user.getPassword());
+            ps.setBoolean(7, user.getAdmin());
             ps.executeUpdate();
             ResultSet ids = ps.getGeneratedKeys();
             ids.next();

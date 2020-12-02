@@ -31,14 +31,9 @@ public class MainController {
         return "index";
     }
 
-    @GetMapping("/loginForm")
-    public String loginForm(){
-        return "loginForm";
-    }
-
-    @PostMapping("/loginForm/submit")
-    public String loginFormSubmit(){
-        return "redirect:/userPage";
+    @PostMapping("/index/submit")
+    public String indexSubmit(){
+        return "redirect:/seeProjects";
     }
 
     @GetMapping("/userPage")
@@ -80,7 +75,7 @@ public class MainController {
     @GetMapping("/employees")
     public String employees(Model model){
         model.addAttribute("userList" , userService.getUserList());
-        model.addAttribute("singleUser", userService.getUser(1));
+//        model.addAttribute("singleUser", userService.getUser(1));
         return "employees";
     }
 

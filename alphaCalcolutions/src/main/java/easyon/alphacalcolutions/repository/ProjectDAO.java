@@ -4,7 +4,11 @@ import easyon.alphacalcolutions.data.DBManager;
 import easyon.alphacalcolutions.mapper.ProjectMapper;
 import easyon.alphacalcolutions.model.Project;
 
+<<<<<<< HEAD
 import javax.xml.transform.Result;
+=======
+import java.lang.reflect.Array;
+>>>>>>> aaae87dc29380bf1518f745758b13f4da2eb8188
 import java.sql.*;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -13,7 +17,6 @@ import java.util.ArrayList;
 
 public class ProjectDAO {
     ProjectMapper projectMapper = new ProjectMapper();
-
     String selectStatement = "select project.*, GROUP_CONCAT(user_has_project.user_id SEPARATOR ',') as assigned_user_ids from project "
                             + " JOIN user_has_project on project.project_id = user_has_project.project_id "
                             + " GROUP BY project.project_id";
@@ -21,6 +24,7 @@ public class ProjectDAO {
     public void createProject(Project project) {
         try {
             Connection con = DBManager.getConnection();
+            con.setAutoCommit(false);
             String SQL = "INSERT INTO project (project_title, project_start_date, project_end_date, project_leader_id) VALUES (?, ?, ?, ?)";
             PreparedStatement ps = con.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
             DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -32,11 +36,24 @@ public class ProjectDAO {
             ps.executeUpdate();
             ResultSet ids = ps.getGeneratedKeys();
             ids.next();
-            int id  = ids.getInt(1);
+            int id = ids.getInt(1);
             project.setProjectId(id);
 
+            try {
+                for (int i = 0; i < project.getAssignedUserIds().length; i++) {
+                    SQL = "INSERT INTO user_has_project (user_id, project_id) VALUES (?, ?)";
+                    ps = con.prepareStatement(SQL);
+                    ps.setInt(1, (int) Array.get(project.getAssignedUserIds(), i));
+                    ps.setInt(2, project.getProjectId());
+                    ps.executeUpdate();
+                }
+            } catch (Exception e){
+                con.rollback();
+            }
 
-        }catch (SQLException ex) {
+            con.commit();
+            con.setAutoCommit(true);
+        } catch (SQLException ex) {
             ex.printStackTrace();
         }
 

@@ -12,6 +12,9 @@ public class UserMapper {
         user.setFirstName(rs.getString("user_first_name"));
         user.setLastName(rs.getString("user_last_name"));
         user.setHourlySalary(rs.getInt("user_hourly_salary"));
+        user.setUsername(rs.getString("user_username"));
+        user.setPassword(rs.getString("user_password"));
+        user.setAdmin(rs.getBoolean("is_admin"));
         return user;
     }
 

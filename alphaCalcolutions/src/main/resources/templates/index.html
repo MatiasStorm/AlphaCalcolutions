@@ -1,14 +1,45 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="/index.css">
 </head>
 <body>
 
-<form method="get" action="/loginForm">
-    <button type="submit">Login</button>
-</form>
+<div> <img src="/images/frontpage_image.jpg" class="imgHeader"> </div>
+
+<div class="boxLogin">
+
+
+        <form action="/index/submit" method="post">
+            <div>
+                <div class="loginText" style="display: flex">
+                    <input class="text" type="text" placeholder="Enter Username" name="username" required>
+                    <div style="padding: 2px"> </div>
+                    <input class="text" type="password" placeholder="Enter Password" name="password" required>
+                    <button class="button" type="submit">Login</button>
+                </div>
+
+                <div th:if="${loginError}" style="color: red; text-align: center">Username eller Password er forkert</div>
+
+
+            </div>
+        </form>
+
+    </div>
+    <div style="display: flex; justify-content: space-around">
+
+
+
+
+        </div>
+    </div>
+</div>
+
+
 
 </body>
 </html>
