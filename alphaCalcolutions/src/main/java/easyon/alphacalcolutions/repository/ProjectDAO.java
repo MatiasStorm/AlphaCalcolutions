@@ -76,24 +76,24 @@ public class ProjectDAO {
         }
         return projectList;
     }
-//
-//    public Project getProject (int projectId){
-//        try{
-//            Connection con = DBManager.getConnection();
-//            String SQL = INDSÆT SELCTSTATEMENT
-//                    + "WHERE project_id=?";
-//            PreparedStatement ps = con.prepareStatement(SQL);
-//            ps.setInt(1, projectId);
-//            ResultSet rs = ps.executeQuery();
-//            if(rs.next()){
-//                Project project = projectMapper.mapRow(rs);
-//                return project;
-//            }
-//        }catch (SQLException ex) {
-//            ex.printStackTrace();
-//        }
-//        return null;
-//
-//    }
+
+    public Project getProject (int projectId){
+        try{
+            Connection con = DBManager.getConnection();
+            String SQL = selectStatement
+                    + "WHERE project_id=?";
+            PreparedStatement ps = con.prepareStatement(SQL);
+            ps.setInt(1, projectId);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                Project project = projectMapper.mapRow(rs);
+                return project;
+            }
+        }catch (SQLException | ParseException ex) {
+            ex.printStackTrace();
+        }
+        return null;
+
+    }
 
 }
