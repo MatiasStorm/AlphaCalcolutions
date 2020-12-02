@@ -31,16 +31,9 @@ public class MainController {
         return "index";
     }
 
-
-
-    @GetMapping("/loginForm")
-    public String loginForm(){
-        return "loginForm";
-    }
-
-    @PostMapping("/loginForm/submit")
-    public String loginFormSubmit(){
-        return "redirect:/userPage";
+    @PostMapping("/index/submit")
+    public String indexSubmit(){
+        return "redirect:/seeProjects";
     }
 
     @GetMapping("/userPage")
