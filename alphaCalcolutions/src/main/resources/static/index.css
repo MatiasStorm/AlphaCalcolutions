@@ -23,19 +23,11 @@
     position:absolute;
     top:40%;
     left:50%;
-    /*margin-top:-50px; !* this is half the height of your div*!*/
-    /*margin-left:-100px; !*this is half of width of your div*!*/
     width: 45%;
     transform: translate(-50%,0%);
     min-height: 25%;
     min-width: 450px;
-    max-width: 600px;
-    background: darkgrey;
-    -moz-box-shadow: 0 0 10px #4b4b4b;
-    -webkit-box-shadow: 0 0 10px #4b4b4b;
-    box-shadow: 0 0 10px #4b4b4b;
-    /*-webkit-box-shadow: 10px 10px 10px 10px rgba(0, 0, 0, 1);*/
-    /*box-shadow: 10px 10px 10px 10px rgba(0, 0, 0, 1);*/
+    max-width: 800px;
     border-radius: 12px;
 
 }
@@ -49,6 +41,27 @@
     text-align: center;
 }
 
+.loginText {
+    background-color: darkslategray;
+    border-radius: 10px;
+    border: 4px double #cccccc;
+    color: #eeeeee;
+    font-size: 28px;
+    padding: 25px;
+    min-width: 10px;
+
+    margin: 5px;
+
+}
+
+.text{
+    min-width: 35%;
+    background-color: #cccccc;
+    font-size: 25px;
+    text-align: center;
+
+}
+
 .button {
     background-color: darkslategray;
     border-radius: 10px;
@@ -57,10 +70,11 @@
     text-align: center;
     font-size: 28px;
     padding: 15px;
-    min-width: 50px;
+    min-width: 10px;
     cursor: pointer;
-    width: 100%;
+    width: 25%;
     margin: 5px;
+
 }
 
 .button:hover {

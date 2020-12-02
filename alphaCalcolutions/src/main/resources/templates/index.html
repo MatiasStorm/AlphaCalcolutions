@@ -6,55 +6,40 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" type="text/css" href="/index.css">
-    <link rel="stylesheet" type="text/css" href="/modal.css">
 </head>
 <body>
 
 <div> <img src="/images/frontpage_image.jpg" class="imgHeader"> </div>
 
 <div class="boxLogin">
-    <div class="boxHeaderLogin">
-        <h1>Alpha Calcolutions</h1>
+
+
+        <form action="/login" method="post">
+            <div>
+                <div class="loginText" style="display: flex">
+                    <input class="text" type="text" placeholder="Enter Username" name="username" required>
+                    <div style="padding: 2px"> </div>
+                    <input class="text" type="password" placeholder="Enter Password" name="password" required>
+                    <button class="button" type="submit">Login</button>
+                </div>
+
+                <div th:if="${loginError}" style="color: red; text-align: center">Username eller Password er forkert</div>
+
+
+            </div>
+        </form>
+
     </div>
     <div style="display: flex; justify-content: space-around">
-        <button class="button" onclick="document.getElementById('loginModal').style.display='block'">Login</button>
+
+
+
+
+        </div>
     </div>
 </div>
 
-<div id="loginModal" class="modal" th:style="${loginError} ? 'display: block' : 'display: none'">
-    <form class="modal-content animate" action="/login" method="post">
-    <span onclick="document.getElementById('loginModal').style.display='none'" class="close"
-          title="Close Modal">&times;</span>
-        <div class="container">
-            <label><b>Username</b></label>
-            <input type="text" placeholder="Enter Username" name="username" required>
-            <label><b>Password</b></label>
-            <input type="password" placeholder="Enter Password" name="password" required>
-            <div th:if="${loginError}" style="color: red; text-align: center">Username eller Password er forkert</div>
 
-            <div style="display: flex">
-                <button type="button" onclick="document.getElementById('loginModal').style.display='none'"
-                        class="button">
-                    Fortryd
-                </button>
-                <button class="button" type="submit">Login</button>
-            </div>
-        </div>
-    </form>
-</div>
-
-
-<script>
-    // Get the modal
-    var loginModal = document.getElementById('loginModal');
-
-    // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function (event) {
-        if (event.target == loginModal) {
-            loginModal.style.display = "none";
-        }
-    }
-</script>
 
 </body>
 </html>
