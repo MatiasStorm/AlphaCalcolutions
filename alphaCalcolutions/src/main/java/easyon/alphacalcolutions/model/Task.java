@@ -12,6 +12,7 @@ public class Task {
     private Date startDate;
     private Date endDate;
     private int[] taskDependencyIds;
+    private int projectId;
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
 
@@ -87,5 +88,13 @@ public class Task {
 
     public void setEndDate(String endDate) throws ParseException {
         this.endDate = dateFormat.parse(endDate);
+    }
+
+    public int getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(int projectId) {
+        this.projectId = projectId;
     }
 }
