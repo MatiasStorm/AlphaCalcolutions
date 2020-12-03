@@ -1,7 +1,6 @@
 package easyon.alphacalcolutions.repository;
 
 import easyon.alphacalcolutions.mapper.TaskMapper;
-import easyon.alphacalcolutions.model.Project;
 import easyon.alphacalcolutions.model.Task;
 
 import java.lang.reflect.Array;

@@ -1,6 +1,7 @@
 package easyon.alphacalcolutions.data;
 
 import easyon.alphacalcolutions.model.Project;
+import easyon.alphacalcolutions.model.Task;
 import easyon.alphacalcolutions.model.UserTitle;
 import easyon.alphacalcolutions.model.User;
 
@@ -11,22 +12,26 @@ public interface IDataFacade {
     //----------------------------- USER -------------------------------------
 
 
-    public void createUser(User user);
+    void createUser(User user);
 
-    public ArrayList<User> getUserList();
+    ArrayList<User> getUserList();
 
-    public User getUser(int employeeId);
+    User getUser(int employeeId);
 
     //----------------------------- USER TITLE -------------------------------------
 
-    public ArrayList<UserTitle> getUserTitleList();
+    ArrayList<UserTitle> getUserTitleList();
 
     //----------------------------- PROJECT -------------------------------------
 
-    public void createProject(Project project);
+    void createProject(Project project);
 
-    public ArrayList<Project> getProjectList();
+    ArrayList<Project> getProjectList();
 
-    public Project getProject(int projectId);
+    Project getProject(int projectId);
+
+    //----------------------------- TASK -------------------------------------
+
+    void createTask(Task task);
 }
 

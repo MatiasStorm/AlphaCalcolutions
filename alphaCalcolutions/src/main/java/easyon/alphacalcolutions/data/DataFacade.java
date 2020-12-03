@@ -1,9 +1,11 @@
 package easyon.alphacalcolutions.data;
 
 import easyon.alphacalcolutions.model.Project;
+import easyon.alphacalcolutions.model.Task;
 import easyon.alphacalcolutions.model.UserTitle;
 import easyon.alphacalcolutions.model.User;
 import easyon.alphacalcolutions.repository.ProjectDAO;
+import easyon.alphacalcolutions.repository.TaskDAO;
 import easyon.alphacalcolutions.repository.UserDAO;
 import org.springframework.stereotype.Component;
 
@@ -14,7 +16,7 @@ public class DataFacade implements IDataFacade{
 
     private final UserDAO USER_DAO = new UserDAO(DBManager.getConnection());
     private final ProjectDAO PROJECT_DAO = new ProjectDAO(DBManager.getConnection());
-
+    private final TaskDAO TASK_DAO = new TaskDAO(DBManager.getConnection());
 
 
     //----------------------------- USER -------------------------------------
@@ -45,6 +47,13 @@ public class DataFacade implements IDataFacade{
     public ArrayList<Project> getProjectList() {return PROJECT_DAO.getProjectList();}
 
     public Project getProject (int projectId) {return PROJECT_DAO.getProject(projectId);}
+
+    //----------------------------- TASK -------------------------------------
+
+    public void createTask(Task task) {
+        TASK_DAO.createTask(task);
+    }
+
 
 
 }
