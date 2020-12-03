@@ -70,7 +70,7 @@ public class Task {
         int id;
         for(int i = 0; i < taskDependencyIds.length; i++){
             id = Integer.parseInt(taskDependencyIds[i]);
-            this.assignedUserIds[i] = id;
+            this.taskDependencyIds[i] = id;
         }
     }
 

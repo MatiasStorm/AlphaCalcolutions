@@ -4,6 +4,8 @@ import easyon.alphacalcolutions.data.DataFacade;
 import easyon.alphacalcolutions.model.Task;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+
 
 @Service
 public class TaskService {
@@ -16,5 +18,8 @@ public class TaskService {
 
     public void createTask(Task task){
         dataFacade.createTask(task);
+    }
+    public ArrayList<Task> getTaskList(){
+        return dataFacade.getTaskList();
     }
 }

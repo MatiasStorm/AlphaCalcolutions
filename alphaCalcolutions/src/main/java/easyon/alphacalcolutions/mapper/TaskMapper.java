@@ -19,8 +19,9 @@ public class TaskMapper {
         task.setEndDate(rs.getString("task_end_date"));
         task.setTaskId(rs.getInt("project_id"));
         task.setAssignedUserIds(rs.getString("assigned_user_ids").split(","));
-        task.setTaskDependencyIds(rs.getString("task_dependency_ids").split(","));
+//        task.setTaskDependencyIds(rs.getString("task_dependency_ids").split(","));
         return task;
 
     }
+
 }

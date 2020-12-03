@@ -1,20 +1,30 @@
 package easyon.alphacalcolutions.repository;
 
 import easyon.alphacalcolutions.mapper.TaskMapper;
+import easyon.alphacalcolutions.model.Project;
 import easyon.alphacalcolutions.model.Task;
 
 import java.lang.reflect.Array;
 import java.sql.*;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
 public class TaskDAO {
 
     private TaskMapper taskMapper = new TaskMapper();
     private final Connection con;
     //husk at ændre til task
-    private String selectStatement = "select project.*, GROUP_CONCAT(user_has_project.user_id SEPARATOR ',') as assigned_user_ids from project "
-            + " JOIN user_has_project on project.project_id = user_has_project.project_id ";
+    private String selectStatement = "select task.*, GROUP_CONCAT(user_has_task.user_id SEPARATOR ',') as assigned_user_ids " +
+            "from task " +
+            "JOIN user_has_task on task.task_id = user_has_task.task_id " +
+            "GROUP BY task.task_id;";
+
+//    select task.*,  GROUP_CONCAT(task_has_dependency.dependant_task_id SEPARATOR ',')
+//    from task
+//    left join task_has_dependency on task.task_id = task_has_dependency.dependency_task_id
+//    GROUP BY task.task_id;
 
     public TaskDAO(Connection con) {
         this.con = con;
@@ -71,6 +81,24 @@ public class TaskDAO {
             ex.printStackTrace();
         }
 
+    }
+
+    public ArrayList<Task> getTaskList(){
+        ArrayList<Task> taskList = new ArrayList<>();
+        try{
+
+            PreparedStatement ps = con.prepareStatement(selectStatement);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Task task = taskMapper.mapRow(rs);
+                taskList.add(task);
+            }
+
+        }catch (SQLException | ParseException ex) {
+            ex.printStackTrace();
+        }
+        return taskList;
     }
 
 }

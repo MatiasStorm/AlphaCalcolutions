@@ -1,11 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Tasks</title>
+    <title>See Tasks</title>
+    <link rel="stylesheet" type="text/css" href="/static/topPart.css">
 </head>
 <body>
 
-</body>
+<div th:replace="/includes/topPart :: topPart"></div>
 
+
+<div th:each="task : ${taskList}">
+    <p th:text="${task.title}"></p>
+    <p th:text="${task.taskLeaderId}"></p>
+    <div th:each="user : ${task.assignedUserIds}">
+        <p th:text="${user}"></p>
+    </div>
+
+</div>
+
+
+</body>
 </html>

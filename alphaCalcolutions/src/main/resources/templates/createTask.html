@@ -10,23 +10,37 @@
 
 <div th:replace="/includes/topPart :: topPart"></div>
 
-<form action="/createTask/submit" method="post">
-    <label>Titel:</label>
-    <input type="text" required>
-    <label>Task leder:</label>
-    <input type="text" required>
-    <label>Tildel ansatte:</label>
-    <select type="number">
-        <option>Phillip</option>
-        <option>Jens</option>
-        <option>Jørgen</option>
-        <option>Matias</option>
-        <option>Jytte</option>
+<form action="/createTask/submit" th:object="${task}" method="post">
+    <label>Title:</label>
+    <input type="text" th:field="*{title}" required>
+
+    <label>Task leader:</label>
+    <select type="text" th:field="*{taskLeaderId}" required>
+        <option th:each="user : ${userList}" th:value="${user.userId}"
+                th:text="${user.firstName} + ' ' + ${user.lastName}"></option>
     </select>
-    <label>Deadline:</label>
-    <input type="date" required>
-    <label>Afhængighed:</label>
-    <input type="number">
+    <label>Assign task members:</label>
+    <select type="text" th:field="*{assignedUserIds}" multiple>
+        <option th:each="user : ${userList}" th:value="${user.userId}"
+                th:text="${user.firstName} + ' ' + ${user.lastName}"></option>
+    </select>
+    <label>Assign task dependencies:</label>
+<!--    <select type="text" th:field="*{taskDependencyIds}" multiple>-->
+<!--        <option th:each="user : ${userList}" th:value="${user.userId}"-->
+<!--                th:text="${user.firstName} + ' ' + ${user.lastName}"></option>-->
+<!--    </select>-->
+    <label>Project to add task to:</label>
+    <select type="text" th:field="*{projectId}" required>
+        <option th:each="project : ${projectList}" th:value="${project.projectId}"
+                th:text="${project.title}"></option>
+    </select>
+
+    <label>Project start date:</label>
+    <input type="date" th:field="*{startDate}" required>
+
+    <label>Project end date:</label>
+    <input type="date" th:field="*{endDate}" required>
+
     <button type="submit">Create</button>
 </form>
 

@@ -1,8 +1,10 @@
 package easyon.alphacalcolutions.controller;
 
 import easyon.alphacalcolutions.model.Project;
+import easyon.alphacalcolutions.model.Task;
 import easyon.alphacalcolutions.model.User;
 import easyon.alphacalcolutions.service.ProjectService;
+import easyon.alphacalcolutions.service.TaskService;
 import easyon.alphacalcolutions.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,11 +16,13 @@ public class MainController {
 
      private final UserService userService;
      private final ProjectService projectService;
+     private final TaskService taskService;
 
 
-    public MainController(UserService userService, ProjectService projectService) {
+    public MainController(UserService userService, ProjectService projectService, TaskService taskService) {
         this.userService = userService;
         this.projectService = projectService;
+        this.taskService = taskService;
     }
 
     @GetMapping("/")
@@ -51,13 +55,26 @@ public class MainController {
         return "redirect:/seeProjects";
     }
 
+    @GetMapping("/seeTasks")
+    public String seeTasks(Model model, Task task){
+        model.addAttribute("taskList", taskService.getTaskList());
+        model.addAttribute("task", task);
+        return "seeTasks";
+    }
+
     @GetMapping("/createTask")
-    public String createTask(){
+    public String createTask(Model model ,Task task){
+        model.addAttribute("task", task);
+        model.addAttribute("userList", userService.getUserList());
+        model.addAttribute("projectList", projectService.getProjectList());
         return "createTask";
     }
 
     @PostMapping("/createTask/submit")
-    public String createTaskSubmit(){
+    public String createTaskSubmit(Task task){
+        String[] dependencies = new String[]{"1", "6", "11"};
+        task.setTaskDependencyIds(dependencies);
+        taskService.createTask(task);
         return "redirect:/createTask";
     }
 
@@ -82,6 +99,7 @@ public class MainController {
 
         return "redirect:/users";
     }
+
 
     @GetMapping("/test")
     public String tes(Model model){
