@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Task {
+    private int taskId;
     private String title;
     private int taskLeaderId;
     private int[] assignedUserIds;
@@ -13,6 +14,14 @@ public class Task {
     private int[] taskDependencyIds;
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
+
+    public int getTaskId() {
+        return taskId;
+    }
+
+    public void setTaskId(int taskId) {
+        this.taskId = taskId;
+    }
 
     public String getTitle() {
         return title;
@@ -34,9 +43,9 @@ public class Task {
         return assignedUserIds;
     }
 
-//    public void setAssignedUserIds(int[] assignedUserIds) {
-//        this.assignedUserIds = assignedUserIds;
-//    }
+    public void setAssignedUserIds(int[] assignedUserIds) {
+        this.assignedUserIds = assignedUserIds;
+    }
 
     public void setAssignedUserIds(String[] assignedUserIdStrings) {
         this.assignedUserIds = new int[assignedUserIdStrings.length];
@@ -53,6 +62,15 @@ public class Task {
 
     public void setTaskDependencyIds(int[] taskDependencyIds) {
         this.taskDependencyIds = taskDependencyIds;
+    }
+
+    public void setTaskDependencyIds(String[] taskDependencyIds) {
+        this.taskDependencyIds = new int[taskDependencyIds.length];
+        int id;
+        for(int i = 0; i < taskDependencyIds.length; i++){
+            id = Integer.parseInt(taskDependencyIds[i]);
+            this.assignedUserIds[i] = id;
+        }
     }
 
     public Date getStartDate() {
