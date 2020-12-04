@@ -9,18 +9,15 @@
 .navbarItem {
     background-color: darkslategray;
     display: table-cell;
-    vertical-align: text-top;
     color: white;
     text-align: center;
     font-size: 25px;
-    font-family: Serif;
+    font-family: serif;
     padding: 10px;
     min-width: 10%;
     cursor: pointer;
-    border:none;
-    transition: all 0.5s ease-in-out;
-    border-top: 10px solid darkslategray;
-    border-bottom: 10px solid darkslategray;
+    transition: all 0.3s ease-in-out;
+    border: 10px solid darkslategray;
 }
 
 .navbarItem:hover{
