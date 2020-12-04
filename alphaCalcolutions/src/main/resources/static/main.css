@@ -253,4 +253,7 @@ form .label {
     padding: 1rem;
 }
 
-
+/* Text */
+.text-align-center {
+    text-align: center;
+}

@@ -5,35 +5,65 @@
     <meta charset="UTF-8">
     <title>Create Employee</title>
     <link rel="stylesheet" type="text/css" href="/main.css">
+    <link rel="stylesheet" type="text/css" href="/topPart.css">
 </head>
 <body>
 
-<form action="/createUser/submit" th:object="${user}" method="post">
-    <label>First Name:</label>
-    <input type="text" th:field="*{firstName}" required>
-    <label>Last Name:</label>
-    <input type="text" th:field="*{lastName}" required>
-    <label>Title:</label>
-    <select type="number" th:field="*{title.userTitleId}" required>
-        <option th:each="userTitle : ${userTitleList}" th:value="${userTitle.userTitleId}"
-                th:text="${userTitle.userTitle}"></option>
-    </select>
-    <label>Hourly Salary:</label>
-    <input type="number" th:field="*{hourlySalary}" required>
-    <label>Username:</label>
-    <input type="text" th:field="*{username}" required>
-    <label>Password:</label>
-    <input type="text" th:field="*{password}" required>
-    <label>Create as admin?:</label>
+<div th:replace="/includes/topPart :: topPart"></div>
 
-    <select th:field="*{admin}" required>
-        <option th:value="0">No</option>
-        <option th:value="1">Yes</option>
-    </select>
+<h2 class="text-align-center">Create new Employee</h2>
 
+<div class="container justify-content-center">
+    <form action="/createUser/submit" th:object="${user}" method="post" class="w-25">
+        <div class="row">
+            <label class="label">First Name</label>
+            <input class="input" type="text" th:field="*{firstName}" required>
+        </div>
 
-    <button type="submit">Create</button>
-</form>
+        <div class="row">
+            <label class="label">Last Name</label>
+            <input class="input" type="text" th:field="*{lastName}" required>
+        </div>
+
+        <div class="row">
+            <label class="label">Title</label>
+            <select class="input" type="number" th:field="*{title.userTitleId}" required>
+                <option th:each="userTitle : ${userTitleList}" th:value="${userTitle.userTitleId}"
+                        th:text="${userTitle.userTitle}"></option>
+            </select>
+        </div>
+
+        <div class="row">
+            <label class="label">Hourly Salary</label>
+            <input class="input" type="number" th:field="*{hourlySalary}" required>
+        </div>
+
+        <div class="row">
+            <label class="label">Username</label>
+            <input class="input" type="text" th:field="*{username}" required>
+        </div>
+
+        <div class="row">
+            <label class="label">Password</label>
+            <input class="input" type="text" th:field="*{password}" required>
+        </div>
+
+        <div class="row">
+            <label class="label">Create as admin?</label>
+            <select class="input" th:field="*{admin}" required>
+                <option th:value="0">No</option>
+                <option th:value="1">Yes</option>
+            </select>
+        </div>
+
+        <div class="row mt-2">
+            <button class="btn btn-secondary btn-md px-2" type="button" onclick="document.location.href = '/users'">
+                Cancel
+            </button>
+            <button class="btn btn-primary btn-md px-2" type="submit">Create</button>
+        </div>
+    </form>
+</div>
 
 </body>
 </html>

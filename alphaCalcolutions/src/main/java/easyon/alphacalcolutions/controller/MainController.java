@@ -68,6 +68,7 @@ public class MainController {
         model.addAttribute("task", task);
         model.addAttribute("userList", projectService.getAssignedUsersFromProject(projectId));
         model.addAttribute("projectList", projectService.getProjectList());
+        model.addAttribute("projectName", "InsertProjectName");
         return "createTask";
     }
 

@@ -11,39 +11,71 @@
 
 <div th:replace="/includes/topPart :: topPart"></div>
 
-<form action="/createTask/submit" th:object="${task}" method="post">
-    <label>Title:</label>
-    <input type="text" th:field="*{title}" required>
+<h2 class="text-align-center" th:text="'Create new task for project \'' + ${projectName} + '\'' "></h2>
 
-    <label>Task leader:</label>
-    <select type="text" th:field="*{taskLeaderId}" required>
-        <option th:each="user : ${userList}" th:value="${user.userId}"
-                th:text="${user.firstName} + ' ' + ${user.lastName}"></option>
-    </select>
-    <label>Assign task members:</label>
-    <select type="text" th:field="*{assignedUserIds}" multiple>
-        <option th:each="user : ${userList}" th:value="${user.userId}"
-                th:text="${user.firstName} + ' ' + ${user.lastName}"></option>
-    </select>
-    <label>Assign task dependencies:</label>
-<!--    <select type="text" th:field="*{taskDependencyIds}" multiple>-->
-<!--        <option th:each="user : ${userList}" th:value="${user.userId}"-->
-<!--                th:text="${user.firstName} + ' ' + ${user.lastName}"></option>-->
-<!--    </select>-->
-    <label>Project to add task to:</label>
-    <select type="text" th:field="*{projectId}" required>
-        <option th:each="project : ${projectList}" th:value="${project.projectId}"
-                th:text="${project.title}"></option>
-    </select>
+<div class="container justify-content-center">
+    <form action="/createTask/submit" th:object="${task}" method="post" class="w-25">
+        <div class="row m-0">
+            <label class="label">Title:</label>
+            <input class="input" type="text" th:field="*{title}" required>
+        </div>
 
-    <label>Project start date:</label>
-    <input type="date" th:field="*{startDate}" required>
+        <div class="row">
+            <label class="label">Task leader:</label>
+            <select class="input" type="text" th:field="*{taskLeaderId}" required>
+                <option th:each="user : ${userList}" th:value="${user.userId}"
+                        th:text="${user.firstName} + ' ' + ${user.lastName}"></option>
+            </select>
+        </div>
+        <div class="row">
+            <label class="label">Assign task members:</label>
+            <select class="input" type="text" th:field="*{assignedUserIds}" multiple id="multipleSelect">
+                <option th:each="user : ${userList}" th:value="${user.userId}"
+                        th:text="${user.firstName} + ' ' + ${user.lastName}"></option>
+            </select>
+        </div>
 
-    <label>Project end date:</label>
-    <input type="date" th:field="*{endDate}" required>
+        <div class="row">
+            <label class="label">Assign task dependencies:</label>
+            <!--    <select class="input" type="text" th:field="*{taskDependencyIds}" multiple>-->
+            <!--        <option th:each="user : ${userList}" th:value="${user.userId}"-->
+            <!--                th:text="${user.firstName} + ' ' + ${user.lastName}"></option>-->
+            <!--    </select>-->
+        </div>
 
-    <button type="submit">Create</button>
-</form>
+        <div class="row">
+            <label class="label">Project start date:</label>
+            <input class="input" type="date" th:field="*{startDate}" required>
+        </div>
 
+        <div class="row">
+            <label class="label">Project end date:</label>
+            <input class="input" type="date" th:field="*{endDate}" required>
+        </div>
+
+        <input type="number" th:field="*{projectId}" hidden="true">
+
+        <div class="row mt-2">
+            <button class="btn btn-secondary btn-md px-2" type="button"
+                    th:onclick="'document.location.href = \'/seeTasks?projectId=' + *{projectId} + '\''"
+            >
+                Cancel
+            </button>
+            <button class="btn btn-primary btn-md px-2" type="submit">Create</button>
+        </div>
+    </form>
+</div>
 </body>
+<script>
+    var checkList = document.getElementById('multipleSelect');
+    checkList.onmousedown = function(e) {
+        e.preventDefault();
+        var select = this;
+        var scroll = select.scrollTop;
+        e.target.selected = !e.target.selected;
+
+        setTimeout(() => {select.scrollTop = scroll}, 0);
+        select.focus();
+    }
+</script>
 </html>

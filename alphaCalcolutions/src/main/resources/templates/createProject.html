@@ -12,7 +12,7 @@
 <div th:replace="/includes/topPart :: topPart"></div>
 <h2 style="text-align: center">Create new project:</h2>
 <div class="container justify-content-center">
-    <form action="/createProject/submit" th:object="${project}" method="post" class="form w-25">
+    <form action="/createProject/submit" th:object="${project}" method="post" class="w-25">
         <div class="row m-0">
             <label class="label">Title</label>
             <input type="text" th:field="*{title}" required class="input">
@@ -45,7 +45,9 @@
         </div>
 
         <div class="row mt-2">
-            <button class="btn btn-secondary btn-md px-2" type="button">Cancel</button>
+            <button class="btn btn-secondary btn-md px-2" type="button" onclick="document.location.href = '/seeProjects'">
+                Cancel
+            </button>
             <button class="btn btn-primary btn-md px-2" type="submit">Create</button>
         </div>
     </form>
