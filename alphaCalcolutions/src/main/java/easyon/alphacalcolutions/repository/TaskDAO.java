@@ -18,8 +18,7 @@ public class TaskDAO {
     //husk at ændre til task
     private String selectStatement = "select task.*, GROUP_CONCAT(user_has_task.user_id SEPARATOR ',') as assigned_user_ids " +
             "from task " +
-            "JOIN user_has_task on task.task_id = user_has_task.task_id " +
-            "GROUP BY task.task_id;";
+            "JOIN user_has_task on task.task_id = user_has_task.task_id ";
 
 //    select task.*,  GROUP_CONCAT(task_has_dependency.dependant_task_id SEPARATOR ',')
 //    from task
@@ -28,6 +27,10 @@ public class TaskDAO {
 
     public TaskDAO(Connection con) {
         this.con = con;
+    }
+
+    private String createSelect(String where){
+        return selectStatement + where + " GROUP BY task.task_id;";
     }
 
     public void createTask(Task task) {
@@ -87,7 +90,7 @@ public class TaskDAO {
         ArrayList<Task> taskList = new ArrayList<>();
         try{
 
-            PreparedStatement ps = con.prepareStatement(selectStatement);
+            PreparedStatement ps = con.prepareStatement(createSelect(" "));
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
@@ -99,6 +102,22 @@ public class TaskDAO {
             ex.printStackTrace();
         }
         return taskList;
+    }
+
+    public Task getTaskById(int taskId){
+        try{
+            String SQL = createSelect(" WHERE task.task_id=?");
+            PreparedStatement ps = con.prepareStatement(SQL);
+            ps.setInt(1, taskId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()){
+                Task task = taskMapper.mapRow(rs);
+                return task;
+            }
+        } catch (SQLException | ParseException ex){
+            ex.printStackTrace();
+        }
+        return null;
     }
 
 }
