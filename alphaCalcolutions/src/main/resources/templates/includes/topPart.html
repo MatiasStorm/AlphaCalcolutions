@@ -11,16 +11,15 @@
 <div th:fragment="topPart">
 
     <div class="navbar">
-
-        <a class="navbarItem button" href="/createProject">
-            Opret projekt
-        </a>
-        <a class="navbarItem button" href="/seeProjects">
-            Se projekter
-        </a>
-        <a class="navbarItem button" href="/users">
-            Medarbejder side
-        </a>
+        <button class="navbarItem" onclick="document.location.href= '/seeProjects'">
+            Projects
+        </button>
+        <button class="navbarItem" onclick="document.location.href='/users'">
+            Users
+        </button>
+        <button class="navbarItem" onclick="document.location.href='/'">
+            Logout
+        </button>
 
     </div>
 </div>
