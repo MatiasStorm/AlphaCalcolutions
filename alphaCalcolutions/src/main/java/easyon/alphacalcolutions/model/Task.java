@@ -2,6 +2,7 @@ package easyon.alphacalcolutions.model;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Task {
@@ -13,6 +14,8 @@ public class Task {
     private Date endDate;
     private int[] taskDependencyIds;
     private int projectId;
+    private ArrayList<User> assignedUsers;
+    private User taskLeader;
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
 
@@ -96,5 +99,21 @@ public class Task {
 
     public void setProjectId(int projectId) {
         this.projectId = projectId;
+    }
+
+    public ArrayList<User> getAssignedUsers() {
+        return assignedUsers;
+    }
+
+    public void setAssignedUsers(ArrayList<User> assignedUsers) {
+        this.assignedUsers = assignedUsers;
+    }
+
+    public User getTaskLeader() {
+        return taskLeader;
+    }
+
+    public void setTaskLeader(User taskLeader) {
+        this.taskLeader = taskLeader;
     }
 }

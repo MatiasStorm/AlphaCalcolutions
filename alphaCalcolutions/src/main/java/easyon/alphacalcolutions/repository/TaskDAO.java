@@ -85,12 +85,13 @@ public class TaskDAO {
         return task;
     }
 
-    public ArrayList<Task> getTaskList(){
+    public ArrayList<Task> getTaskList(int projectId){
         ArrayList<Task> taskList = new ArrayList<>();
         try{
 
-            String selectStatment = getSelectStatement("");
+            String selectStatment = getSelectStatement(" WHERE task.project_id=?");
             PreparedStatement ps = con.prepareStatement(selectStatment);
+            ps.setInt(1, projectId);
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
@@ -120,5 +121,6 @@ public class TaskDAO {
         }
         return null;
     }
+
 
 }

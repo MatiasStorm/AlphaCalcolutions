@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class MainController {
@@ -56,18 +57,16 @@ public class MainController {
     }
 
     @GetMapping("/seeTasks")
-    public String seeTasks(Model model, Task task){
-        model.addAttribute("taskList", taskService.getTaskList());
-        model.addAttribute("usersOnTaskList", taskService.getAssignedUsersFromTask(8));
-        model.addAttribute("taskLeader", taskService.getTaskLeader(8));
+    public String seeTasks(Model model, Task task, @RequestParam int projectId){
+        model.addAttribute("taskList", taskService.getTaskList(projectId));
         model.addAttribute("task", task);
         return "seeTasks";
     }
 
     @GetMapping("/createTask")
-    public String createTask(Model model ,Task task){
+    public String createTask(Model model ,Task task, @RequestParam int projectId){
         model.addAttribute("task", task);
-        model.addAttribute("userList", projectService.getAssignedUsersFromProject(2));
+        model.addAttribute("userList", projectService.getAssignedUsersFromProject(projectId));
         model.addAttribute("projectList", projectService.getProjectList());
         return "createTask";
     }
@@ -77,7 +76,7 @@ public class MainController {
         String[] dependencies = new String[]{"1", "6", "11"};
         task.setTaskDependencyIds(dependencies);
         taskService.createTask(task);
-        return "redirect:/createTask";
+        return "redirect:/seeTasks?projectId=" + task.getProjectId();
     }
 
     @GetMapping("/users")

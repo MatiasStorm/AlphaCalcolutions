@@ -11,19 +11,19 @@
 <div th:replace="/includes/topPart :: topPart"></div>
 
 
-<div th:each="task : ${taskList}">
+<div th:each="task : ${taskList}" th:object="${task}">
     <b>Task</b>
-    <p th:text="${task.title}"></p>
+    <p th:text="*{title}"></p>
     <b>Task leader</b>
-    <p th:text="${taskLeader.firstName} + ' ' + ${taskLeader.lastName}"></p>
+    <p th:text="*{taskLeader.firstName} + ' ' + *{taskLeader.lastName}"></p>
     <b>Task members</b>
-    <div th:each="user : ${usersOnTaskList}">
+    <div th:each="user : *{assignedUsers}">
         <p th:text="${user.firstName} + ' ' + ${user.lastName}"></p>
     </div>
     <b>Start date</b>
-    <p th:text="${task.startDate}"></p>
+    <p th:text="*{startDate}"></p>
     <b>End date</b>
-    <p th:text="${task.endDate}"></p>
+    <p th:text="*{endDate}"></p>
     <br>
     <br>
     <br>

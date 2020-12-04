@@ -23,22 +23,27 @@ public class TaskService {
         dataFacade.createTask(task);
     }
 
-    public ArrayList<Task> getTaskList(){
-        return dataFacade.getTaskList();
+    public ArrayList<Task> getTaskList(int projectId){
+        ArrayList<Task> taskList  = dataFacade.getTaskList(projectId);
+        for (Task task: taskList) {
+            task.setTaskLeader(getTaskLeader(task.getTaskLeaderId()));
+            task.setAssignedUsers(getAssignedUsersFromTask(task.getAssignedUserIds()));
+        }
+        return taskList;
     }
 
     public Task getTaskById(int taskId){
         return dataFacade.getTaskById(taskId);
     }
 
-    public ArrayList<User> getAssignedUsersFromTask(int taskId){
-        int[] assignedUsers = dataFacade.getTaskById(taskId).getAssignedUserIds();
+    public ArrayList<User> getAssignedUsersFromTask(int[] assignedUsers){
         return dataFacade.getUsersById(assignedUsers);
     }
 
-    public User getTaskLeader(int taskId){
-       int taskLeaderId = dataFacade.getTaskById(taskId).getTaskLeaderId();
+    public User getTaskLeader(int taskLeaderId){
        return dataFacade.getUser(taskLeaderId);
     }
+
+
 
 }
