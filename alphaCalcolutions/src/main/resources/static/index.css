@@ -1,22 +1,13 @@
-* {
-    margin: 0;
-    padding: 0;
-}
-
 .imgHeader {
-
-
     max-height: 100%;
     max-width: 100%;
     background-position: center;
     background-repeat: no-repeat;
     background-size: auto;
-
 }
 
 .boxLoginText {
     font-style: inherit;
-
 }
 
 .boxLogin {
@@ -29,11 +20,9 @@
     min-width: 450px;
     max-width: 800px;
     border-radius: 12px;
-
 }
 
 .boxHeaderLogin {
-
     background: darkgray;
     height: 100px;
     line-height: 100px;
@@ -49,9 +38,7 @@
     font-size: 28px;
     padding: 25px;
     min-width: 10px;
-
     margin: 5px;
-
 }
 
 .text{
@@ -59,7 +46,6 @@
     background-color: #cccccc;
     font-size: 25px;
     text-align: center;
-
 }
 
 .button {
@@ -74,7 +60,6 @@
     cursor: pointer;
     width: 25%;
     margin: 5px;
-
 }
 
 .button:hover {
