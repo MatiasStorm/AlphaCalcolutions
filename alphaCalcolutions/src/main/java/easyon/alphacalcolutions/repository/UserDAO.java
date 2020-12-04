@@ -105,12 +105,16 @@ public class UserDAO {
         return selectStatement + where + " GROUP BY user.user_id";
     }
 
-    public ArrayList<User> getUsersByIds(ArrayList<Integer> userIds){
+    public ArrayList<User> getUsersByIds(int[] userIds){
         ArrayList<User> userList = new ArrayList<>();
         try {
-            String inSql = '(' + String.join(",", Collections.nCopies(userIds.size(), "?")) + ") ";
+            String inSql = '(' + String.join(",", Collections.nCopies(userIds.length, "?")) + ") ";
             String SQL = createSelect(" WHERE user_id IN " + inSql);
             PreparedStatement ps = con.prepareStatement(SQL);
+            for (int i = 0; i <userIds.length ; i++) {
+                ps.setInt(i + 1, userIds[i]);
+            }
+
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {

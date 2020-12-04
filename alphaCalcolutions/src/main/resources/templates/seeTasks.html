@@ -13,8 +13,8 @@
 <div th:each="task : ${taskList}">
     <p th:text="${task.title}"></p>
     <p th:text="${task.taskLeaderId}"></p>
-    <div th:each="user : ${task.assignedUserIds}">
-        <p th:text="${user}"></p>
+    <div th:each="user : ${usersOnTaskList}">
+        <p th:text="${user.firstName} + ' ' + ${user.lastName}"></p>
     </div>
 
 </div>

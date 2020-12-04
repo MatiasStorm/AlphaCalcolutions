@@ -6,6 +6,7 @@ import easyon.alphacalcolutions.model.UserTitle;
 import easyon.alphacalcolutions.model.User;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public interface IDataFacade {
 
@@ -18,7 +19,7 @@ public interface IDataFacade {
 
     User getUser(int employeeId);
 
-    ArrayList<User> getUsersById(ArrayList<Integer> userIds);
+    ArrayList<User> getUsersById(int[] userIds);
 
     //----------------------------- USER TITLE -------------------------------------
 

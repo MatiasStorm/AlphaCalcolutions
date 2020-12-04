@@ -58,6 +58,7 @@ public class MainController {
     @GetMapping("/seeTasks")
     public String seeTasks(Model model, Task task){
         model.addAttribute("taskList", taskService.getTaskList());
+        model.addAttribute("usersOnTaskList", taskService.getAssignedUsersFromTask(8));
         model.addAttribute("task", task);
         return "seeTasks";
     }

@@ -34,7 +34,7 @@ public class DataFacade implements IDataFacade{
         return USER_DAO.getUser(userId);
     }
 
-    public ArrayList<User> getUsersById(ArrayList<Integer> userIds){
+    public ArrayList<User> getUsersById(int[] userIds){
         return USER_DAO.getUsersByIds(userIds);
     }
 
