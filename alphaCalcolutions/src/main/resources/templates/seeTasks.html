@@ -20,7 +20,10 @@
     <div th:each="user : ${usersOnTaskList}">
         <p th:text="${user.firstName} + ' ' + ${user.lastName}"></p>
     </div>
-
+    <b>Start date</b>
+    <p th:text="${task.startDate}"></p>
+    <b>End date</b>
+    <p th:text="${task.endDate}"></p>
     <br>
     <br>
     <br>
