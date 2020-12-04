@@ -18,6 +18,8 @@ public interface IDataFacade {
 
     User getUser(int employeeId);
 
+    ArrayList<User> getUsersById(ArrayList<Integer> userIds);
+
     //----------------------------- USER TITLE -------------------------------------
 
     ArrayList<UserTitle> getUserTitleList();
