@@ -12,25 +12,29 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 public class TaskDAO {
-
     private TaskMapper taskMapper = new TaskMapper();
     private final Connection con;
     //husk at ændre til task
-    private String selectStatement = "select task.*, GROUP_CONCAT(user_has_task.user_id SEPARATOR ',') as assigned_user_ids " +
-            "from task " +
-            "JOIN user_has_task on task.task_id = user_has_task.task_id " +
-            "GROUP BY task.task_id;";
-
-//    select task.*,  GROUP_CONCAT(task_has_dependency.dependant_task_id SEPARATOR ',')
-//    from task
-//    left join task_has_dependency on task.task_id = task_has_dependency.dependency_task_id
-//    GROUP BY task.task_id;
+//    private String selectStatement = "select task.*, GROUP_CONCAT(user_has_task.user_id SEPARATOR ',') as assigned_user_ids " +
+//            "from task " +
+//            "JOIN user_has_task on task.task_id = user_has_task.task_id " +
+//            "GROUP BY task.task_id;";
 
     public TaskDAO(Connection con) {
         this.con = con;
     }
 
-    public void createTask(Task task) {
+    private String getSelectStatement(String where){
+        String selectStatement = "SELECT task.*, sub_task.dependency_task_ids, GROUP_CONCAT(uht.user_id SEPARATOR ',') AS assigned_user_ids FROM task"
+                                + " JOIN (SELECT task.task_id, GROUP_CONCAT(thd.dependency_task_id SEPARATOR ',') AS dependency_task_ids FROM task"
+                                + " LEFT JOIN task_has_dependency thd ON thd.dependant_task_id = task.task_id"
+                                + " GROUP BY task.task_id) sub_task ON task.task_id = sub_task.task_id"
+                                + " LEFT JOIN user_has_task uht ON task.task_id = uht.task_id ";
+        String groupBy = " GROUP BY task.task_id";
+        return selectStatement + where + groupBy;
+    }
+
+    public Task createTask(Task task) {
         try {
             con.setAutoCommit(false);
             String SQL = "INSERT INTO task (task_title, task_leader_id, task_start_date, task_end_date, project_id) VALUES (?, ?, ?, ?, ?)";
@@ -80,14 +84,14 @@ public class TaskDAO {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-
+        return task;
     }
 
     public ArrayList<Task> getTaskList(){
         ArrayList<Task> taskList = new ArrayList<>();
         try{
-
-            PreparedStatement ps = con.prepareStatement(selectStatement);
+            String selectStatment = getSelectStatement("");
+            PreparedStatement ps = con.prepareStatement(selectStatment);
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
@@ -101,4 +105,21 @@ public class TaskDAO {
         return taskList;
     }
 
+    public Task getTask(int taskId){
+        Task task = new Task();
+        try{
+            String selectStatment = getSelectStatement("WHERE task.task_id = ?");
+            PreparedStatement ps = con.prepareStatement(selectStatment);
+            ps.setInt(1, taskId);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                task = taskMapper.mapRow(rs);
+            }
+
+        }catch (SQLException | ParseException ex) {
+            ex.printStackTrace();
+        }
+        return task;
+    }
 }
