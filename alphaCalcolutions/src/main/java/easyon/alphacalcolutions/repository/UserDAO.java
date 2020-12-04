@@ -8,6 +8,8 @@ import easyon.alphacalcolutions.model.User;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 
 public class UserDAO {
@@ -97,6 +99,30 @@ public class UserDAO {
             ex.printStackTrace();
         }
         return userTitleList;   //Hvordan kan Tine slippe afsted med return højere oppe ?
+    }
+
+    private String createSelect(String where){
+        return selectStatement + where + " GROUP BY user.user_id";
+    }
+
+    public List<User> getUsersByIds(List<Integer> userIds){
+        ArrayList<User> userList = new ArrayList<>();
+        try {
+            String inSql = '(' + String.join(",", Collections.nCopies(userIds.size(), "?")) + ") ";
+            String SQL = createSelect(" WHERE user_id IN " + inSql);
+            PreparedStatement ps = con.prepareStatement(SQL);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                User user = userMapper.mapRow(rs);
+                user.setTitle(userTitleMapper.mapRow(rs));
+                userList.add(user);
+            }
+
+        } catch (SQLException ex){
+            ex.printStackTrace();
+        }
+        return userList;
     }
 
 
