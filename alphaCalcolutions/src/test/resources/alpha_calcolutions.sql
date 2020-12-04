@@ -93,10 +93,10 @@ CREATE TABLE `user_has_project` (
 --
 
 CREATE TABLE `user_has_task` (
-  `employee_id` int NOT NULL,
+  user_id int NOT NULL,
   `task_id` int NOT NULL,
-  PRIMARY KEY (`employee_id`,`task_id`),
-  CONSTRAINT `employee_has_task_employee_id` FOREIGN KEY (`employee_id`) REFERENCES `user` (`user_id`),
+  PRIMARY KEY (user_id,`task_id`),
+  CONSTRAINT `employee_has_task_employee_id` FOREIGN KEY (user_id) REFERENCES `user` (`user_id`),
   CONSTRAINT `employee_has_task_task_id` FOREIGN KEY (`task_id`) REFERENCES `task` (`task_id`)
 );
 
@@ -106,13 +106,28 @@ INSERT INTO `user_title`(user_title)
 VALUES ('Graphical designer');
 
 INSERT INTO `user`(user_first_name, user_last_name, user_title_id, user_hourly_salary, user_username, user_password)
-VALUES ('First_name', 'Last_name', 1, 120, 'username', 'password');
+VALUES
+    ('First_name', 'Last_name', 1, 120, 'username', 'password'),
+    ('John', 'Doe', 1, 120, 'username2', 'password'),
+    ('Jane', 'Doe', 1, 122, 'username3', 'password'),
+    ('Jørgen', 'Jensen', 2, 120, 'username4', 'password');
 
-INSERT INTO `user`(user_first_name, user_last_name, user_title_id, user_hourly_salary, user_username, user_password)
-VALUES ('Jørgen', 'Jensen', 2, 120, 'username1', 'password');
 
 INSERT INTO `project`(project_title, project_start_date, project_end_date, project_leader_id)
-VALUES ('Title', '2020-12-12', '2020-12-24', 1) ;
+VALUES ('Title', '2020-12-12', '2020-12-24', 1);
+
+
+INSERT INTO `task`(project_id, task_title, task_leader_id, task_start_date, task_end_date)
+    VALUES
+        (1,'Test Task',1,'2020-12-17','2020-12-18'),
+        (1,'Test Task 2',2,'2020-12-10','2020-12-25'),
+        (1,'Test Task 3',1,'2020-12-25','2021-01-25'),
+        (1,'Test Task 4',2,'2020-12-7','2020-12-25'),
+        (1,'Test Task 5',2,'2020-12-08','2020-12-12');
+
+INSERT INTO `task_has_dependency`(dependant_task_id, dependency_task_id) VALUES (1, 2),(1,3),(3,4),(4,5);
+
+INSERT INTO `user_has_task`(user_id, task_id) VALUES (2, 1),(3,1),(4,1),(1,2),(4,2);
 
 INSERT INTO `user_has_project`(user_id, project_id)
 VALUES (1, 1);

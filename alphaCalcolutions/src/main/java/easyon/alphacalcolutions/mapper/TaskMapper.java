@@ -10,7 +10,6 @@ import java.text.ParseException;
 public class TaskMapper {
 
     public Task mapRow(ResultSet rs) throws SQLException, ParseException {
-
         Task task = new Task();
         task.setTaskId(rs.getInt("task_id"));
         task.setTitle(rs.getString("task_title"));
@@ -18,8 +17,12 @@ public class TaskMapper {
         task.setStartDate(rs.getString("task_start_date"));
         task.setEndDate(rs.getString("task_end_date"));
         task.setTaskId(rs.getInt("project_id"));
-        task.setAssignedUserIds(rs.getString("assigned_user_ids").split(","));
-//        task.setTaskDependencyIds(rs.getString("task_dependency_ids").split(","));
+
+        String assignedUserIds = rs.getString("assigned_user_ids");
+        task.setAssignedUserIds(assignedUserIds != null ? assignedUserIds.split(",") : new String[]{});
+
+        String taskDependencyIds = rs.getString("dependency_task_ids");
+        task.setTaskDependencyIds(taskDependencyIds != null ? taskDependencyIds.split(",") : new String[]{});
         return task;
 
     }

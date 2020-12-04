@@ -34,7 +34,7 @@ class UserDAOTest extends AbstractDAOTest{
     @Test
     void getUserList() {
         List<User> users = userDAO.getUserList();
-        assertEquals(2, users.size());
+        assertEquals(4, users.size());
     }
 
     @Test
