@@ -10,17 +10,29 @@
 
 <div th:replace="/includes/topPart :: topPart"></div>
 
-
-<div th:each="project : ${projectList}">
-    <p th:text="${project.projectId}"></p>
-    <p th:text="${project.title}"></p>
-
+<div class="container justify-content-left">
+    <button class="btn btn-primary btn-lg" onclick="document.location.href = '/createProject'">
+        Create new Project
+    </button>
 </div>
 
-<div>
-<p th:text="${singleProject.title}"> </p>
+<div class="container">
+    <div class="card w-100 mb-2" th:each="project : ${projectList}" th:object="${project}">
+        <h2 class="card-header" th:text="*{title}"></h2>
+        <div class="card-body">
+            <p th:text="*{startDate}"></p>
+            <p th:text="*{endDate}"></p>
+            <div class="row m-0 p-0">
+                <button class="btn btn-primary btn-sm"
+                        th:onclick="'document.location.href = \'/seeTasks?projectId=' + *{projectId} + '\''"
+                >
+                    View Project
+                </button>
+                <button class="btn btn-danger btn-sm">Delete Project</button>
+            </div>
+        </div>
+    </div>
 </div>
-
 
 </body>
 </html>
