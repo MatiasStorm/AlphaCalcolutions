@@ -105,7 +105,7 @@ public class UserDAO {
         return selectStatement + where + " GROUP BY user.user_id";
     }
 
-    public List<User> getUsersByIds(List<Integer> userIds){
+    public ArrayList<User> getUsersByIds(ArrayList<Integer> userIds){
         ArrayList<User> userList = new ArrayList<>();
         try {
             String inSql = '(' + String.join(",", Collections.nCopies(userIds.size(), "?")) + ") ";

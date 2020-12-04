@@ -10,6 +10,7 @@ import easyon.alphacalcolutions.repository.UserDAO;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class DataFacade implements IDataFacade{
@@ -32,6 +33,12 @@ public class DataFacade implements IDataFacade{
     public User getUser(int userId){
         return USER_DAO.getUser(userId);
     }
+
+    public ArrayList<User> getUsersById(ArrayList<Integer> userIds){
+        return USER_DAO.getUsersByIds(userIds);
+    }
+
+
 
     //----------------------------- USER TITLE -------------------------------------
 
@@ -57,6 +64,8 @@ public class DataFacade implements IDataFacade{
     public ArrayList<Task> getTaskList(){
         return TASK_DAO.getTaskList();
     }
+
+
 
 
 
