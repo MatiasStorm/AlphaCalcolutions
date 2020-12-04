@@ -67,7 +67,7 @@ public class MainController {
     @GetMapping("/createTask")
     public String createTask(Model model ,Task task){
         model.addAttribute("task", task);
-        model.addAttribute("userList", userService.getUserList());
+        model.addAttribute("userList", projectService.getAssignedUsersFromProject(2));
         model.addAttribute("projectList", projectService.getProjectList());
         return "createTask";
     }
