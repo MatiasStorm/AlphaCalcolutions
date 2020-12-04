@@ -65,6 +65,10 @@ public class DataFacade implements IDataFacade{
         return TASK_DAO.getTaskList();
     }
 
+    public Task getTaskById(int taskId){
+        return TASK_DAO.getTaskById(taskId);
+    }
+
 
 
 

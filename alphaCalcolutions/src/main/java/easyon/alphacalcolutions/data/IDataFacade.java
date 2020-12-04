@@ -36,5 +36,6 @@ public interface IDataFacade {
 
     void createTask(Task task);
     ArrayList<Task> getTaskList();
+    Task getTaskById(int taskId);
 }
 
