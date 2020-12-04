@@ -8,6 +8,45 @@ body, html {
     display: flex;
 }
 
+/* Layout */
+.container {
+    margin: 1rem;
+    padding: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin: 1rem 0;
+    flex-wrap: wrap;
+}
+
+.justify-content-space-between{
+    justify-content: space-between;
+}
+
+.justify-content-center {
+    justify-content: center;
+}
+
+/* Width */
+.w-25{
+    width: 25%;
+}
+.w-50{
+    width: 50%;
+}
+.w-75{
+    width: 75%;
+}
+.w-100{
+    width: 100%;
+}
+
 
 /* Padding */
 .p-0 {
@@ -68,6 +107,25 @@ body, html {
     margin: 5rem ;
 }
 
+.mt-0 {
+    margin-top: 0 ;
+}
+.mt-1 {
+    margin-top: 1rem ;
+}
+.mt-2 {
+    margin-top: 2rem ;
+}
+.mt-3 {
+    margin-top: 3rem ;
+}
+.mt-4 {
+    margin-top: 4rem ;
+}
+.mt-5 {
+    margin-top: 5rem ;
+}
+
 .border {
     border: 1px solid
 }
@@ -88,5 +146,61 @@ body, html {
 
 .multipleSelect option:checked {
     background-color: rgba(0, 0, 255, 0.4);
+}
+
+
+/* Form */
+.form {
 
 }
+
+.form .input {
+
+}
+
+.form .label {
+    width: auto;
+}
+
+/* Button */
+.btn {
+    border-radius: 10px;
+    border: 4px double #cccccc;
+    color: white;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.1s;
+}
+
+.btn:hover{
+    filter: brightness(120%);
+}
+
+.btn-primary{
+    background-color: darkslategray;
+}
+
+.btn-secondary{
+    background-color: darkgrey;
+}
+
+.btn-danger{
+    background-color: darkred;
+}
+
+.btn-sm {
+    font-size: 10px;
+    padding: 5px;
+}
+
+.btn-md{
+    font-size: 15px;
+    padding: 10px;
+}
+
+.btn-lg{
+    font-size: 20px;
+    padding: 15px;
+}
+
+
