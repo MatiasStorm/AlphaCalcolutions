@@ -12,43 +12,41 @@
 <div th:replace="/includes/topPart :: topPart"></div>
 <h2 style="text-align: center">Create new project:</h2>
 <div class="container justify-content-center">
-    <form action="/createProject/submit" th:object="${project}" method="post" class="w-25">
+    <form action="/createProject/submit" th:object="${project}" method="post" class="form w-25">
         <div class="row m-0">
-            <label class="label">Title:</label>
+            <label class="label">Title</label>
             <input type="text" th:field="*{title}" required class="input">
 
         </div>
         <div class="row">
-            <label class="label">Project leader:</label>
-            <select type="text" th:field="*{projectLeaderId}" required>
+            <label class="label">Project leader</label>
+            <select class="input" type="text" th:field="*{projectLeaderId}" required>
                 <option th:each="user : ${userList}" th:value="${user.userId}"
                         th:text="${user.firstName} + ' ' + ${user.lastName}"></option>
             </select>
         </div>
 
         <div class="row">
-            <label class="label">Assign project members:</label>
-        </div>
-        <div class="row">
-            <select style="width: 100%"  type="text" th:field="*{assignedUserIds}" multiple id="multipleSelect">
+            <label class="label">Assign project members</label>
+            <select class="input" type="text" th:field="*{assignedUserIds}" multiple id="multipleSelect">
                 <option th:each="user : ${userList}" th:value="${user.userId}"
                         th:text="${user.firstName} + ' ' + ${user.lastName}"></option>
             </select>
         </div>
 
         <div class="row">
-            <label class="label">Project start date:</label>
+            <label class="label">Project start date</label>
             <input class="input" type="date" th:field="*{startDate}" required>
 
         </div>
         <div class="row">
-            <label class="label">Project end date:</label>
+            <label class="label">Project end date</label>
             <input class="input" type="date" th:field="*{endDate}" required>
         </div>
 
         <div class="row mt-2">
-            <button class="btn btn-secondary btn-md" type="button">Cancel</button>
-            <button class="btn btn-primary btn-md" type="submit">Create</button>
+            <button class="btn btn-secondary btn-md px-2" type="button">Cancel</button>
+            <button class="btn btn-primary btn-md px-2" type="submit">Create</button>
         </div>
     </form>
 </div>
