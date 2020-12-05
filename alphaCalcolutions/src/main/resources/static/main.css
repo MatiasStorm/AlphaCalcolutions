@@ -25,6 +25,11 @@ body, html {
     flex-wrap: wrap;
 }
 
+.col {
+    display: flex;
+    flex-direction: column;
+}
+
 .justify-content-space-between{
     justify-content: space-between;
 }
@@ -56,6 +61,10 @@ body, html {
 
 .w-25{
     width: 25%;
+}
+
+.w-30{
+    width: 30%;
 }
 
 .w-40 {
@@ -200,6 +209,31 @@ body, html {
 }
 .m-5 {
     margin: 5rem !important;
+}
+
+.mx-0 {
+    margin-left: 0rem !important;
+    margin-right: 0rem !important;
+}
+.mx-1 {
+    margin-left: 1rem !important;
+    margin-right: 1rem !important;
+}
+.mx-2 {
+    margin-left: 2rem !important;
+    margin-right: 2rem !important;
+}
+.mx-3 {
+    margin-left: 3rem !important;
+    margin-right: 3rem !important;
+}
+.mx-4 {
+    margin-left: 4rem !important;
+    margin-right: 4rem !important;
+}
+.mx-5 {
+    margin-left: 5rem !important;
+    margin-right: 5rem !important;
 }
 
 .mt-0 {
@@ -365,6 +399,27 @@ form .label {
 
 }
 
+/* Colors */
+.background-primary{
+    color: white;
+    background-color: darkslategray;
+}
+
+.background-secondary {
+    background-color: darkgray;
+}
+
+.background-green {
+    background-color: rgba(0, 200, 0, 0.4)
+}
+
+.background-orange{
+    background-color: rgba(255, 180, 0, 0.4)
+}
+
+.background-blue {
+    background-color: rgba(0, 0, 255, 0.4)
+}
 
 
 
