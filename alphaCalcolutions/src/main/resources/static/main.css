@@ -67,6 +67,10 @@ body, html {
     width: 30%;
 }
 
+.w-33{
+    width: 33%;
+}
+
 .w-40 {
     width: 40%;
 }
@@ -421,7 +425,21 @@ form .label {
     background-color: rgba(0, 0, 255, 0.4)
 }
 
+/* Icons */
+.icon {
+    font-size: 25px;
+    transition: all 0.1s;
+    cursor: pointer;
+    min-height: 27px;
+}
 
+.icon:hover{
+    font-size: 27px;
+}
+
+.icon:active{
+    font-size: 24px;
+}
 
 
 

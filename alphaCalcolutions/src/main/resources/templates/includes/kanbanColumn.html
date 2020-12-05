@@ -7,7 +7,7 @@
 </head>
 <body>
 
-<div th:fragment="kanbanColumn (type, taskList)" class="col w-30 m-1 card">
+<div th:fragment="kanbanColumn (type, taskList)" class="col w-30 mx-1 card">
     <th:block th:switch="${type}">
         <h2 th:case="'backlog'" class="card-header background-blue">Backlog</h2>
         <h2 th:case="'inProgress'" class="card-header background-orange">In Progress</h2>
@@ -15,7 +15,18 @@
     </th:block>
     <div class="card-body">
         <div th:each="task : ${taskList}" th:object="${task}" class="card mt-1">
-            <h4 class="card-header background-primary" th:text="*{title}"></h4>
+            <div class="card-header background-primary">
+                <div class="row p-0 m-0 justify-content-space-between">
+                    <span>
+                        <i th:if="${type} == 'inProgress' or ${type} == 'done'" class="icon fas fa-arrow-left"></i>
+                    </span>
+                    <span>
+                        <i th:if="${type} == 'backlog' or ${type} == 'inProgress'" class="icon fas fa-arrow-right"></i>
+                    </span>
+                </div>
+                <h4 class="p-0 m-0" th:text="*{title}"></h4>
+            </div>
+
             <div class="card-body">
                 <div>
                     <b>Task leader: </b>
@@ -34,10 +45,8 @@
                     <span th:text="*{#dates.format(startDate, 'EEEE, LLLL d, yyyy')}"></span>
                 </div>
                 <div class="row justify-content-center m-0 mt-1">
-                    <button th:if="${type} == 'inProgress' or ${type} == 'done'" class="btn btn-primary btn-sm mx-1"><- Mover back</button>
                     <button class="btn btn-danger btn-sm mx-1">Delete</button>
                     <button class="btn btn-secondary btn-sm mx-1">Edit</button>
-                    <button th:if="${type} == 'backlog' or ${type} == 'inProgress'" class="btn btn-primary btn-sm mx-1">Mover over -></button>
                 </div>
             </div>
         </div>
