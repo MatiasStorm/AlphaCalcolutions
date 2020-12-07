@@ -15,47 +15,7 @@
 
 <div class="container justify-content-center">
     <form action="/createTask/submit" method="post" class="w-25">
-        <div th:replace="/includes/taskForm :: taskForm(task=${task})"></div>
-<!--        <div class="row m-0">-->
-<!--            <label class="label">Title:</label>-->
-<!--            <input class="input" type="text" th:field="*{title}" required>-->
-<!--        </div>-->
-
-<!--        <div class="row">-->
-<!--            <label class="label">Task leader:</label>-->
-<!--            <select class="input" type="text" th:field="*{taskLeaderId}" required>-->
-<!--                <option th:each="user : ${userList}" th:value="${user.userId}"-->
-<!--                        th:text="${user.firstName} + ' ' + ${user.lastName}"></option>-->
-<!--            </select>-->
-<!--        </div>-->
-<!--        <div class="row">-->
-<!--            <label class="label">Assign task members:</label>-->
-<!--            <select class="input" type="text" th:field="*{assignedUserIds}" multiple id="multipleSelect">-->
-<!--                <option th:each="user : ${userList}" th:value="${user.userId}"-->
-<!--                        th:text="${user.firstName} + ' ' + ${user.lastName}"></option>-->
-<!--            </select>-->
-<!--        </div>-->
-
-<!--        <div class="row">-->
-<!--            <label class="label">Assign task dependencies:</label>-->
-<!--            &lt;!&ndash;    <select class="input" type="text" th:field="*{taskDependencyIds}" multiple>&ndash;&gt;-->
-<!--            &lt;!&ndash;        <option th:each="user : ${userList}" th:value="${user.userId}"&ndash;&gt;-->
-<!--            &lt;!&ndash;                th:text="${user.firstName} + ' ' + ${user.lastName}"></option>&ndash;&gt;-->
-<!--            &lt;!&ndash;    </select>&ndash;&gt;-->
-<!--        </div>-->
-
-<!--        <div class="row">-->
-<!--            <label class="label">Project start date:</label>-->
-<!--            <input class="input" type="date" th:field="*{startDate}" required>-->
-<!--        </div>-->
-
-<!--        <div class="row">-->
-<!--            <label class="label">Project end date:</label>-->
-<!--            <input class="input" type="date" th:field="*{endDate}" required>-->
-<!--        </div>-->
-
-<!--        <input type="number" th:field="*{projectId}" hidden="true">-->
-
+        <div th:replace="/includes/taskForm :: taskForm(task=${task}, userList=${userList})"></div>
         <div class="row mt-2">
             <button class="btn btn-secondary btn-md px-2" type="button"
                     th:onclick="'document.location.href = \'/seeTasks?projectId=' + ${task.projectId} + '\''"
