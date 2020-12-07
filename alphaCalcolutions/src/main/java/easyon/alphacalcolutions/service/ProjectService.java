@@ -41,17 +41,18 @@ public class ProjectService {
     }
 
     public int getProjectCost(int projectId){
-        int projectTotalHours = 0;
+        int projectTotalCost = 0;
 
         for(Task task : dataFacade.getTaskList(projectId)){
-            int amountOfAssignedMembers = task.getAssignedUserIds().length;
             LocalDate startDate = task.getStartDate();
             LocalDate endDate = task.getEndDate();
-            int noOfDaysBetween = (int) ChronoUnit.DAYS.between(startDate, endDate);
-            int totalHoursWorked = noOfDaysBetween * 8;
-            projectTotalHours += amountOfAssignedMembers * totalHoursWorked;
-
+            int daysWorked = (int) ChronoUnit.DAYS.between(startDate, endDate);
+            int totalHoursWorked = daysWorked * 8;
+            for (User user : task.getAssignedUsers()){
+                int hourlySalary = user.getHourlySalary();
+                projectTotalCost += totalHoursWorked * hourlySalary;
+            }
         }
-        return projectTotalHours;
+        return projectTotalCost;
     }
 }

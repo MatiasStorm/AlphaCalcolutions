@@ -62,8 +62,15 @@ public class DataFacade implements IDataFacade{
     }
 
     public ArrayList<Task> getTaskList(int projectId){
-        return TASK_DAO.getTaskList(projectId);
+
+        ArrayList<Task> taskList = TASK_DAO.getTaskList(projectId);
+        for (Task task: taskList) {
+            task.setTaskLeader(getUser(task.getTaskLeaderId()));
+            task.setAssignedUsers(getUsersById(task.getAssignedUserIds()));
+        }
+        return taskList;
     }
+
 
     public Task getTaskById(int taskId){
         return TASK_DAO.getTaskById(taskId);
