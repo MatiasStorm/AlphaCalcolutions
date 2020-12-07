@@ -41,8 +41,6 @@ CREATE TABLE `user` (
 CREATE TABLE `project` (
   `project_id` int NOT NULL AUTO_INCREMENT,
   `project_title` varchar(100) NOT NULL,
-  `project_start_date` date NOT NULL,
-  `project_end_date` date NOT NULL,
   `project_leader_id` int,
   PRIMARY KEY (`project_id`),
   CONSTRAINT `project_leader_id` FOREIGN KEY (`project_leader_id`) REFERENCES `user` (`user_id`) ON DELETE SET NULL
@@ -113,8 +111,8 @@ VALUES
     ('Jørgen', 'Jensen', 2, 120, 'username4', 'password');
 
 
-INSERT INTO `project`(project_title, project_start_date, project_end_date, project_leader_id)
-VALUES ('Title', '2020-12-12', '2020-12-24', 1);
+INSERT INTO `project`(project_title, project_leader_id)
+VALUES ('Title' , 1);
 
 
 INSERT INTO `task`(project_id, task_title, task_leader_id, task_start_date, task_end_date)
