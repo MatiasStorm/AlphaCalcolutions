@@ -84,4 +84,8 @@ public class DataFacade implements IDataFacade{
     public void deleteProject(int projectId) {
         PROJECT_DAO.deleteProject(projectId);
     }
+
+    public void updateTask(Task task) {
+        TASK_DAO.updateTask(task);
+    }
 }

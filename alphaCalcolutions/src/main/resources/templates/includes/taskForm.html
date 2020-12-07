@@ -7,6 +7,7 @@
 </head>
 <body>
 <div th:fragment="taskForm (task, userList)" th:object="${task}">
+    <input hidden th:field="*{taskId}">
     <div class="row m-0">
         <label class="label">Title:</label>
         <input class="input" type="text" th:field="*{title}" required>

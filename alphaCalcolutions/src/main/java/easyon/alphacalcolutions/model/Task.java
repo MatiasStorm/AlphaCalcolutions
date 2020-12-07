@@ -3,6 +3,7 @@ package easyon.alphacalcolutions.model;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Task {
     private int taskId;
@@ -17,6 +18,20 @@ public class Task {
     private User taskLeader;
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
+    @Override
+    public boolean equals(Object o) {
+        if(this == o) return false;
+        if (o == null || getClass() != o.getClass()) return false;
+        Task t = (Task) o;
+        return taskId == t.getTaskId()
+                && title.equals(t.getTitle())
+                && taskLeaderId == t.getTaskLeaderId()
+                && Arrays.equals(assignedUserIds, t.getAssignedUserIds())
+                && startDate.equals(t.getStartDate())
+                && endDate.equals(t.getEndDate())
+                && Arrays.equals(taskDependencyIds, t.getTaskDependencyIds())
+                && projectId == t.getProjectId();
+    }
 
     public int getTaskId() {
         return taskId;

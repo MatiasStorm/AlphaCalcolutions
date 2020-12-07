@@ -97,14 +97,14 @@ public class MainController {
         String[] dependencies = new String[]{"1", "6", "11"};
         task.setTaskDependencyIds(dependencies);
         taskService.createTask(task);
-        return "redirect:/seeTasks?projectId=" + task.getProjectId();
+        return "redirect:/task?projectId=" + task.getProjectId();
     }
 
     @GetMapping("/task/edit")
     public String editTask(Model model, @RequestParam int taskId){
         Task task = taskService.getTaskById(taskId);
         model.addAttribute("task", task);
-        model.addAttribute("userList", projectService.getAssignedUsersFromProject(task.getTaskId()));
+        model.addAttribute("userList", projectService.getAssignedUsersFromProject(task.getProjectId()));
         model.addAttribute("projectName", "InsertProjectName");
         return "editTask";
     }
@@ -113,8 +113,8 @@ public class MainController {
     public String editTaskSubmit(Task task){
         String[] dependencies = new String[]{"1", "6", "11"};
         task.setTaskDependencyIds(dependencies);
-        taskService.createTask(task);
-        return "redirect:/seeTasks?projectId=" + task.getProjectId();
+        taskService.updateTask(task);
+        return "redirect:/task?projectId=" + task.getProjectId();
     }
 
     @GetMapping("/users")
