@@ -33,11 +33,14 @@ class TaskDAOTest extends AbstractDAOTest{
         assertEquals(t.getTaskDependencyIds().length, actualTask.getTaskDependencyIds().length);
     }
 
-//    @Test
-//    void getTaskList() {
-//        List<Task> tasks = taskDAO.getTaskList();
-//        assertEquals(5, tasks.size());
-//    }
+    @Test
+    void getTaskList() {
+        List<Task> tasks = taskDAO.getTaskList(1);
+        assertEquals(5, tasks.size());
+        for(int i = 0; i < tasks.size(); i++){
+            assertEquals(i+1, tasks.get(i).getTaskId());
+        }
+    }
 
     @Test
     void getTask() {

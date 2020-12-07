@@ -45,7 +45,7 @@
                     <span th:text="*{#temporals.format(endDate, 'EEEE, LLLL d, yyyy')}"></span>
                 </div>
                 <div class="row justify-content-center m-0 mt-1">
-                    <button class="btn btn-secondary btn-sm mx-1">Edit</button>
+                    <button class="btn btn-secondary btn-sm mx-1" th:onclick="'document.location.href=\'/task/edit?taskId=' + *{taskId} + '\''">Edit</button>
                     <button class="btn btn-danger btn-sm mx-1">Delete</button>
                 </div>
             </div>

@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
+
 @Controller
 public class MainController {
 
@@ -44,7 +46,6 @@ public class MainController {
 
     @GetMapping("/project/edit")
     public String editProject(@RequestParam int projectId, Model model){
-        Project p = projectService.getProject(projectId);
         model.addAttribute("project", projectService.getProject(projectId));
         model.addAttribute("userList", userService.getUserList());
         return "editProject";
@@ -75,23 +76,23 @@ public class MainController {
         return "redirect:/project";
     }
 
-    @GetMapping("/seeTasks")
+    @GetMapping("/task")
     public String seeTasks(Model model, @RequestParam int projectId){
+        List<Task> t = taskService.getTaskList(projectId);
         model.addAttribute("taskList", taskService.getTaskList(projectId));
         model.addAttribute("projectId", projectId);
         return "seeTasks";
     }
 
-    @GetMapping("/createTask")
+    @GetMapping("/task/create")
     public String createTask(Model model ,Task task, @RequestParam int projectId){
         model.addAttribute("task", task);
         model.addAttribute("userList", projectService.getAssignedUsersFromProject(projectId));
-        model.addAttribute("projectList", projectService.getProjectList());
         model.addAttribute("projectName", "InsertProjectName");
         return "createTask";
     }
 
-    @PostMapping("/createTask/submit")
+    @PostMapping("/task/create/submit")
     public String createTaskSubmit(Task task){
         String[] dependencies = new String[]{"1", "6", "11"};
         task.setTaskDependencyIds(dependencies);
@@ -99,6 +100,22 @@ public class MainController {
         return "redirect:/seeTasks?projectId=" + task.getProjectId();
     }
 
+    @GetMapping("/task/edit")
+    public String editTask(Model model, @RequestParam int taskId){
+        Task task = taskService.getTaskById(taskId);
+        model.addAttribute("task", task);
+        model.addAttribute("userList", projectService.getAssignedUsersFromProject(task.getTaskId()));
+        model.addAttribute("projectName", "InsertProjectName");
+        return "editTask";
+    }
+
+    @PostMapping("/task/edit/submit")
+    public String editTaskSubmit(Task task){
+        String[] dependencies = new String[]{"1", "6", "11"};
+        task.setTaskDependencyIds(dependencies);
+        taskService.createTask(task);
+        return "redirect:/seeTasks?projectId=" + task.getProjectId();
+    }
 
     @GetMapping("/users")
     public String users(Model model){
