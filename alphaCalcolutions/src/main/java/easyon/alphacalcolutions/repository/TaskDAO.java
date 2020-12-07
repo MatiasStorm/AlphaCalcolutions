@@ -168,4 +168,16 @@ public class TaskDAO {
         ps.setInt(1, task.getTaskId());
         ps.executeUpdate();
     }
+
+    public void deleteTask(int taskId) {
+        try {
+            String deleteStatement = "DELETE FROM task WHERE task_id = ?";
+            PreparedStatement ps = con.prepareStatement(deleteStatement);
+            ps.setInt(1, taskId);
+            ps.executeUpdate();
+        }
+        catch (SQLException ex){
+            ex.printStackTrace();
+        }
+    }
 }

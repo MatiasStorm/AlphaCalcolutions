@@ -117,6 +117,12 @@ public class MainController {
         return "redirect:/task?projectId=" + task.getProjectId();
     }
 
+    @PostMapping("/task/delete")
+    public String deleteTask(int taskId, int projectId){
+        taskService.deleteTask(taskId);
+        return "redirect:/task?projectId=" + projectId;
+    }
+
     @GetMapping("/users")
     public String users(Model model){
         model.addAttribute("userList" , userService.getUserList());

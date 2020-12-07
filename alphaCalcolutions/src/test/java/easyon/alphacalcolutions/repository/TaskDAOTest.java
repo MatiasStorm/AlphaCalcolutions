@@ -67,4 +67,11 @@ class TaskDAOTest extends AbstractDAOTest{
         Task actualTask = taskDAO.getTaskById(expectedTask.getTaskId());
         assertEquals(expectedTask, actualTask);
     }
+
+    @Test
+    void deleteTask(){
+        taskDAO.deleteTask(1);
+        Task t = taskDAO.getTaskById(1);
+        assertNull(t);
+    }
 }

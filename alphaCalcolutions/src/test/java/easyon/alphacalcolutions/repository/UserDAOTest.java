@@ -49,4 +49,15 @@ class UserDAOTest extends AbstractDAOTest{
         List<UserTitle> titles = userDAO.getUserTitleList();
         assertEquals(2, titles.size());
     }
+
+    @Test
+    void getUsersByIds(){
+        int[] ids = {1,3,4};
+        List<User> users = userDAO.getUsersByIds(ids);
+        assertEquals(ids.length, users.size());
+        for(int i = 0; i < users.size(); i++){
+            assertEquals(ids[i], users.get(i).getUserId());
+        }
+
+    }
 }

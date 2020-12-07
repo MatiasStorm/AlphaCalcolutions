@@ -36,4 +36,8 @@ public class TaskService {
     public void updateTask(Task task) {
         dataFacade.updateTask(task);
     }
+
+    public void deleteTask(int taskId) {
+        dataFacade.deleteTask(taskId);
+    }
 }
