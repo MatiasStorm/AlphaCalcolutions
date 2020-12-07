@@ -38,7 +38,7 @@
                     <a th:href="'/project/edit?projectId=' + *{projectId}">
                         <button class="btn btn-secondary btn-sm">Edit</button>
                     </a>
-                    <form class="d-inline"  action="/project/delete" method="post">
+                    <form style="border: none" class="d-inline"  action="/project/delete" method="post">
                         <input hidden name="projectId" th:value="*{projectId}"/>
                         <button type="submit" class="btn btn-danger btn-sm">Delete</button>
                     </form>

@@ -3,6 +3,11 @@ body, html {
     padding: 0;
 }
 
+a:active, a:hover, a:visited, a:link, a{
+    color: black;
+    text-decoration: none;
+}
+
 /* Display */
 .d-flex{
     display: flex;
