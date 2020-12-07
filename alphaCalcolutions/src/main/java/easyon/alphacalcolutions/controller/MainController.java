@@ -61,13 +61,13 @@ public class MainController {
     @PostMapping("/project/create/submit")
     public String createProjectSubmit(Project project){
         projectService.createProject(project);
-        return "redirect:/seeProjects";
+        return "redirect:/project";
     }
 
     @PostMapping("/project/edit/submit")
     public String editProjectSubmit(Project project){
         projectService.updateProject(project);
-        return "redirect:/seeProjects";
+        return "redirect:/project";
     }
 
     @GetMapping("/seeTasks")
