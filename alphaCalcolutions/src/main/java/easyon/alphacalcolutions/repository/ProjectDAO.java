@@ -41,13 +41,6 @@ public class ProjectDAO {
 
             try {
                 insertAssignedUsers(project.getAssignedUserIds(), project.getProjectId());
-//                for (int i = 0; i < project.getAssignedUserIds().length; i++) {
-//                    SQL = "INSERT INTO user_has_project (user_id, project_id) VALUES (?, ?)";
-//                    ps = con.prepareStatement(SQL);
-//                    ps.setInt(1, (int) Array.get(project.getAssignedUserIds(), i));
-//                    ps.setInt(2, project.getProjectId());
-//                    ps.executeUpdate();
-//                }
             } catch (Exception e){
                 con.rollback();
             }
