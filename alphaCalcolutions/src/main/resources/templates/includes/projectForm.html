@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Project Form</title>
+</head>
+<body>
+    <div th:fragment="projectForm (project, userList)" th:object="${project}" >
+        <div class="row m-0">
+            <label class="label">Title</label>
+            <input type="text" th:field="*{title}" required class="input">
+        </div>
+        <div class="row">
+            <label class="label">Project leader</label>
+            <select class="input" type="text" th:field="*{projectLeaderId}" required>
+                <option th:each="user : ${userList}" th:value="${user.userId}"
+                        th:text="${user.firstName} + ' ' + ${user.lastName}"></option>
+            </select>
+        </div>
+
+        <div class="row">
+            <label class="label">Assign project members</label>
+            <select class="input" type="text" th:field="*{assignedUserIds}" multiple id="multipleSelect">
+                <option th:each="user : ${userList}" th:value="${user.userId}"
+                        th:text="${user.firstName} + ' ' + ${user.lastName}"></option>
+            </select>
+        </div>
+
+        <div class="row">
+            <label class="label">Project start date</label>
+            <input th:if="*{startDate}" class="input" type="date" th:name="*{startDate}" th:value="*{#dates.format(startDate, 'yyyy-MM-dd')}" required>
+            <input th:unless="*{startDate}" class="input" type="date" th:field="*{startDate}" required>
+        </div>
+        <div class="row">
+            <label class="label">Project end date</label>
+            <input th:if="*{endDate}" class="input" type="date" th:name="*{endDate}" th:value="*{#dates.format(endDate, 'yyyy-MM-dd')}" required>
+            <input th:unless="*{endDate}" class="input" type="date" th:field="*{endDate}" required>
+        </div>
+
+        <script>
+            var checkList = document.getElementById('multipleSelect');
+            checkList.onmousedown = function(e) {
+                e.preventDefault();
+                var select = this;
+                var scroll = select.scrollTop;
+                e.target.selected = !e.target.selected;
+
+                setTimeout(() => {select.scrollTop = scroll}, 0);
+                select.focus();
+            }
+        </script>
+    </div>
+</body>
+</html>

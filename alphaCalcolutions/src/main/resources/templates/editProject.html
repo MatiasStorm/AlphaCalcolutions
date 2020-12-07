@@ -9,9 +9,9 @@
 </head>
 <body>
     <div th:replace="/includes/topPart :: topPart"></div>
-    <h2 style="text-align: center">Create new project:</h2>
+    <h2 style="text-align: center" th:text="'Editing project: ' + ${project.title}"></h2>
     <div class="container justify-content-center">
-        <form action="/project/create/submit" method="post" class="w-25">
+        <form th:action="'/project/edit/submit?projectId=' + *{project.projectId}" method="post" class="w-25">
             <div th:replace="/includes/projectForm :: projectForm(project=${project}, userList=${userList})"></div>
 
             <div class="row mt-2">

@@ -11,7 +11,7 @@
 <div th:replace="/includes/topPart :: topPart"></div>
 
 <div class="container justify-content-left">
-    <button class="btn btn-primary btn-lg" onclick="document.location.href = '/createProject'">
+    <button class="btn btn-primary btn-lg" onclick="document.location.href = '/project/create'">
         Create new Project
     </button>
 </div>
@@ -35,7 +35,9 @@
                     View Project
                 </button>
                 <div>
-                    <button class="btn btn-secondary btn-sm">Edit</button>
+                    <a th:href="'/project/edit?projectId=' + *{projectId}">
+                        <button class="btn btn-secondary btn-sm">Edit</button>
+                    </a>
                     <button class="btn btn-danger btn-sm">Delete</button>
                 </div>
             </div>

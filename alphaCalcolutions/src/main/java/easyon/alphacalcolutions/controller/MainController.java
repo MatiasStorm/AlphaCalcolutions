@@ -33,25 +33,39 @@ public class MainController {
 
     @PostMapping("/index/submit")
     public String indexSubmit(){
-        return "redirect:/seeProjects";
+        return "redirect:/project";
     }
 
-    @GetMapping("/createProject")
+    @GetMapping("/project/create")
     public String createProject(Model model, Project project){
         model.addAttribute("project", project);
         model.addAttribute("userList", userService.getUserList());
         return "createProject";
     }
 
-    @GetMapping("/seeProjects")
+    @GetMapping("/project/edit")
+    public String editProject(@RequestParam int projectId, Model model){
+        Project p = projectService.getProject(projectId);
+        model.addAttribute("project", projectService.getProject(projectId));
+        model.addAttribute("userList", userService.getUserList());
+        return "editProject";
+    }
+
+    @GetMapping("/project")
     public String seeProjects(Model model){
         model.addAttribute("projectList", projectService.getProjectList());
         model.addAttribute("singleProject", projectService.getProject(2));
         return "seeProjects";
     }
 
-    @PostMapping("/createProject/submit")
+    @PostMapping("/project/create/submit")
     public String createProjectSubmit(Project project){
+        projectService.createProject(project);
+        return "redirect:/seeProjects";
+    }
+
+    @PostMapping("/project/edit/submit")
+    public String editProjectSubmit(Project project){
         projectService.createProject(project);
         return "redirect:/seeProjects";
     }
