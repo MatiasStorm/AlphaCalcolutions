@@ -37,12 +37,14 @@
 
     <div class="row">
         <label class="label">Project start date:</label>
-        <input class="input" type="date" th:field="*{startDate}" required>
+        <input th:if="*{startDate}" class="input" type="date" name="startDate" th:value="*{#temporals.format(startDate, 'yyyy-MM-dd')}" required>
+        <input th:unless="*{startDate}" class="input" type="date" th:field="*{startDate}" required>
     </div>
 
     <div class="row">
         <label class="label">Project end date:</label>
-        <input class="input" type="date" th:field="*{endDate}" required>
+        <input th:if="*{endDate}" class="input" type="date" name="endDate" th:value="*{#temporals.format(endDate, 'yyyy-MM-dd')}" required>
+        <input th:unless="*{endDate}" class="input" type="date" th:field="*{endDate}" required>
     </div>
 
     <input type="number" th:field="*{projectId}" hidden="true">
