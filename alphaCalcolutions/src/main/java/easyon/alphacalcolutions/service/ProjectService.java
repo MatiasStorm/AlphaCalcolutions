@@ -2,9 +2,12 @@ package easyon.alphacalcolutions.service;
 
 import easyon.alphacalcolutions.data.DataFacade;
 import easyon.alphacalcolutions.model.Project;
+import easyon.alphacalcolutions.model.Task;
 import easyon.alphacalcolutions.model.User;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 
 @Service
@@ -35,5 +38,20 @@ public class ProjectService {
 
     public void deleteProject(int projectId) {
         dataFacade.deleteProject(projectId);
+    }
+
+    public int getProjectCost(int projectId){
+        int projectTotalHours = 0;
+
+        for(Task task : dataFacade.getTaskList(projectId)){
+            int amountOfAssignedMembers = task.getAssignedUserIds().length;
+            LocalDate startDate = task.getStartDate();
+            LocalDate endDate = task.getEndDate();
+            int noOfDaysBetween = (int) ChronoUnit.DAYS.between(startDate, endDate);
+            int totalHoursWorked = noOfDaysBetween * 8;
+            projectTotalHours += amountOfAssignedMembers * totalHoursWorked;
+
+        }
+        return projectTotalHours;
     }
 }

@@ -127,6 +127,7 @@ public class MainController {
     @GetMapping("/test")
     public String tes(Model model){
         model.addAttribute("users" , userService.getUserList());
+        projectService.getProjectCost(2);
         return "testSelectMultiple";
     }
 
