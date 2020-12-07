@@ -9,13 +9,13 @@ import java.sql.*;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class TaskDAO {
     private TaskMapper taskMapper = new TaskMapper();
     private final Connection con;
-    //husk at ændre til task
-
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("YYYY-MM-dd");
 
     public TaskDAO(Connection con) {
         this.con = con;
@@ -37,12 +37,11 @@ public class TaskDAO {
             con.setAutoCommit(false);
             String SQL = "INSERT INTO task (task_title, task_leader_id, task_start_date, task_end_date, project_id) VALUES (?, ?, ?, ?, ?)";
             PreparedStatement ps = con.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
-            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
             ps.setString(1, task.getTitle());
             ps.setInt(2, task.getTaskLeaderId());
-            ps.setString(3, dateFormat.format(task.getStartDate()));
-            ps.setString(4, dateFormat.format(task.getEndDate()));
+            ps.setString(3, formatter.format(task.getStartDate()));
+            ps.setString(4, formatter.format(task.getEndDate()));
             ps.setInt(5, task.getProjectId());
 
             ps.executeUpdate();
