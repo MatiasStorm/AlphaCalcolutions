@@ -11,6 +11,8 @@ public class Project{
     private int[] assignedUserIds;
     private LocalDate startDate;
     private LocalDate endDate;
+    private int projectCost;
+    private int projectDuration;
 
     public int getProjectId() {
         return projectId;
@@ -71,6 +73,22 @@ public class Project{
         if (endDate != null) {
             this.endDate = LocalDate.parse(endDate);
         }
+    }
+
+    public int getProjectCost() {
+        return projectCost;
+    }
+
+    public void setProjectCost(int projectCost) {
+        this.projectCost = projectCost;
+    }
+
+    public int getProjectDuration() {
+        return projectDuration;
+    }
+
+    public void setProjectDuration(int projectDuration) {
+        this.projectDuration = projectDuration;
     }
 
     @Override

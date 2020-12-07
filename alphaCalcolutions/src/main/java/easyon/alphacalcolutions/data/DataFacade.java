@@ -9,11 +9,13 @@ import easyon.alphacalcolutions.repository.TaskDAO;
 import easyon.alphacalcolutions.repository.UserDAO;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class DataFacade implements IDataFacade{
+public class DataFacade implements IDataFacade {
 
     private final UserDAO USER_DAO = new UserDAO(DBManager.getConnection());
     private final ProjectDAO PROJECT_DAO = new ProjectDAO(DBManager.getConnection());
@@ -22,38 +24,68 @@ public class DataFacade implements IDataFacade{
 
     //----------------------------- USER -------------------------------------
 
-    public void createUser(User user){
+    public void createUser(User user) {
         USER_DAO.createUser(user);
     }
 
-    public ArrayList<User> getUserList(){
-       return USER_DAO.getUserList();
+    public ArrayList<User> getUserList() {
+        return USER_DAO.getUserList();
     }
 
-    public User getUser(int userId){
+    public User getUser(int userId) {
         return USER_DAO.getUser(userId);
     }
 
-    public ArrayList<User> getUsersById(int[] userIds){
+    public ArrayList<User> getUsersById(int[] userIds) {
         return USER_DAO.getUsersByIds(userIds);
     }
 
 
-
     //----------------------------- USER TITLE -------------------------------------
 
-    public ArrayList<UserTitle> getUserTitleList(){
+    public ArrayList<UserTitle> getUserTitleList() {
         return USER_DAO.getUserTitleList();
     }
 
     //----------------------------- PROJECT -------------------------------------
 
-    public void createProject(Project project) {PROJECT_DAO.createProject(project);
+    public void createProject(Project project) {
+        PROJECT_DAO.createProject(project);
     }
 
-    public ArrayList<Project> getProjectList() {return PROJECT_DAO.getProjectList();}
+    public ArrayList<Project> getProjectList() {
+        ArrayList<Project> projects = PROJECT_DAO.getProjectList();
+        for (Project project : projects) {
+            project.setProjectCost(getProjectCost(project.getProjectId()));
+            project.setProjectDuration(getProjectDuration(project.getProjectId()));
+        }
+        return projects;
+    }
+
+
 
     public Project getProject (int projectId) {return PROJECT_DAO.getProject(projectId);}
+
+    public int getProjectCost(int projectId){
+        int projectTotalCost = 0;
+
+        for(Task task : getTaskList(projectId)){
+            LocalDate startDate = task.getStartDate();
+            LocalDate endDate = task.getEndDate();
+            int daysWorked = (int) ChronoUnit.DAYS.between(startDate, endDate);
+            int totalHoursWorked = daysWorked * 8;
+            for (User user : task.getAssignedUsers()){
+                int hourlySalary = user.getHourlySalary();
+                projectTotalCost += totalHoursWorked * hourlySalary;
+            }
+        }
+        return projectTotalCost;
+    }
+
+    public int getProjectDuration(int projectId){
+        Project project = getProject(projectId);
+        return (int) ChronoUnit.DAYS.between(project.getStartDate(), project.getEndDate());
+    }
 
     //----------------------------- TASK -------------------------------------
 
