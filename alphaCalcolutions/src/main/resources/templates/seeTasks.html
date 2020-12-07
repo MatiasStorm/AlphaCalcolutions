@@ -12,7 +12,10 @@
 <div th:replace="/includes/topPart :: topPart"></div>
 
 <div class="container justify-content-left">
-    <button class="btn btn-primary btn-lg">Dispaly GANNT diagram</button>
+    <button class="btn btn-primary btn-lg">Display GANNT diagram</button>
+</div>
+<div class="container justify-content-left">
+    <button class="btn btn-primary btn-lg" th:onclick="'document.location.href=\'/createTask?projectId=' + ${projectId} + '\''">Add new task</button>
 </div>
 
 <div class="container">

@@ -19,7 +19,6 @@ public class MainController {
      private final ProjectService projectService;
      private final TaskService taskService;
 
-
     public MainController(UserService userService, ProjectService projectService, TaskService taskService) {
         this.userService = userService;
         this.projectService = projectService;
@@ -77,9 +76,9 @@ public class MainController {
     }
 
     @GetMapping("/seeTasks")
-    public String seeTasks(Model model, Task task, @RequestParam int projectId){
+    public String seeTasks(Model model, @RequestParam int projectId){
         model.addAttribute("taskList", taskService.getTaskList(projectId));
-        model.addAttribute("task", task);
+        model.addAttribute("projectId", projectId);
         return "seeTasks";
     }
 

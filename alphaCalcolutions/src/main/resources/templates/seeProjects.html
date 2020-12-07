@@ -22,11 +22,11 @@
         <div class="card-body">
             <div class="pb-1">
                 <b>Inception: </b>
-                <span th:text="*{#dates.format(startDate, 'EEEE, LLLL d, yyyy')}"></span>
+                <span th:text="*{#temporals.format(startDate, 'EEEE, LLLL d, yyyy')}"></span>
             </div>
             <div class="pb-1">
                 <b>Deadline:</b>
-                <span th:text="*{#dates.format(endDate, 'EEEE, LLLL d, yyyy')}"></span>
+                <span th:text="*{#temporals.format(endDate, 'EEEE, LLLL d, yyyy')}"></span>
             </div>
             <div class="row m-0 p-0">
                 <button class="btn btn-primary btn-sm"
