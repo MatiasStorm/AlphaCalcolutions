@@ -40,25 +40,6 @@ public class ProjectService {
         dataFacade.deleteProject(projectId);
     }
 
-    public int getProjectCost(int projectId){
-        int projectTotalCost = 0;
 
-        for(Task task : dataFacade.getTaskList(projectId)){
-            LocalDate startDate = task.getStartDate();
-            LocalDate endDate = task.getEndDate();
-            int daysWorked = (int) ChronoUnit.DAYS.between(startDate, endDate);
-            int totalHoursWorked = daysWorked * 8;
-            for (User user : task.getAssignedUsers()){
-                int hourlySalary = user.getHourlySalary();
-                projectTotalCost += totalHoursWorked * hourlySalary;
-            }
-        }
-        return projectTotalCost;
-    }
-
-    public int getProjectDuration(int projectId){
-        Project project = getProject(projectId);
-        return (int) ChronoUnit.DAYS.between(project.getStartDate(), project.getEndDate());
-    }
 
 }
