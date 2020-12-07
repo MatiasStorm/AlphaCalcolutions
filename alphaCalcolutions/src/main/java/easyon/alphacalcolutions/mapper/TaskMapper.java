@@ -16,7 +16,7 @@ public class TaskMapper {
         task.setTaskLeaderId(rs.getInt("task_leader_id"));
         task.setStartDate(rs.getString("task_start_date"));
         task.setEndDate(rs.getString("task_end_date"));
-        task.setTaskId(rs.getInt("project_id"));
+        task.setProjectId(rs.getInt("project_id"));
 
         String assignedUserIds = rs.getString("assigned_user_ids");
         task.setAssignedUserIds(assignedUserIds != null ? assignedUserIds.split(",") : new String[]{});
