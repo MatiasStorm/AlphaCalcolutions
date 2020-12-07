@@ -51,4 +51,11 @@ class ProjectDAOTest extends AbstractDAOTest{
         Project actualProject = projectDAO.getProject(1);
         assertEquals(project, actualProject);
     }
+
+    @Test
+    void deleteProject() {
+        projectDAO.deleteProject(1);
+        Project p = projectDAO.getProject(1);
+        assertNull(p);
+    }
 }

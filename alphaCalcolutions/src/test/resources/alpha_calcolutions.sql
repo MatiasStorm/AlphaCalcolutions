@@ -43,9 +43,9 @@ CREATE TABLE `project` (
   `project_title` varchar(100) NOT NULL,
   `project_start_date` date NOT NULL,
   `project_end_date` date NOT NULL,
-  `project_leader_id` int NOT NULL,
+  `project_leader_id` int,
   PRIMARY KEY (`project_id`),
-  CONSTRAINT `project_leader_id` FOREIGN KEY (`project_leader_id`) REFERENCES `user` (`user_id`)
+  CONSTRAINT `project_leader_id` FOREIGN KEY (`project_leader_id`) REFERENCES `user` (`user_id`) ON DELETE SET NULL
 );
 
 --
@@ -60,7 +60,7 @@ CREATE TABLE `task` (
   `task_end_date` date NOT NULL,
   `project_id` int NOT NULL,
   PRIMARY KEY (`task_id`),
-  CONSTRAINT `task_leader_id` FOREIGN KEY (`task_leader_id`) REFERENCES `user` (`user_id`)
+  CONSTRAINT `task_leader_id` FOREIGN KEY (`task_leader_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE
 ) ;
 
 --
@@ -71,8 +71,8 @@ CREATE TABLE `task_has_dependency` (
   `dependant_task_id` int NOT NULL,
   `dependency_task_id` int NOT NULL,
   PRIMARY KEY (`dependant_task_id`,`dependency_task_id`),
-  CONSTRAINT `dependant_task_id` FOREIGN KEY (`dependant_task_id`) REFERENCES `task` (`task_id`),
-  CONSTRAINT `dependency_task_id` FOREIGN KEY (`dependency_task_id`) REFERENCES `task` (`task_id`)
+  CONSTRAINT `dependant_task_id` FOREIGN KEY (`dependant_task_id`) REFERENCES `task` (`task_id`) ON DELETE CASCADE ,
+  CONSTRAINT `dependency_task_id` FOREIGN KEY (`dependency_task_id`) REFERENCES `task` (`task_id`) ON DELETE CASCADE
 );
 
 
@@ -84,8 +84,8 @@ CREATE TABLE `user_has_project` (
   `user_id` int NOT NULL,
   `project_id` int NOT NULL,
   PRIMARY KEY (`user_id`,`project_id`),
-  CONSTRAINT `project_id` FOREIGN KEY (`project_id`) REFERENCES `project` (`project_id`),
-  CONSTRAINT `user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
+  CONSTRAINT `project_id` FOREIGN KEY (`project_id`) REFERENCES `project` (`project_id`) ON DELETE CASCADE ,
+  CONSTRAINT `user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE
 );
 
 --
@@ -96,8 +96,8 @@ CREATE TABLE `user_has_task` (
   user_id int NOT NULL,
   `task_id` int NOT NULL,
   PRIMARY KEY (user_id,`task_id`),
-  CONSTRAINT `employee_has_task_employee_id` FOREIGN KEY (user_id) REFERENCES `user` (`user_id`),
-  CONSTRAINT `employee_has_task_task_id` FOREIGN KEY (`task_id`) REFERENCES `task` (`task_id`)
+  CONSTRAINT `employee_has_task_employee_id` FOREIGN KEY (user_id) REFERENCES `user` (`user_id`) ON DELETE CASCADE ,
+  CONSTRAINT `employee_has_task_task_id` FOREIGN KEY (`task_id`) REFERENCES `task` (`task_id`) ON DELETE CASCADE
 );
 
 INSERT INTO `user_title`(user_title)

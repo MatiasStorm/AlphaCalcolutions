@@ -8,6 +8,10 @@ body, html {
     display: flex;
 }
 
+.d-inline{
+    display: inline;
+}
+
 /* Layout */
 .container {
     margin: 1rem;

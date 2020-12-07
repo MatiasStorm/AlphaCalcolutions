@@ -70,6 +70,12 @@ public class MainController {
         return "redirect:/project";
     }
 
+    @PostMapping("/project/delete")
+    public String deleteProject(int projectId){
+        projectService.deleteProject(projectId);
+        return "redirect:/project";
+    }
+
     @GetMapping("/seeTasks")
     public String seeTasks(Model model, Task task, @RequestParam int projectId){
         model.addAttribute("taskList", taskService.getTaskList(projectId));
@@ -93,6 +99,7 @@ public class MainController {
         taskService.createTask(task);
         return "redirect:/seeTasks?projectId=" + task.getProjectId();
     }
+
 
     @GetMapping("/users")
     public String users(Model model){

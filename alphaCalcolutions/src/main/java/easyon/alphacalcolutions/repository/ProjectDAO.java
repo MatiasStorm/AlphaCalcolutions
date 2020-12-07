@@ -141,4 +141,16 @@ public class ProjectDAO {
             ex.printStackTrace();
         }
     }
+
+    public void deleteProject(int projectId) {
+        try {
+            String deleteStatement = "DELETE FROM project WHERE project_id = ?";
+            PreparedStatement ps = con.prepareStatement(deleteStatement);
+            ps.setInt(1, projectId);
+            ps.executeUpdate();
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
 }

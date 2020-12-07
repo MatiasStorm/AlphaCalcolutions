@@ -32,4 +32,8 @@ public class ProjectService {
     public void updateProject(Project project) {
         dataFacade.updateProject(project);
     }
+
+    public void deleteProject(int projectId) {
+        dataFacade.deleteProject(projectId);
+    }
 }
