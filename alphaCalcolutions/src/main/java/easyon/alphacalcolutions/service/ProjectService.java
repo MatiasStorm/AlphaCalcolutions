@@ -55,4 +55,10 @@ public class ProjectService {
         }
         return projectTotalCost;
     }
+
+    public int getProjectDuration(int projectId){
+        Project project = getProject(projectId);
+        return (int) ChronoUnit.DAYS.between(project.getStartDate(), project.getEndDate());
+    }
+
 }
