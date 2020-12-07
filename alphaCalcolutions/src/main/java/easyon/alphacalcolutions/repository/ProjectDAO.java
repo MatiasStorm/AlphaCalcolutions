@@ -17,8 +17,11 @@ public class ProjectDAO {
     private ProjectMapper projectMapper = new ProjectMapper();
     private final Connection con;
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("YYYY-MM-dd");
-    private String selectStatement = "select project.*, GROUP_CONCAT(user_has_project.user_id SEPARATOR ',') as assigned_user_ids from project "
-                           + " JOIN user_has_project on project.project_id = user_has_project.project_id ";
+    private String selectStatement = "select project.*, sub_project.assigned_user_ids, MIN(task.task_start_date) as project_start_date, MAX(task.task_end_date) as project_end_date from project " +
+            "JOIN (select project.project_id, GROUP_CONCAT(user_has_project.user_id SEPARATOR ',') as assigned_user_ids from project " +
+            "JOIN user_has_project ON project.project_id = user_has_project.project_id GROUP BY project.project_id) " +
+            "sub_project ON sub_project.project_id = project.project_id " +
+            "LEFT JOIN task ON project.project_id = task.project_id ";
 
     public ProjectDAO(Connection con){
         this.con = con;

@@ -58,7 +58,9 @@ public class Project{
     }
 
     public void setStartDate(String startDate) {
-        this.startDate = LocalDate.parse(startDate);
+        if (startDate != null) {
+            this.startDate = LocalDate.parse(startDate);
+        }
     }
 
     public LocalDate getEndDate() {
@@ -66,7 +68,9 @@ public class Project{
     }
 
     public void setEndDate(String endDate) {
-        this.endDate = LocalDate.parse(endDate);
+        if (endDate != null) {
+            this.endDate = LocalDate.parse(endDate);
+        }
     }
 
     @Override
