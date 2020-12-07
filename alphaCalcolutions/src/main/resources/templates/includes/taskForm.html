@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Task Form</title>
+</head>
+<body>
+
+<div th:fragement="taskForm (task, userList)" th:object="${task}">
+    <div class="row m-0">
+        <label class="label">Title:</label>
+        <input class="input" type="text" th:field="*{title}" required>
+    </div>
+
+    <div class="row">
+        <label class="label">Task leader:</label>
+        <select class="input" type="text" th:field="*{taskLeaderId}" required>
+            <option th:each="user : ${userList}" th:value="${user.userId}"
+                    th:text="${user.firstName} + ' ' + ${user.lastName}"></option>
+        </select>
+    </div>
+    <div class="row">
+        <label class="label">Assign task members:</label>
+        <select class="input" type="text" th:field="*{assignedUserIds}" multiple id="multipleSelect">
+            <option th:each="user : ${userList}" th:value="${user.userId}"
+                    th:text="${user.firstName} + ' ' + ${user.lastName}"></option>
+        </select>
+    </div>
+
+    <div class="row">
+        <label class="label">Assign task dependencies:</label>
+        <!--    <select class="input" type="text" th:field="*{taskDependencyIds}" multiple>-->
+        <!--        <option th:each="user : ${userList}" th:value="${user.userId}"-->
+        <!--                th:text="${user.firstName} + ' ' + ${user.lastName}"></option>-->
+        <!--    </select>-->
+    </div>
+
+    <div class="row">
+        <label class="label">Project start date:</label>
+        <input class="input" type="date" th:field="*{startDate}" required>
+    </div>
+
+    <div class="row">
+        <label class="label">Project end date:</label>
+        <input class="input" type="date" th:field="*{endDate}" required>
+    </div>
+
+    <input type="number" th:field="*{projectId}" hidden="true">
+
+    <div class="row mt-2">
+        <button class="btn btn-secondary btn-md px-2" type="button"
+                th:onclick="'document.location.href = \'/seeTasks?projectId=' + *{projectId} + '\''"
+        >
+            Cancel
+        </button>
+        <button class="btn btn-primary btn-md px-2" type="submit">Create</button>
+    </div>
+    <script>
+        var checkList = document.getElementById('multipleSelect');
+        checkList.onmousedown = function(e) {
+            e.preventDefault();
+            var select = this;
+            var scroll = select.scrollTop;
+            e.target.selected = !e.target.selected;
+
+            setTimeout(() => {select.scrollTop = scroll}, 0);
+            select.focus();
+        }
+    </script>
+</div>
+</body>
+</html>

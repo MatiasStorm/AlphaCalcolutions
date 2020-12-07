@@ -38,11 +38,11 @@
                 <!--            </div>-->
                 <div>
                     <b>Start: </b>
-                    <span th:text="*{#dates.format(startDate, 'EEEE, LLLL d, yyyy')}"></span>
+                    <span th:text="*{#temporals.format(startDate, 'EEEE, LLLL d, yyyy')}"></span>
                 </div>
                 <div>
                     <b>End: </b>
-                    <span th:text="*{#dates.format(endDate, 'EEEE, LLLL d, yyyy')}"></span>
+                    <span th:text="*{#temporals.format(endDate, 'EEEE, LLLL d, yyyy')}"></span>
                 </div>
                 <div class="row justify-content-center m-0 mt-1">
                     <button class="btn btn-secondary btn-sm mx-1">Edit</button>
