@@ -40,13 +40,14 @@ public class ProjectDAO {
             project.setProjectId(id);
 
             try {
-                for (int i = 0; i < project.getAssignedUserIds().length; i++) {
-                    SQL = "INSERT INTO user_has_project (user_id, project_id) VALUES (?, ?)";
-                    ps = con.prepareStatement(SQL);
-                    ps.setInt(1, (int) Array.get(project.getAssignedUserIds(), i));
-                    ps.setInt(2, project.getProjectId());
-                    ps.executeUpdate();
-                }
+                insertAssignedUsers(project.getAssignedUserIds(), project.getProjectId());
+//                for (int i = 0; i < project.getAssignedUserIds().length; i++) {
+//                    SQL = "INSERT INTO user_has_project (user_id, project_id) VALUES (?, ?)";
+//                    ps = con.prepareStatement(SQL);
+//                    ps.setInt(1, (int) Array.get(project.getAssignedUserIds(), i));
+//                    ps.setInt(2, project.getProjectId());
+//                    ps.executeUpdate();
+//                }
             } catch (Exception e){
                 con.rollback();
             }
@@ -56,7 +57,24 @@ public class ProjectDAO {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
+    }
 
+    private void insertAssignedUsers(int[] assignedUserIds, int projectId) throws SQLException {
+        String insertStatement = "INSERT INTO user_has_project (user_id, project_id) VALUES (?, ?)";
+        PreparedStatement ps;
+        for (int i = 0; i < assignedUserIds.length; i++) {
+            ps = con.prepareStatement(insertStatement);
+            ps.setInt(1, (int) Array.get(assignedUserIds, i));
+            ps.setInt(2, projectId);
+            ps.executeUpdate();
+        }
+    }
+
+    private void deleteAssignedUsers(int projectId) throws SQLException {
+        String deleteStatement = "DELETE FROM user_has_project WHERE project_id = ?";
+        PreparedStatement ps = con.prepareStatement(deleteStatement);
+        ps.setInt(1, projectId);
+        ps.executeUpdate();
     }
 
     public ArrayList<Project> getProjectList(){
@@ -97,4 +115,30 @@ public class ProjectDAO {
 
     }
 
+    public void updateProject(Project project) {
+        try {
+            con.setAutoCommit(false);
+            String SQL = "UPDATE project SET project_title = ?, project_start_date=?, project_end_date=?, project_leader_id=? WHERE project_id=?";
+            PreparedStatement ps = con.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+            ps.setString(1, project.getTitle());
+            ps.setString(2, dateFormat.format(project.getStartDate()));
+            ps.setString(3, dateFormat.format(project.getEndDate()));
+            ps.setInt(4, project.getProjectLeaderId());
+            ps.setInt(5, project.getProjectId());
+            ps.executeUpdate();
+            try {
+                deleteAssignedUsers(project.getProjectId());
+                insertAssignedUsers(project.getAssignedUserIds(), project.getProjectId());
+            } catch (Exception e){
+                con.rollback();
+            }
+
+            con.commit();
+            con.setAutoCommit(true);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
 }

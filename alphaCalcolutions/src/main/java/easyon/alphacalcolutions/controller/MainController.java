@@ -66,7 +66,7 @@ public class MainController {
 
     @PostMapping("/project/edit/submit")
     public String editProjectSubmit(Project project){
-        projectService.createProject(project);
+        projectService.updateProject(project);
         return "redirect:/seeProjects";
     }
 

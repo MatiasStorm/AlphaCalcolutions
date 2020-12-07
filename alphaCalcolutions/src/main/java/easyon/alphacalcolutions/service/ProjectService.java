@@ -29,4 +29,7 @@ public class ProjectService {
         return dataFacade.getUsersById(assignedUsers);
     }
 
+    public void updateProject(Project project) {
+        dataFacade.updateProject(project);
+    }
 }

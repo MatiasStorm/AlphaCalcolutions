@@ -3,9 +3,10 @@ package easyon.alphacalcolutions.model;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 
-public class Project {
+public class Project{
     private int projectId;
     private String title;
     private int projectLeaderId;
@@ -69,5 +70,18 @@ public class Project {
 
     public void setEndDate(String endDate) throws ParseException {
         this.endDate = dateFormat.parse(endDate);
+    }
+
+    @Override
+    public boolean equals(Object o){
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Project p = (Project) o;
+        return projectId == p.getProjectId()
+                && title.equals(p.getTitle())
+                && projectLeaderId == p.getProjectLeaderId()
+                && Arrays.equals(assignedUserIds, p.getAssignedUserIds())
+                && startDate.equals(p.getStartDate())
+                && endDate.equals(p.getEndDate());
     }
 }
