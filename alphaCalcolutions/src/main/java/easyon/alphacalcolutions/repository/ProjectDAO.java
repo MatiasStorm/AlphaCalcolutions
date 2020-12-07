@@ -16,7 +16,6 @@ import java.util.ArrayList;
 public class ProjectDAO {
     private ProjectMapper projectMapper = new ProjectMapper();
     private final Connection con;
-    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("YYYY-MM-dd");
     private String selectStatement = "select project.*, sub_project.assigned_user_ids, MIN(task.task_start_date) as project_start_date, MAX(task.task_end_date) as project_end_date from project " +
             "JOIN (select project.project_id, GROUP_CONCAT(user_has_project.user_id SEPARATOR ',') as assigned_user_ids from project " +
             "JOIN user_has_project ON project.project_id = user_has_project.project_id GROUP BY project.project_id) " +
@@ -30,13 +29,11 @@ public class ProjectDAO {
     public void createProject(Project project) {
         try {
             con.setAutoCommit(false);
-            String SQL = "INSERT INTO project (project_title, project_start_date, project_end_date, project_leader_id) VALUES (?, ?, ?, ?)";
+            String SQL = "INSERT INTO project (project_title, project_leader_id) VALUES (?, ?)";
             PreparedStatement ps = con.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
 
             ps.setString(1, project.getTitle());
-            ps.setString(2, formatter.format(project.getStartDate()));
-            ps.setString(3, formatter.format(project.getEndDate()));
-            ps.setInt(4, project.getProjectLeaderId());
+            ps.setInt(2, project.getProjectLeaderId());
             ps.executeUpdate();
             ResultSet ids = ps.getGeneratedKeys();
             ids.next();
@@ -115,14 +112,12 @@ public class ProjectDAO {
     public void updateProject(Project project) {
         try {
             con.setAutoCommit(false);
-            String SQL = "UPDATE project SET project_title = ?, project_start_date=?, project_end_date=?, project_leader_id=? WHERE project_id=?";
+            String SQL = "UPDATE project SET project_title = ?, project_leader_id=? WHERE project_id=?";
             PreparedStatement ps = con.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
 
             ps.setString(1, project.getTitle());
-            ps.setString(2, formatter.format(project.getStartDate()));
-            ps.setString(3, formatter.format(project.getEndDate()));
-            ps.setInt(4, project.getProjectLeaderId());
-            ps.setInt(5, project.getProjectId());
+            ps.setInt(2, project.getProjectLeaderId());
+            ps.setInt(3, project.getProjectId());
             ps.executeUpdate();
             try {
                 deleteAssignedUsers(project.getProjectId());

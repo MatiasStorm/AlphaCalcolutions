@@ -11,18 +11,15 @@ class ProjectDAOTest extends AbstractDAOTest{
     private ProjectDAO projectDAO = new ProjectDAO(con);
 
     @Test
-    void createProject() throws ParseException {
+    void createProject() {
         Project project = new Project();
         project.setTitle("Project2");
         project.setProjectLeaderId(2);
         project.setAssignedUserIds(new int[]{1,2});
-        project.setStartDate("2020-12-12");
-        project.setEndDate("2020-12-21");
         projectDAO.createProject(project);
         Project actualProject = projectDAO.getProject(2);
         assertNotNull(actualProject);
         assertEquals(project, actualProject);
-        assertEquals(project.getAssignedUserIds().length, actualProject.getAssignedUserIds().length);
     }
 
     @Test
@@ -38,14 +35,11 @@ class ProjectDAOTest extends AbstractDAOTest{
     }
 
     @Test
-    void updateProject() throws ParseException {
-        Project project = new Project();
-        project.setProjectId(1);
+    void updateProject() {
+        Project project = projectDAO.getProject(1);
         project.setTitle("Updated Project");
-        project.setProjectLeaderId(2);
+        project.setProjectLeaderId(3);
         project.setAssignedUserIds(new int[]{1,2});
-        project.setStartDate("2020-12-12");
-        project.setEndDate("2020-12-21");
         projectDAO.updateProject(project);
         Project actualProject = projectDAO.getProject(1);
         assertEquals(project, actualProject);

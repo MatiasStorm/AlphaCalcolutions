@@ -82,7 +82,17 @@ public class Project{
                 && title.equals(p.getTitle())
                 && projectLeaderId == p.getProjectLeaderId()
                 && Arrays.equals(assignedUserIds, p.getAssignedUserIds())
-                && startDate.equals(p.getStartDate())
-                && endDate.equals(p.getEndDate());
+                && compareEndDate(p)
+                && compareStartDate(p);
+    }
+
+    private boolean compareStartDate(Project p){
+        if(startDate == null) return p.getStartDate() == null;
+        return startDate.equals(p.getStartDate());
+    }
+
+    private boolean compareEndDate(Project p){
+        if(endDate == null) return p.getEndDate() == null;
+        return endDate.equals(p.getEndDate());
     }
 }
