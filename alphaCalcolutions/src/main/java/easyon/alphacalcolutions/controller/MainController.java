@@ -97,7 +97,7 @@ public class MainController {
         String[] dependencies = new String[]{"1", "6", "11"};
         task.setTaskDependencyIds(dependencies);
         taskService.createTask(task);
-        return "redirect:/seeTasks?projectId=" + task.getProjectId();
+        return "redirect:/task?projectId=" + task.getProjectId();
     }
 
     @GetMapping("/task/edit")
@@ -111,8 +111,8 @@ public class MainController {
 
     @PostMapping("/task/edit/submit")
     public String editTaskSubmit(Task task){
-//        String[] dependencies = new String[]{"1", "6", "11"};
-//        task.setTaskDependencyIds(dependencies);
+        String[] dependencies = new String[]{"1", "6", "11"};
+        task.setTaskDependencyIds(dependencies);
         taskService.updateTask(task);
         return "redirect:/task?projectId=" + task.getProjectId();
     }
