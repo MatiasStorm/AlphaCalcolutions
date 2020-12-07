@@ -2,6 +2,7 @@ package easyon.alphacalcolutions.model;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -11,9 +12,9 @@ public class Project{
     private String title;
     private int projectLeaderId;
     private int[] assignedUserIds;
-    private Date startDate;
-    private Date endDate;
-    private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    private LocalDate startDate;
+    private LocalDate endDate;
+//    private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     public int getProjectId() {
         return projectId;
@@ -56,20 +57,20 @@ public class Project{
         }
     }
 
-    public Date getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
     public void setStartDate(String startDate) throws ParseException {
-        this.startDate = dateFormat.parse(startDate);
+        this.startDate = LocalDate.parse(startDate);
     }
 
-    public Date getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 
     public void setEndDate(String endDate) throws ParseException {
-        this.endDate = dateFormat.parse(endDate);
+        this.endDate = LocalDate.parse(endDate);
     }
 
     @Override

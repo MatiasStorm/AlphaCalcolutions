@@ -10,11 +10,13 @@ import java.sql.*;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class ProjectDAO {
     private ProjectMapper projectMapper = new ProjectMapper();
     private final Connection con;
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("YYYY-MM-dd");
     private String selectStatement = "select project.*, GROUP_CONCAT(user_has_project.user_id SEPARATOR ',') as assigned_user_ids from project "
                            + " JOIN user_has_project on project.project_id = user_has_project.project_id ";
 
@@ -27,11 +29,10 @@ public class ProjectDAO {
             con.setAutoCommit(false);
             String SQL = "INSERT INTO project (project_title, project_start_date, project_end_date, project_leader_id) VALUES (?, ?, ?, ?)";
             PreparedStatement ps = con.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
-            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
             ps.setString(1, project.getTitle());
-            ps.setString(2, dateFormat.format(project.getStartDate()));
-            ps.setString(3, dateFormat.format(project.getEndDate()));
+            ps.setString(2, formatter.format(project.getStartDate()));
+            ps.setString(3, formatter.format(project.getEndDate()));
             ps.setInt(4, project.getProjectLeaderId());
             ps.executeUpdate();
             ResultSet ids = ps.getGeneratedKeys();
@@ -113,11 +114,10 @@ public class ProjectDAO {
             con.setAutoCommit(false);
             String SQL = "UPDATE project SET project_title = ?, project_start_date=?, project_end_date=?, project_leader_id=? WHERE project_id=?";
             PreparedStatement ps = con.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
-            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
             ps.setString(1, project.getTitle());
-            ps.setString(2, dateFormat.format(project.getStartDate()));
-            ps.setString(3, dateFormat.format(project.getEndDate()));
+            ps.setString(2, formatter.format(project.getStartDate()));
+            ps.setString(3, formatter.format(project.getEndDate()));
             ps.setInt(4, project.getProjectLeaderId());
             ps.setInt(5, project.getProjectId());
             ps.executeUpdate();
