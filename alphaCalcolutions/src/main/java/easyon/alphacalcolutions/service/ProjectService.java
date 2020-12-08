@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 @Service
 public class ProjectService {
@@ -40,6 +41,13 @@ public class ProjectService {
         dataFacade.deleteProject(projectId);
     }
 
+    public HashMap<String , Integer> getTitleHours(int projectId){
+        return dataFacade.getTitleHours(projectId);
+    }
+
+    public HashMap<User , Integer> getUserHours(int projectId){
+        return dataFacade.getUserHours(projectId);
+    }
 
 
 }

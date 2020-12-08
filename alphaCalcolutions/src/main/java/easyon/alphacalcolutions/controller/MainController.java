@@ -78,7 +78,8 @@ public class MainController {
 
     @GetMapping("/task")
     public String seeTasks(Model model, @RequestParam int projectId){
-        List<Task> t = taskService.getTaskList(projectId);
+        model.addAttribute("userHours", projectService.getUserHours(projectId));
+        model.addAttribute("titleHours", projectService.getTitleHours(projectId));
         model.addAttribute("taskList", taskService.getTaskList(projectId));
         model.addAttribute("projectId", projectId);
         return "seeTasks";
