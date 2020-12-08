@@ -3,6 +3,8 @@ package easyon.alphacalcolutions.repository;
 import easyon.alphacalcolutions.mapper.TaskMapper;
 import easyon.alphacalcolutions.model.Project;
 import easyon.alphacalcolutions.model.Task;
+import easyon.alphacalcolutions.repository.exception.CreateTaskHasDependencyException;
+import easyon.alphacalcolutions.repository.exception.CreateUserHasTaskException;
 
 import java.lang.reflect.Array;
 import java.sql.*;
@@ -31,7 +33,7 @@ public class TaskDAO {
         return selectStatement + where + groupBy;
     }
 
-    public Task createTask(Task task) {
+    public Task createTask(Task task) throws CreateUserHasTaskException, CreateTaskHasDependencyException {
         try {
             con.setAutoCommit(false);
             String SQL = "INSERT INTO task (task_title, task_leader_id, task_start_date, task_end_date, project_id) VALUES (?, ?, ?, ?, ?)";
@@ -55,33 +57,54 @@ public class TaskDAO {
             }
             con.commit();
             con.setAutoCommit(true);
-        } catch (SQLException ex) {
-            try {
-                con.rollback();
-            }
-            catch (SQLException e){
-                e.printStackTrace(); // Should hopefully never get here
-            }
+        }
+        catch (CreateTaskHasDependencyException | CreateUserHasTaskException ex){
+            connectionRollBack();
+            throw ex;
+        }
+        catch (SQLException ex) {
+            connectionRollBack();
+            ex.printStackTrace(); // Should hopefully never get here
         }
         return task;
     }
 
-    private void createUserHasTask(Task task) throws SQLException {
-        for (int i = 0; i < task.getAssignedUserIds().length; i++) {
-            String insertStatement = "INSERT INTO user_has_task (user_id, task_id) VALUES (?, ?)";
-            PreparedStatement ps = con.prepareStatement(insertStatement);
-            ps.setInt(1, (int) Array.get(task.getAssignedUserIds(), i));
-            ps.setInt(2, task.getTaskId());
-            ps.executeUpdate();
+    private void connectionRollBack(){
+        try{
+            con.rollback();
+            con.setAutoCommit(false);
+        }
+        catch (SQLException ex){
+            ex.printStackTrace();
         }
     }
-    private void createTaskHasDependency(Task task) throws SQLException {
-        for (int i = 0; i < task.getTaskDependencyIds().length; i++) {
-            String insertStatement = "INSERT INTO task_has_dependency (dependant_task_id, dependency_task_id) VALUES (?, ?)";
-            PreparedStatement ps = con.prepareStatement(insertStatement);
-            ps.setInt(1, task.getTaskId());
-            ps.setInt(2, (int) Array.get(task.getTaskDependencyIds(), i));
-            ps.executeUpdate();
+
+    private void createUserHasTask(Task task) throws CreateUserHasTaskException {
+        try {
+            for (int i = 0; i < task.getAssignedUserIds().length; i++) {
+                String insertStatement = "INSERT INTO user_has_task (user_id, task_id) VALUES (?, ?)";
+                PreparedStatement ps = con.prepareStatement(insertStatement);
+                ps.setInt(1, (int) Array.get(task.getAssignedUserIds(), i));
+                ps.setInt(2, task.getTaskId());
+                ps.executeUpdate();
+            }
+        }
+        catch (SQLException e){
+            throw new CreateUserHasTaskException();
+        }
+    }
+    private void createTaskHasDependency(Task task) throws CreateTaskHasDependencyException {
+        try {
+            for (int i = 0; i < task.getTaskDependencyIds().length; i++) {
+                String insertStatement = "INSERT INTO task_has_dependency (dependant_task_id, dependency_task_id) VALUES (?, ?)";
+                PreparedStatement ps = con.prepareStatement(insertStatement);
+                ps.setInt(1, task.getTaskId());
+                ps.setInt(2, (int) Array.get(task.getTaskDependencyIds(), i));
+                ps.executeUpdate();
+            }
+        }
+        catch (SQLException e){
+            throw new CreateTaskHasDependencyException();
         }
     }
 
@@ -123,7 +146,7 @@ public class TaskDAO {
     }
 
 
-    public void updateTask(Task task) {
+    public void updateTask(Task task) throws CreateUserHasTaskException, CreateTaskHasDependencyException {
         try {
             con.setAutoCommit(false);
             String SQL = "UPDATE task SET task_title = ?, task_leader_id = ?, task_start_date = ?, task_end_date = ?, project_id = ? WHERE task_id = ?";
@@ -145,13 +168,14 @@ public class TaskDAO {
             createTaskHasDependency(task);
             con.commit();
             con.setAutoCommit(true);
-        } catch (SQLException ex) {
-            try {
-                con.rollback();
-            }
-            catch (SQLException e){
-                e.printStackTrace(); // Should hopefully never get here
-            }
+        }
+        catch (CreateTaskHasDependencyException | CreateUserHasTaskException ex){
+            connectionRollBack();
+            throw ex;
+        }
+        catch (SQLException ex) {
+            connectionRollBack();
+            ex.printStackTrace();
         }
     }
 

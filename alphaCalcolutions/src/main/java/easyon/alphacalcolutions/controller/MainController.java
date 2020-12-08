@@ -93,11 +93,13 @@ public class MainController {
     }
 
     @PostMapping("/task/create/submit")
-    public String createTaskSubmit(Task task){
+    public String createTaskSubmit(Task task, Model model){
         String[] dependencies = new String[]{"1", "6", "11"};
         task.setTaskDependencyIds(dependencies);
-        taskService.createTask(task);
-        return "redirect:/task?projectId=" + task.getProjectId();
+        if (taskService.createTask(task)){
+            return "redirect:/task?projectId=" + task.getProjectId();
+        }
+        return createTask(model, task, task.getProjectId());
     }
 
     @GetMapping("/task/edit")
@@ -110,11 +112,13 @@ public class MainController {
     }
 
     @PostMapping("/task/edit/submit")
-    public String editTaskSubmit(Task task){
+    public String editTaskSubmit(Task task, Model model){
         String[] dependencies = new String[]{"1", "6", "11"};
         task.setTaskDependencyIds(dependencies);
-        taskService.updateTask(task);
-        return "redirect:/task?projectId=" + task.getProjectId();
+        if(taskService.updateTask(task)) {
+            return "redirect:/task?projectId=" + task.getProjectId();
+        }
+        return editTask(model, task.getTaskId());
     }
 
     @PostMapping("/task/delete")
