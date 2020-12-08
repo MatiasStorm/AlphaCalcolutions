@@ -84,6 +84,7 @@ public class DataFacade implements IDataFacade {
 
     public int getProjectDuration(int projectId){
         Project project = getProject(projectId);
+        if (project.getStartDate() == null || project.getEndDate() == null) return 0;
         return (int) ChronoUnit.DAYS.between(project.getStartDate(), project.getEndDate());
     }
 
