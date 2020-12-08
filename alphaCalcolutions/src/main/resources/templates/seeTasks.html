@@ -15,13 +15,52 @@
     <button class="btn btn-primary btn-lg">Display GANNT diagram</button>
 </div>
 <div class="container justify-content-left">
-    <button class="btn btn-primary btn-lg" th:onclick="'document.location.href=\'/task/create?projectId=' + ${projectId} + '\''">Add new task</button>
+    <button class="btn btn-primary btn-lg"
+            th:onclick="'document.location.href=\'/task/create?projectId=' + ${projectId} + '\''">Add new task
+    </button>
 </div>
 
 <div class="container">
-    <div th:replace="/includes/kanbanColumn :: kanbanColumn (type = 'backlog', taskList = ${taskList})"></div>
-    <div th:replace="/includes/kanbanColumn :: kanbanColumn (type = 'inProgress', taskList = ${taskList})"></div>
-    <div th:replace="/includes/kanbanColumn :: kanbanColumn (type = 'done', taskList = ${taskList})"></div>
+    <div th:each="task,iter : ${taskList}" th:object="${task}" class="card mt-1">
+        <div class="card-header background-primary">
+            <h4 class="p-0 m-0" th:text="*{title}"></h4>
+        </div>
+
+        <div class="card-body">
+            <div>
+                <b>Leader: </b>
+                <span th:text="*{taskLeader.firstName} + ' ' + *{taskLeader.lastName}"></span>
+            </div>
+            <b>Assignees:</b>
+            <ul>
+                <li th:each="user : *{assignedUsers}" th:text="${user.firstName} + ' ' + ${user.lastName}"></li>
+            </ul>
+            <div>
+                <b>Start: </b>
+                <span th:text="*{#temporals.format(startDate, 'EEEE, LLLL d, yyyy')}"></span>
+            </div>
+            <div>
+                <b>End: </b>
+                <span th:text="*{#temporals.format(endDate, 'EEEE, LLLL d, yyyy')}"></span>
+            </div>
+            <div class="row justify-content-center m-0 mt-1">
+                <button class="btn btn-secondary btn-sm mx-1"
+                        th:onclick="'document.location.href=\'/task/edit?taskId=' + *{taskId} + '\''">Edit
+                </button>
+                <button th:id="'activateModal' + ${iter.index}" class="btn btn-danger btn-sm mx-1">Delete</button>
+<!--                <form action="/task/delete" method="post">-->
+<!--                    <input hidden name="taskId" th:value="*{taskId}"/>-->
+<!--                    <input hidden name="projectId" th:value="*{projectId}"/>-->
+<!--                </form>-->
+            </div>
+        </div>
+        <div th:replace="/includes/confirmModal :: confirmModal(title = 'Are you sure you want to delete: \'' + *{title} + '\'',
+                                                                 action = '/task/delete?taskId=' + *{taskId} + '&projectId=' + *{projectId},
+                                                                 submitText = 'Delete',
+                                                                 num = ${iter.index},
+                                                                 activeBtnId = 'activateModal' + ${iter.index})"
+        ></div>
+    </div>
 </div>
 
 

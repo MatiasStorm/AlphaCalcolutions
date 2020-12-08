@@ -7,6 +7,8 @@ import easyon.alphacalcolutions.model.User;
 import easyon.alphacalcolutions.repository.ProjectDAO;
 import easyon.alphacalcolutions.repository.TaskDAO;
 import easyon.alphacalcolutions.repository.UserDAO;
+import easyon.alphacalcolutions.repository.exception.CreateTaskHasDependencyException;
+import easyon.alphacalcolutions.repository.exception.CreateUserHasTaskException;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -90,7 +92,7 @@ public class DataFacade implements IDataFacade {
 
     //----------------------------- TASK -------------------------------------
 
-    public void createTask(Task task) {
+    public void createTask(Task task) throws CreateUserHasTaskException, CreateTaskHasDependencyException {
         TASK_DAO.createTask(task);
     }
 
@@ -118,7 +120,7 @@ public class DataFacade implements IDataFacade {
         PROJECT_DAO.deleteProject(projectId);
     }
 
-    public void updateTask(Task task) {
+    public void updateTask(Task task) throws CreateUserHasTaskException, CreateTaskHasDependencyException {
         TASK_DAO.updateTask(task);
     }
 

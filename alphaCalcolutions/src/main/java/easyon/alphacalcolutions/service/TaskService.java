@@ -3,6 +3,8 @@ package easyon.alphacalcolutions.service;
 import easyon.alphacalcolutions.data.DataFacade;
 import easyon.alphacalcolutions.model.Task;
 import easyon.alphacalcolutions.model.User;
+import easyon.alphacalcolutions.repository.exception.CreateTaskHasDependencyException;
+import easyon.alphacalcolutions.repository.exception.CreateUserHasTaskException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -19,8 +21,17 @@ public class TaskService {
         this.dataFacade = dataFacade;
     }
 
-    public void createTask(Task task){
-        dataFacade.createTask(task);
+    public boolean createTask(Task task){
+        try {
+            dataFacade.createTask(task);
+            return true;
+        }
+        catch (CreateUserHasTaskException ex){
+            return false;
+        }
+        catch (CreateTaskHasDependencyException ex){
+            return false;
+        }
     }
 
     public ArrayList<Task> getTaskList(int projectId){
@@ -33,8 +44,17 @@ public class TaskService {
     }
 
 
-    public void updateTask(Task task) {
-        dataFacade.updateTask(task);
+    public boolean updateTask(Task task) {
+        try {
+            dataFacade.updateTask(task);
+            return true;
+        }
+        catch (CreateUserHasTaskException ex){
+            return false;
+        }
+        catch (CreateTaskHasDependencyException ex){
+            return false;
+        }
     }
 
     public void deleteTask(int taskId) {

@@ -1,6 +1,8 @@
 package easyon.alphacalcolutions.repository;
 
 import easyon.alphacalcolutions.model.Task;
+import easyon.alphacalcolutions.repository.exception.CreateTaskHasDependencyException;
+import easyon.alphacalcolutions.repository.exception.CreateUserHasTaskException;
 import org.junit.jupiter.api.Test;
 
 import java.text.ParseException;
@@ -12,7 +14,7 @@ class TaskDAOTest extends AbstractDAOTest{
     private TaskDAO taskDAO = new TaskDAO(con);
 
     @Test
-    void createTask() throws ParseException {
+    void createTask() throws ParseException, CreateUserHasTaskException, CreateTaskHasDependencyException {
         Task t = new Task();
         t.setTitle("New Task");
         t.setTaskLeaderId(2);
@@ -53,7 +55,7 @@ class TaskDAOTest extends AbstractDAOTest{
     }
 
     @Test
-    void updateTask(){
+    void updateTask() throws CreateUserHasTaskException, CreateTaskHasDependencyException {
         Task expectedTask = new Task();
         expectedTask.setTaskId(1);
         expectedTask.setTitle("New Task");

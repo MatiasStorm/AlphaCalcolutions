@@ -17,14 +17,14 @@
         </div>
     </div>
     <script th:inline="javascript">
-        var modal = document.getElementById([['modal' + ${num}]]);
+        var [('modal' + ${num})] = document.getElementById([['modal' + ${num}]]);
         var activateBtn = document.getElementById([[${activeBtnId}]]);
         var cancleBtn = document.getElementById([['cancelBtn' + ${num}]]);
         activateBtn.onclick = function () {
-            modal.style.display = "flex";
+            [('modal' + ${num})].style.display = "flex";
         }
         cancleBtn.onclick = function () {
-            modal.style.display = "none";
+            [('modal' + ${num})].style.display = "none";
         }
         window.onclick = function (event) {
             if (event.target == modal) {
