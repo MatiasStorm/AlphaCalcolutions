@@ -22,7 +22,7 @@
     </div>
     <div class="row">
         <label class="label">Assign task members:</label>
-        <select class="input" type="text" th:field="*{assignedUserIds}" multiple id="multipleSelect">
+        <select class="input" type="text" th:field="*{assignedUserIds}" multiple id="multipleSelectUser">
             <option th:each="user : ${userList}" th:value="${user.userId}"
                     th:text="${user.firstName} + ' ' + ${user.lastName}"></option>
         </select>
@@ -30,36 +30,69 @@
 
     <div class="row">
         <label class="label">Assign task dependencies:</label>
-        <!--    <select class="input" type="text" th:field="*{taskDependencyIds}" multiple>-->
-        <!--        <option th:each="user : ${userList}" th:value="${user.userId}"-->
-        <!--                th:text="${user.firstName} + ' ' + ${user.lastName}"></option>-->
-        <!--    </select>-->
+        <select class="input" type="text" th:field="*{taskDependencyIds}" multiple id="multipleSelectTask">
+            <option th:each="dependencyTask : ${taskList}" th:value="${dependencyTask.taskId}"
+                    th:text="${dependencyTask.title}" th:data="${dependencyTask.endDate}"></option>
+        </select>
     </div>
 
     <div class="row">
-        <label class="label">Project start date:</label>
-        <input th:if="*{startDate}" class="input" type="date" name="startDate" th:value="*{#temporals.format(startDate, 'yyyy-MM-dd')}" required>
-        <input th:unless="*{startDate}" class="input" type="date" th:field="*{startDate}" required>
+        <label class="label">Start date:</label>
+        <input class="input"
+               type="date"
+               name="startDate"
+               th:value="*{startDate} != null ? *{#temporals.format(startDate, 'yyyy-MM-dd')} :${#dates.format(#dates.createNow(), 'yyyy-MM-dd')} "
+               required
+        >
     </div>
 
     <div class="row">
-        <label class="label">Project end date:</label>
-        <input th:if="*{endDate}" class="input" type="date" name="endDate" th:value="*{#temporals.format(endDate, 'yyyy-MM-dd')}" required>
-        <input th:unless="*{endDate}" class="input" type="date" th:field="*{endDate}" required>
+        <label class="label">End date:</label>
+        <input class="input"
+               type="date"
+               name="endDate"
+               th:value="*{endDate} != null ? *{#temporals.format(endDate, 'yyyy-MM-dd')} : ${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}"
+               required>
     </div>
 
     <input type="number" th:field="*{projectId}" hidden="true">
     <script>
-        var checkList = document.getElementById('multipleSelect');
-        checkList.onmousedown = function(e) {
+        function autoMultiselect(e){
             e.preventDefault();
-            var select = this;
-            var scroll = select.scrollTop;
+            const select = this;
+            const scroll = select.scrollTop;
             e.target.selected = !e.target.selected;
 
             setTimeout(() => {select.scrollTop = scroll}, 0);
             select.focus();
         }
+
+        function setDateInputs(){
+            const dateInputs = document.querySelectorAll("input[type='date']")
+            let latestDate = new Date();
+            let endDate;
+            for(let task of tasks.selectedOptions) {
+                endDate = new Date(task.getAttribute("data"));
+                if (endDate > latestDate) {
+                    latestDate = endDate;
+                }
+            }
+            for(let dateInput of dateInputs){
+                let endDateString = latestDate.toISOString().split("T")[0]
+                dateInput.setAttribute("min", endDateString)
+                dateInput.setAttribute("value", endDateString)
+                latestDate.setDate(latestDate.getDate() + 1)
+            }
+        }
+        const users = document.getElementById('multipleSelectUser');
+        const tasks = document.getElementById('multipleSelectTask');
+        users.onmousedown = e => autoMultiselect(e);
+        tasks.onmousedown = e => {
+            autoMultiselect(e);
+            setDateInputs();
+        }
+        document.onload = setDateInputs();
+
     </script>
 </div>
 </body>

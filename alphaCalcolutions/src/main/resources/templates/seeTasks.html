@@ -48,10 +48,6 @@
                         th:onclick="'document.location.href=\'/task/edit?taskId=' + *{taskId} + '\''">Edit
                 </button>
                 <button th:id="'activateModal' + ${iter.index}" class="btn btn-danger btn-sm mx-1">Delete</button>
-<!--                <form action="/task/delete" method="post">-->
-<!--                    <input hidden name="taskId" th:value="*{taskId}"/>-->
-<!--                    <input hidden name="projectId" th:value="*{projectId}"/>-->
-<!--                </form>-->
             </div>
         </div>
         <div th:replace="/includes/confirmModal :: confirmModal(title = 'Are you sure you want to delete: \'' + *{title} + '\'',

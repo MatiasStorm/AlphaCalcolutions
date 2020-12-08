@@ -88,6 +88,7 @@ public class MainController {
     public String createTask(Model model ,Task task, @RequestParam int projectId){
         model.addAttribute("task", task);
         model.addAttribute("userList", projectService.getAssignedUsersFromProject(projectId));
+        model.addAttribute("taskList", taskService.getTaskList(projectId));
         model.addAttribute("projectName", "InsertProjectName");
         return "createTask";
     }
@@ -107,6 +108,7 @@ public class MainController {
         Task task = taskService.getTaskById(taskId);
         model.addAttribute("task", task);
         model.addAttribute("userList", projectService.getAssignedUsersFromProject(task.getProjectId()));
+        model.addAttribute("taskList", taskService.getTaskList(task.getProjectId()));
         model.addAttribute("projectName", "InsertProjectName");
         return "editTask";
     }
