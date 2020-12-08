@@ -39,7 +39,7 @@ class UserDAOTest extends AbstractDAOTest{
 
     @Test
     void getUser() {
-        User actualUser = userDAO.getUser(1);
+        User actualUser = userDAO.getUserById(1);
         assertNotNull(actualUser);
         assertEquals(1, actualUser.getUserId());
     }
@@ -58,6 +58,21 @@ class UserDAOTest extends AbstractDAOTest{
         for(int i = 0; i < users.size(); i++){
             assertEquals(ids[i], users.get(i).getUserId());
         }
-
     }
+    
+//    @Test
+//    void updateUser(){
+//
+//        User expectedUser = new User();
+//        userDAO.updateUser(expectedUser);
+//        User actualUser = userDAO.getUserById(expectedUser.getUserId());
+//        assertEquals(expectedUser, actualUser);
+//    }
+//
+//    @Test
+//    void deleteUser() {
+//        userDAO.deleteUser(1);
+//        User u = userDAO.getUserById(1);
+//        assertNull(u);
+//    }
 }

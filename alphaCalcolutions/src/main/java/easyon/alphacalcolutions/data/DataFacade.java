@@ -15,7 +15,6 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Component
@@ -37,7 +36,7 @@ public class DataFacade implements IDataFacade {
     }
 
     public User getUser(int userId) {
-        return USER_DAO.getUser(userId);
+        return USER_DAO.getUserById(userId);
     }
 
     public ArrayList<User> getUsersById(int[] userIds) {

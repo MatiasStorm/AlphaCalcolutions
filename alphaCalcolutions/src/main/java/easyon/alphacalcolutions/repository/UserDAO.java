@@ -65,7 +65,7 @@ public class UserDAO {
         return userList;   //Hvordan kan Tine slippe afsted med return højere oppe ?
     }
 
-    public User getUser(int userId){
+    public User getUserById(int userId){
         try {
             String SQL = selectStatement
                     + " WHERE user_id=?";

@@ -61,7 +61,7 @@ public class MainController {
     @PostMapping("/project/create/submit")
     public String createProjectSubmit(Project project){
         projectService.createProject(project);
-        return "redirect:/project";
+        return "redirect:/task?projectId=" + project.getProjectId();
     }
 
     @PostMapping("/project/edit/submit")
