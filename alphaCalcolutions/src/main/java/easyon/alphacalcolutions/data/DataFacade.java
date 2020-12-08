@@ -35,12 +35,20 @@ public class DataFacade implements IDataFacade {
         return USER_DAO.getUserList();
     }
 
-    public User getUser(int userId) {
+    public User getUserById(int userId) {
         return USER_DAO.getUserById(userId);
     }
 
     public ArrayList<User> getUsersById(int[] userIds) {
         return USER_DAO.getUsersByIds(userIds);
+    }
+
+    public boolean updateUser(User user) {
+        return USER_DAO.updateUser(user);
+    }
+
+    public boolean deleteUser(int userId){
+        return USER_DAO.deleteUser(userId);
     }
 
 
@@ -162,7 +170,7 @@ public class DataFacade implements IDataFacade {
 
         ArrayList<Task> taskList = TASK_DAO.getTaskList(projectId);
         for (Task task : taskList) {
-            task.setTaskLeader(getUser(task.getTaskLeaderId()));
+            task.setTaskLeader(getUserById(task.getTaskLeaderId()));
             task.setAssignedUsers(getUsersById(task.getAssignedUserIds()));
         }
         return taskList;
@@ -189,4 +197,5 @@ public class DataFacade implements IDataFacade {
     public void deleteTask(int taskId) {
         TASK_DAO.deleteTask(taskId);
     }
+
 }

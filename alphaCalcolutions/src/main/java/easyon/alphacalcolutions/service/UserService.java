@@ -23,11 +23,19 @@ public class UserService {
         return dataFacade.getUserList();
     }
 
-    public User getUser(int employeeId){
-        return dataFacade.getUser(employeeId);
+    public User getUserById(int employeeId){
+        return dataFacade.getUserById(employeeId);
     }
 
     public ArrayList<UserTitle> getUserTitleList(){
         return dataFacade.getUserTitleList();
+    }
+
+    public boolean updateUser(User user) {
+        return dataFacade.updateUser(user);
+    }
+
+    public boolean deleteUser(int userId){
+        return dataFacade.deleteUser(userId);
     }
 }

@@ -19,7 +19,7 @@ public interface IDataFacade {
 
     ArrayList<User> getUserList();
 
-    User getUser(int employeeId);
+    User getUserById(int employeeId);
 
     ArrayList<User> getUsersById(int[] userIds);
 

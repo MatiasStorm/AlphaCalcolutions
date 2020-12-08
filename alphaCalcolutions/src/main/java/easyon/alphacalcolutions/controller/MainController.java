@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.List;
-
 @Controller
 public class MainController {
 
@@ -130,26 +128,43 @@ public class MainController {
         return "redirect:/task?projectId=" + projectId;
     }
 
-    @GetMapping("/users")
+    @GetMapping("/user")
     public String users(Model model){
         model.addAttribute("userList" , userService.getUserList());
 //        model.addAttribute("singleUser", userService.getUser(1));
         return "users";
     }
 
-    @GetMapping("/createUser")
+    @GetMapping("/user/create")
     public String createUser(Model model, User user) {
         model.addAttribute("user", user);
         model.addAttribute("userTitleList", userService.getUserTitleList());
         return "createUser";
     }
 
-    @PostMapping("/createUser/submit")
+    @PostMapping("/user/create/submit")
     public String createUserSubmit(User user) {
+        userService.createUser(user);
+        return "redirect:/user";
+    }
 
-       userService.createUser(user);
+    @GetMapping("/user/edit")
+    public String editUser(Model model, @RequestParam int userId){
+        model.addAttribute("user", userService.getUserById(userId));
+        model.addAttribute("userTitleList", userService.getUserTitleList());
+        return "editUser";
+    }
 
-        return "redirect:/users";
+    @PostMapping("/user/edit/submit")
+    public String editUserSubmit(User user){
+        userService.updateUser(user);
+        return "redirect:/user";
+    }
+
+    @PostMapping("/user/delete")
+    public String editUserSubmit(int userId){
+        userService.deleteUser(userId);
+        return "redirect:/user";
     }
 
 

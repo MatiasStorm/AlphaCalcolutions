@@ -11,48 +11,40 @@
 <div th:replace="/includes/topPart :: topPart"></div>
 
 <div class="container justify-content-left">
-    <button class="btn btn-primary btn-lg" onclick="document.location.href='/createUser'">Create new User</button>
+    <button class="btn btn-primary btn-lg" onclick="document.location.href='/user/create'">Create new User</button>
 </div>
 
 <div class="container">
-    <div th:each="user : ${userList}" class="card w-100 mb-1">
+    <div th:each="user, iter : ${userList}" class="card w-100 mb-1" th:object="${user}">
         <div class="card-body row p-1 m-0">
             <span class="w-25">
                 <b>Name:</b>
-                <span th:text="${user.firstName}"></span>
-                <span th:text="${user.lastName}"></span>
+                <span th:text="*{firstName}"></span>
+                <span th:text="*{lastName}"></span>
             </span>
 
             <span class="w-25">
                 <b>Hourly Salary:</b>
-                <span th:text="${user.hourlySalary}"></span>
+                <span th:text="*{hourlySalary}"></span>
             </span>
 
             <span class="w-25">
                 <b>Title:</b>
-                <span th:text="${user.title.userTitle}"></span>
+                <span th:text="*{title.userTitle}"></span>
             </span>
 
             <span class="">
-                <button class="btn btn-secondary btn-sm">Edit</button>
-                <button class="btn btn-danger btn-sm">Delete</button>
+                <button class="btn btn-secondary btn-sm" th:onclick="'document.location.href = \'/user/edit?userId=' + *{userId} + '\''">Edit</button>
+                <button class="btn btn-danger btn-sm" th:id="'activateModal' + ${iter.index}">Delete</button>
             </span>
         </div>
+        <div th:replace="/includes/confirmModal :: confirmModal(title = 'Are you sure you want to delete user: \'' + *{firstName} + ' ' + *{lastName} + '\'',
+                                                                 action = '/user/delete?userId=' + *{userId},
+                                                                 submitText = 'Delete',
+                                                                 num = ${iter.index},
+                                                                 activeBtnId = 'activateModal' + ${iter.index})"
+        ></div>
     </div>
 </div>
-
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-
-<!--<div th:object="${singleUser}">-->
-<!--    <p th:text="*{firstName}"></p>-->
-<!--    <p th:text="*{lastName}"></p>-->
-<!--</div>-->
-
 </body>
 </html>
