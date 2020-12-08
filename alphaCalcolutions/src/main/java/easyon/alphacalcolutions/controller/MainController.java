@@ -79,7 +79,7 @@ public class MainController {
         model.addAttribute("userHours", projectService.getUserHours(projectId));
         model.addAttribute("titleHours", projectService.getTitleHours(projectId));
         model.addAttribute("taskList", taskService.getTaskList(projectId));
-        model.addAttribute("projectId", projectId);
+        model.addAttribute("project", projectService.getProject(projectId));
         return "seeTasks";
     }
 

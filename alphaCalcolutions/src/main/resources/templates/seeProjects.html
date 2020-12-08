@@ -1,12 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>User Page</title>
-    <link rel="stylesheet" type="text/css" href="/main.css">
-    <link rel="stylesheet" type="text/css" href="/topPart.css">
-</head>
+<head th:replace="/includes/head :: head(title = 'Projects')"></head>
 <body>
 
 <div th:replace="/includes/topPart :: topPart"></div>
