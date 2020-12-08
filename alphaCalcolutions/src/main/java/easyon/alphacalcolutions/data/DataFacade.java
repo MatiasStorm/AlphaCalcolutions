@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @Component
@@ -86,6 +87,30 @@ public class DataFacade implements IDataFacade {
         Project project = getProject(projectId);
         if (project.getStartDate() == null || project.getEndDate() == null) return 0;
         return (int) ChronoUnit.DAYS.between(project.getStartDate(), project.getEndDate());
+    }
+
+    public HashMap<String, Integer> getTitleHours(int projectId){
+
+        ArrayList<Task> tasks = getTaskList(projectId);
+
+        HashMap<String , Integer> hashMap = new HashMap<>();
+
+        for (UserTitle userTitle : USER_DAO.getUserTitleList()){
+            hashMap.put(userTitle.getUserTitle(), 0);
+        }
+
+
+        for (Task task : tasks){
+            for (User u : task.getAssignedUsers()){
+                LocalDate startDate = task.getStartDate();
+                LocalDate endDate = task.getEndDate();
+                int oldValue = hashMap.get(u.getTitle().getUserTitle());
+                int hours = (int) ChronoUnit.DAYS.between(startDate, endDate) * 8;
+                hashMap.replace(u.getTitle().getUserTitle(), oldValue + hours);
+
+            }
+        }
+        return hashMap;
     }
 
     //----------------------------- TASK -------------------------------------
