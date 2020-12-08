@@ -20,6 +20,10 @@
     </button>
 </div>
 
+<div th:each="title : ${titleHours}">
+    <p th:text="${title.key}"></p>
+    <p th:text="${title.value}"></p>
+</div>
 <div class="container">
     <div th:each="task,iter : ${taskList}" th:object="${task}" class="card mt-1">
         <div class="card-header background-primary">
