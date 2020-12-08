@@ -16,6 +16,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Component
 public class DataFacade implements IDataFacade {
@@ -66,18 +67,19 @@ public class DataFacade implements IDataFacade {
     }
 
 
+    public Project getProject(int projectId) {
+        return PROJECT_DAO.getProject(projectId);
+    }
 
-    public Project getProject (int projectId) {return PROJECT_DAO.getProject(projectId);}
-
-    public int getProjectCost(int projectId){
+    public int getProjectCost(int projectId) {
         int projectTotalCost = 0;
 
-        for(Task task : getTaskList(projectId)){
+        for (Task task : getTaskList(projectId)) {
             LocalDate startDate = task.getStartDate();
             LocalDate endDate = task.getEndDate();
             int daysWorked = (int) ChronoUnit.DAYS.between(startDate, endDate);
             int totalHoursWorked = daysWorked * 8;
-            for (User user : task.getAssignedUsers()){
+            for (User user : task.getAssignedUsers()) {
                 int hourlySalary = user.getHourlySalary();
                 projectTotalCost += totalHoursWorked * hourlySalary;
             }
@@ -85,25 +87,25 @@ public class DataFacade implements IDataFacade {
         return projectTotalCost;
     }
 
-    public int getProjectDuration(int projectId){
+    public int getProjectDuration(int projectId) {
         Project project = getProject(projectId);
         if (project.getStartDate() == null || project.getEndDate() == null) return 0;
         return (int) ChronoUnit.DAYS.between(project.getStartDate(), project.getEndDate());
     }
 
-    public HashMap<String, Integer> getTitleHours(int projectId){
+    public HashMap<String, Integer> getTitleHours(int projectId) {
 
         ArrayList<Task> tasks = getTaskList(projectId);
 
-        HashMap<String , Integer> hashMap = new HashMap<>();
+        HashMap<String, Integer> hashMap = new HashMap<>();
 
-        for (UserTitle userTitle : USER_DAO.getUserTitleList()){
+        for (UserTitle userTitle : USER_DAO.getUserTitleList()) {
             hashMap.put(userTitle.getUserTitle(), 0);
         }
 
 
-        for (Task task : tasks){
-            for (User u : task.getAssignedUsers()){
+        for (Task task : tasks) {
+            for (User u : task.getAssignedUsers()) {
                 LocalDate startDate = task.getStartDate();
                 LocalDate endDate = task.getEndDate();
                 int oldValue = hashMap.get(u.getTitle().getUserTitle());
@@ -115,16 +117,52 @@ public class DataFacade implements IDataFacade {
         return hashMap;
     }
 
+    //Try to split title hours out on each worker
+    public HashMap<User, Integer> getUserHours(int projectId) {
+        Project project = getProject(projectId);
+        ArrayList<Task> tasks = getTaskList(projectId);
+        ArrayList<User> users = USER_DAO.getUsersByIds(project.getAssignedUserIds());
+
+        HashMap<String, Integer> hashMap = new HashMap<>();
+        HashMap<User, Integer> hashMap1 = new HashMap<>();
+
+
+        for (User user : users) {
+            hashMap.put(user.getUsername(), 0);
+        }
+
+
+        for (Task task : tasks) {
+            for (User user : task.getAssignedUsers()) {
+                LocalDate startDate = task.getStartDate();
+                LocalDate endDate = task.getEndDate();
+                int oldValue = hashMap.get(user.getUsername());
+                int hours = (int) ChronoUnit.DAYS.between(startDate, endDate) * 8;
+                hashMap.replace(user.getUsername(), oldValue + hours);
+            }
+        }
+
+        for (Map.Entry<String, Integer> entry : hashMap.entrySet()){
+            for(User user : users){
+                if (user.getUsername().equals(entry.getKey())){
+                    hashMap1.put(user, entry.getValue());
+                }
+            }
+        }
+
+        return hashMap1;
+    }
+
     //----------------------------- TASK -------------------------------------
 
     public void createTask(Task task) throws CreateUserHasTaskException, CreateTaskHasDependencyException {
         TASK_DAO.createTask(task);
     }
 
-    public ArrayList<Task> getTaskList(int projectId){
+    public ArrayList<Task> getTaskList(int projectId) {
 
         ArrayList<Task> taskList = TASK_DAO.getTaskList(projectId);
-        for (Task task: taskList) {
+        for (Task task : taskList) {
             task.setTaskLeader(getUser(task.getTaskLeaderId()));
             task.setAssignedUsers(getUsersById(task.getAssignedUserIds()));
         }
@@ -132,7 +170,7 @@ public class DataFacade implements IDataFacade {
     }
 
 
-    public Task getTaskById(int taskId){
+    public Task getTaskById(int taskId) {
         return TASK_DAO.getTaskById(taskId);
     }
 

@@ -45,5 +45,9 @@ public class ProjectService {
         return dataFacade.getTitleHours(projectId);
     }
 
+    public HashMap<User , Integer> getUserHours(int projectId){
+        return dataFacade.getUserHours(projectId);
+    }
+
 
 }

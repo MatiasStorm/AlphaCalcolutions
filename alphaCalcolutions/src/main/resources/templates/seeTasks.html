@@ -22,7 +22,16 @@
 
 <div th:each="title : ${titleHours}">
     <p th:text="${title.key}"></p>
-    <p th:text="${title.value}"></p>
+    <br>
+    <div th:each="user : ${userHours}">
+        <div th:if="${title.key == user.key.title.userTitle}">
+        <p th:text="${user.key.firstName} + ' ' + ${user.key.lastName}"></p>
+        <p th:text="${user.value} + ' Hours'"></p>
+            <br>
+        </div>
+    </div>
+    <br>
+    <b th:text="'Total Hours: ' + ${title.value}"></b>
 </div>
 <div class="container">
     <div th:each="task,iter : ${taskList}" th:object="${task}" class="card mt-1">
