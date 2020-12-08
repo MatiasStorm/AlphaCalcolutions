@@ -4,6 +4,15 @@ public class UserTitle {
     private int userTitleId;
     private String userTitle;
 
+    @Override
+    public boolean equals(Object o) {
+        if(this == o) return true;
+        if (o == null || getClass() != o.getClass() ) return false;
+        UserTitle ut = (UserTitle) o;
+        return userTitleId == ut.getUserTitleId()
+                && userTitle.equals(ut.getUserTitle());
+    }
+
     public int getUserTitleId() {
         return userTitleId;
     }

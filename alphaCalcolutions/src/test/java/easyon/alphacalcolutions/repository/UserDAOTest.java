@@ -11,8 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class UserDAOTest extends AbstractDAOTest{
     private UserDAO userDAO = new UserDAO(con);
 
-    @Test
-    void createUser() {
+    private User getExpectedUser(){
         User u = new User();
         u.setFirstName("John");
         u.setLastName("Doe");
@@ -22,13 +21,19 @@ class UserDAOTest extends AbstractDAOTest{
         u.setAdmin(false);
         UserTitle t = new UserTitle();
         t.setUserTitleId(1);
+        t.setUserTitle("Computer Science");
         u.setTitle(t);
+        return u;
+    }
 
-        User actualUser = userDAO.createUser(u);
+    @Test
+    void createUser() {
+        User expectedUser = getExpectedUser();
+        User actualUser = userDAO.createUser(expectedUser);
         assertNotNull(actualUser);
-        assertEquals(u.getAdmin(), actualUser.getAdmin());
-        assertEquals(u.getUsername(), actualUser.getUsername());
-        assertEquals(u.getTitle().getUserTitleId(), actualUser.getTitle().getUserTitleId());
+        assertEquals(expectedUser.getAdmin(), actualUser.getAdmin());
+        assertEquals(expectedUser.getUsername(), actualUser.getUsername());
+        assertEquals(expectedUser.getTitle().getUserTitleId(), actualUser.getTitle().getUserTitleId());
     }
 
     @Test
@@ -60,19 +65,19 @@ class UserDAOTest extends AbstractDAOTest{
         }
     }
     
-//    @Test
-//    void updateUser(){
-//
-//        User expectedUser = new User();
-//        userDAO.updateUser(expectedUser);
-//        User actualUser = userDAO.getUserById(expectedUser.getUserId());
-//        assertEquals(expectedUser, actualUser);
-//    }
-//
-//    @Test
-//    void deleteUser() {
-//        userDAO.deleteUser(1);
-//        User u = userDAO.getUserById(1);
-//        assertNull(u);
-//    }
+    @Test
+    void updateUser(){
+        User expectedUser = getExpectedUser();
+        expectedUser.setUserId(1);
+        userDAO.updateUser(expectedUser);
+        User actualUser = userDAO.getUserById(expectedUser.getUserId());
+        assertEquals(expectedUser, actualUser);
+    }
+
+    @Test
+    void deleteUser() {
+        userDAO.deleteUser(1);
+        User u = userDAO.getUserById(1);
+        assertNull(u);
+    }
 }

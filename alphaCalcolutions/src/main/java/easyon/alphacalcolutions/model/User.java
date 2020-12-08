@@ -11,6 +11,20 @@ public class User {
     private Boolean isAdmin;
 
 
+    @Override
+    public boolean equals(Object o){
+        if(this == o) return true;
+        if(o == null || getClass() != o.getClass()) return false;
+        User u = (User) o;
+        return userId == u.getUserId()
+                && firstName.equals(u.getFirstName())
+                && lastName.equals(u.getLastName())
+                && hourlySalary == u.getHourlySalary()
+                && title.equals(u.getTitle())
+                && username.equals(u.getUsername())
+                && password.equals(u.getPassword())
+                && isAdmin == u.getAdmin();
+    }
 
     public UserTitle getTitle() {
         return title;

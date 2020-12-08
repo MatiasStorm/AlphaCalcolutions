@@ -129,5 +129,42 @@ public class UserDAO {
         return userList;
     }
 
+    public boolean updateUser(User user){
+        try {
+            String updateStatement = "UPDATE user " +
+                    " SET user_first_name = ?, user_last_name = ?, user_title_id = ?, user_hourly_salary = ?, user_username = ?, user_password = ?, is_admin = ?" +
+                    " WHERE user_id = ?";
+            PreparedStatement ps = con.prepareStatement(updateStatement);
+            ps.setString(1, user.getFirstName());
+            ps.setString(2, user.getLastName());
+            ps.setInt(3, user.getTitle().getUserTitleId());
+            ps.setInt(4, user.getHourlySalary());
+            ps.setString(5, user.getUsername());
+            ps.setString(6, user.getPassword());
+            ps.setBoolean(7, user.getAdmin());
+            ps.setInt(8, user.getUserId());
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    public boolean deleteUser(int userId){
+        try {
+            String deleteStatement = "DELETE FROM user WHERE user_id = ?";
+            PreparedStatement ps = con.prepareStatement(deleteStatement);
+            ps.setInt(1, userId);
+            ps.executeUpdate();
+        }
+        catch (SQLException ex){
+            ex.printStackTrace();
+            return false;
+        }
+        return true;
+
+    }
+
 
 }
