@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -17,7 +18,7 @@
 </div>
 
 <div class="container">
-    <div class="card w-100 mb-2" th:each="project : ${projectList}" th:object="${project}">
+    <div class="card w-100 mb-2" th:each="project, iter : ${projectList}" th:object="${project}">
         <h2 class="card-header" th:text="*{title}"></h2>
         <div class="card-body">
             <div class="pb-1">
@@ -40,15 +41,19 @@
                     <a th:href="'/project/edit?projectId=' + *{projectId}">
                         <button class="btn btn-secondary btn-sm">Edit</button>
                     </a>
-                    <form class="d-inline"  action="/project/delete" method="post">
-                        <input hidden name="projectId" th:value="*{projectId}"/>
-                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                    </form>
+                        <button th:id="'activateModal' + ${iter.index}" type="submit" id="delete" class="btn btn-danger btn-sm">Delete</button>
                 </div>
             </div>
         </div>
+        <div th:replace="/includes/confirmModal :: confirmModal(title = 'Are you sure you want to delete: \'' + *{title} + '\'',
+                                                                 action = '/project/delete?projectId=' + *{projectId},
+                                                                 submitText = 'Delete',
+                                                                 num = ${iter.index},
+                                                                 activeBtnId = 'activateModal' + ${iter.index})"
+        ></div>
     </div>
 </div>
+
 
 </body>
 </html>
