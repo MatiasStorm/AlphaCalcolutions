@@ -24,8 +24,14 @@
                 <b>Deadline:</b>
                 <span th:text="*{#temporals.format(endDate, 'EEEE, LLLL d, yyyy')}"></span>
             </div>
-            <p th:text="*{projectCost}"></p>
-            <p th:text="*{projectDuration}"></p>
+            <div class="pb-1">
+                <b>Price: </b>
+                <span th:text="*{projectCost} + ' DKK'"></span>
+            </div>
+            <div class="pb-1">
+                <b>Number of workdays: </b>
+                <span th:text="*{projectDuration}"></span>
+            </div>
             <div class="row m-0 p-0">
                 <button class="btn btn-primary btn-sm"
                         th:onclick="'document.location.href = \'/task?projectId=' + *{projectId} + '\''"
