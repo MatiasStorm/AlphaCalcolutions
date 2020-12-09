@@ -175,18 +175,5 @@ public class MainController {
         userService.deleteUser(userId);
         return "redirect:/user";
     }
-
-
-    @GetMapping("/test")
-    public String tes(Model model){
-        model.addAttribute("users" , userService.getUserList());
-        return "testSelectMultiple";
-    }
-
-    @PostMapping("/testPost")
-    public String testPost(String[] users){
-        return "redirect:/test";
-    }
-
 }
 
