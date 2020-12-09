@@ -16,19 +16,7 @@
     </button>
 </div>
 
-<div th:each="title : ${titleHours}">
-    <p th:text="${title.key}"></p>
-    <br>
-    <div th:each="user : ${userHours}">
-        <div th:if="${title.key == user.key.title.userTitle}">
-        <p th:text="${user.key.firstName} + ' ' + ${user.key.lastName}"></p>
-        <p th:text="${user.value} + ' Hours'"></p>
-            <br>
-        </div>
-    </div>
-    <br>
-    <b th:text="'Total Hours: ' + ${title.value}"></b>
-</div>
+
 <div class="container">
     <div th:each="task,iter : ${taskList}" th:object="${task}" class="card mt-1">
         <div class="card-header background-primary">
@@ -68,6 +56,22 @@
     </div>
 </div>
 
+<div class="container">
+    <h2>Project Hours:</h2>
+    <div th:each="title : ${titleHours}" class="card w-100 mb-1">
+        <div class="card-body ">
+            <div class="row m-0 p-0 justify-content-space-between">
+                <h4 class="p-0 m-0" th:text="${title.key}"></h4>
+                <h4 class="p-0 m-0" th:text="'Total Hours: ' + ${title.value}"></h4>
+            </div>
+            <div th:each="user : ${userHours}" class="row m-0 p-0">
+                <div th:if="${title.key == user.key.title.userTitle}">
+                    <p th:text="${user.key.firstName} + ' ' + ${user.key.lastName} + ' - ' + ${user.value} + ' Hours'"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 </body>
 </html>
