@@ -1,6 +1,5 @@
 package easyon.alphacalcolutions.repository;
 
-import easyon.alphacalcolutions.data.DBManager;
 import easyon.alphacalcolutions.mapper.UserMapper;
 import easyon.alphacalcolutions.mapper.UserTitleMapper;
 import easyon.alphacalcolutions.model.UserTitle;
@@ -9,7 +8,6 @@ import easyon.alphacalcolutions.model.User;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
 
 public class UserDAO {
@@ -17,8 +15,16 @@ public class UserDAO {
     private UserMapper userMapper = new UserMapper();
     private UserTitleMapper userTitleMapper = new UserTitleMapper();
 
-    private String selectStatement = "SELECT * FROM user " +
-            "INNER JOIN user_title ON user.user_title_id = user_title.user_title_id";
+    private String getSelectStatement(String whereClause){
+        String selectStatement = "SELECT * FROM user " +
+                                " LEFT JOIN user_title ON user.user_title_id = user_title.user_title_id ";
+        String orderBy = " ORDER BY user_title.user_title";
+        return selectStatement + whereClause + orderBy;
+    }
+
+    private String getSelectStatement(){
+        return getSelectStatement("");
+    }
 
     public UserDAO(Connection con){
         this.con = con;
@@ -49,8 +55,8 @@ public class UserDAO {
     public ArrayList<User> getUserList(){
         ArrayList<User> userList = new ArrayList<>();
         try {
-            String SQL = selectStatement;
-            PreparedStatement ps = con.prepareStatement(SQL);
+            String selectStatement = getSelectStatement();
+            PreparedStatement ps = con.prepareStatement(selectStatement);
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
@@ -62,14 +68,13 @@ public class UserDAO {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        return userList;   //Hvordan kan Tine slippe afsted med return højere oppe ?
+        return userList;
     }
 
     public User getUserById(int userId){
         try {
-            String SQL = selectStatement
-                    + " WHERE user_id=?";
-            PreparedStatement ps = con.prepareStatement(SQL);
+            String selectStatement = getSelectStatement("WHERE user_id=?");
+            PreparedStatement ps = con.prepareStatement(selectStatement);
             ps.setInt(1, userId);
             ResultSet rs = ps.executeQuery();
             if(rs.next()){
@@ -98,19 +103,16 @@ public class UserDAO {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        return userTitleList;   //Hvordan kan Tine slippe afsted med return højere oppe ?
-    }
-
-    private String createSelect(String where){
-        return selectStatement + " " + where + " GROUP BY user.user_id";
+        return userTitleList;
     }
 
     public ArrayList<User> getUsersByIds(int[] userIds){
         ArrayList<User> userList = new ArrayList<>();
         try {
             String inSql = '(' + String.join(",", Collections.nCopies(userIds.length, "?")) + ") ";
-            String SQL = createSelect(" WHERE user_id IN " + inSql);
-            PreparedStatement ps = con.prepareStatement(SQL);
+            String whereClause = "WHERE user_id IN " + inSql;
+            String selectStatement = getSelectStatement(whereClause);
+            PreparedStatement ps = con.prepareStatement(selectStatement);
             for (int i = 0; i <userIds.length ; i++) {
                 ps.setInt(i + 1, userIds[i]);
             }
@@ -170,8 +172,9 @@ public class UserDAO {
     public ArrayList<User> getUserSearch(String search) {
         ArrayList<User> listOfUsers = new ArrayList<>();
         try {
-            String selectStatement = createSelect("WHERE user.user_first_name LIKE ? OR user.user_last_name LIKE ? ");
-            PreparedStatement ps = con.prepareStatement(selectStatement);
+            String whereClause = "WHERE user.user_first_name LIKE ? OR user.user_last_name LIKE ?";
+            String statement = getSelectStatement(whereClause);
+            PreparedStatement ps = con.prepareStatement(statement);
             search =  "%"+search+"%";
             ps.setString(1, search);
             ps.setString(2, search);
