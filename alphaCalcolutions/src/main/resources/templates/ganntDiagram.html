@@ -32,8 +32,8 @@
         let rows = []
         const tasks = [[${taskList}]]
         for (let task of tasks){
-            console.log([task.taskId + "", task.title, null, new Date(task.startDate), new Date(task.endDate), null, 0, task.taskDependencyIds.join(",")])
-            rows.push([task.taskId + "", task.title, null, new Date(task.startDate), new Date(task.endDate), null, 0, task.taskDependencyIds.join(",")])
+            console.log([task.taskId + "", task.title, task.taskDependencyIds.join(","), new Date(task.startDate), new Date(task.endDate), null, 0, task.taskDependencyIds.join(",")])
+            rows.push([task.taskId + "", task.title, task.taskDependencyIds.join(","), new Date(task.startDate), new Date(task.endDate), null, 0, task.taskDependencyIds.join(",")])
         }
         data.addRows(rows)
 
