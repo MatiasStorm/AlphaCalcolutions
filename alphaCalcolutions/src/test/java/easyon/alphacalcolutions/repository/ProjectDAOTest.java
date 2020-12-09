@@ -2,7 +2,6 @@ package easyon.alphacalcolutions.repository;
 
 import easyon.alphacalcolutions.model.Project;
 import org.junit.jupiter.api.Test;
-import java.text.ParseException;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;

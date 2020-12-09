@@ -1,26 +1,29 @@
 package easyon.alphacalcolutions.repository;
 
-import easyon.alphacalcolutions.data.DBManager;
 import easyon.alphacalcolutions.mapper.ProjectMapper;
 import easyon.alphacalcolutions.model.Project;
 
-import javax.xml.transform.Result;
 import java.lang.reflect.Array;
 import java.sql.*;
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class ProjectDAO {
     private ProjectMapper projectMapper = new ProjectMapper();
     private final Connection con;
-    private String selectStatement = "select project.*, sub_project.assigned_user_ids, MIN(task.task_start_date) as project_start_date, MAX(task.task_end_date) as project_end_date from project " +
-            "JOIN (select project.project_id, GROUP_CONCAT(user_has_project.user_id SEPARATOR ',') as assigned_user_ids from project " +
-            "JOIN user_has_project ON project.project_id = user_has_project.project_id GROUP BY project.project_id) " +
-            "sub_project ON sub_project.project_id = project.project_id " +
-            "LEFT JOIN task ON project.project_id = task.project_id ";
+
+    private String getSelectStatement(String where){
+        String selectStatement = "select project.*, sub_project.assigned_user_ids, MIN(task.task_start_date) as project_start_date, MAX(task.task_end_date) as project_end_date from project " +
+                "JOIN (select project.project_id, GROUP_CONCAT(user_has_project.user_id SEPARATOR ',') as assigned_user_ids from project " +
+                "JOIN user_has_project ON project.project_id = user_has_project.project_id GROUP BY project.project_id) " +
+                "sub_project ON sub_project.project_id = project.project_id " +
+                "LEFT JOIN task ON project.project_id = task.project_id ";
+        return selectStatement + where + " GROUP BY project.project_id";
+    }
+
+    private String getSelectStatement(){
+        return getSelectStatement("");
+    }
 
     public ProjectDAO(Connection con){
         this.con = con;
@@ -74,7 +77,7 @@ public class ProjectDAO {
     public ArrayList<Project> getProjectList(){
         ArrayList<Project> projectList = new ArrayList<>();
         try{
-            PreparedStatement ps = con.prepareStatement(createSelect(" "));
+            PreparedStatement ps = con.prepareStatement(getSelectStatement());
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
@@ -88,14 +91,11 @@ public class ProjectDAO {
         return projectList;
     }
 
-    private String createSelect(String where){
-        return selectStatement + where + " GROUP BY project.project_id";
-    }
 
     public Project getProject (int projectId){
         try{
-            String SQL =  createSelect(" WHERE project.project_id=?");
-            PreparedStatement ps = con.prepareStatement(SQL);
+            String selectStatement =  getSelectStatement(" WHERE project.project_id=?");
+            PreparedStatement ps = con.prepareStatement(selectStatement);
             ps.setInt(1, projectId);
             ResultSet rs = ps.executeQuery();
             if(rs.next()){
