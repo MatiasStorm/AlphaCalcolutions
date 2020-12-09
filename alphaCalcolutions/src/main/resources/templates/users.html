@@ -9,6 +9,17 @@
     <button class="btn btn-primary btn-lg" onclick="document.location.href='/user/create'">Create new User</button>
 </div>
 
+<form name="searchBar" action="/user" method="get">
+    <div class="displayFlexFix">
+        <button class="searchButton">Search</button>
+        <input class="searchField" type="search" name="search" ;>
+    </div>
+</form>
+
+<form name="updateBar" action="/user">
+    <button> Update</button>
+</form>
+
 <div class="container">
     <div th:each="user, iter : ${userList}" class="card w-100 mb-1" th:object="${user}">
         <div class="card-body row p-1 m-0">

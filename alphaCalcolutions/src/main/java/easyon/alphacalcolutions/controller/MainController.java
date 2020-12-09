@@ -11,6 +11,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.context.request.WebRequest;
+
+import java.util.List;
 
 @Controller
 public class MainController {
@@ -132,9 +135,12 @@ public class MainController {
     }
 
     @GetMapping("/user")
-    public String users(Model model){
+    public String users(@RequestParam(required = false) String search, Model model){
         model.addAttribute("userList" , userService.getUserList());
-//        model.addAttribute("singleUser", userService.getUser(1));
+            if(search != null){
+                List<User> searchList = userService.searchUser(search);
+                model.addAttribute("userList", searchList);
+            }
         return "users";
     }
 
@@ -181,4 +187,6 @@ public class MainController {
     public String testPost(String[] users){
         return "redirect:/test";
     }
+
 }
+

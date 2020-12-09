@@ -15,6 +15,7 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Component
@@ -183,4 +184,7 @@ public class DataFacade implements IDataFacade {
         TASK_DAO.deleteTask(taskId);
     }
 
+    public ArrayList<User> getUserSearch(String search) {
+        return USER_DAO.getUserSearch(search);
+    }
 }

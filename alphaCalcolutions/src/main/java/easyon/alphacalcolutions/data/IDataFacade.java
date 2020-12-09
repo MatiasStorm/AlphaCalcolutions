@@ -23,6 +23,8 @@ public interface IDataFacade {
 
     ArrayList<User> getUsersById(int[] userIds);
 
+    ArrayList<User> getUserSearch(String string);
+
     //----------------------------- USER TITLE -------------------------------------
 
     ArrayList<UserTitle> getUserTitleList();

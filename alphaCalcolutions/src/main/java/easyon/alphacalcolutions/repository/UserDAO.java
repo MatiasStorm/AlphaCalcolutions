@@ -102,7 +102,7 @@ public class UserDAO {
     }
 
     private String createSelect(String where){
-        return selectStatement + where + " GROUP BY user.user_id";
+        return selectStatement + " " + where + " GROUP BY user.user_id";
     }
 
     public ArrayList<User> getUsersByIds(int[] userIds){
@@ -167,4 +167,28 @@ public class UserDAO {
     }
 
 
+    public ArrayList<User> getUserSearch(String search) {
+        ArrayList<User> listOfUsers = new ArrayList<>();
+        try {
+            String selectStatement = createSelect("WHERE user.user_first_name LIKE ? OR user.user_last_name LIKE ? ");
+            PreparedStatement ps = con.prepareStatement(selectStatement);
+            search =  "%"+search+"%";
+            ps.setString(1, search);
+            ps.setString(2, search);
+
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                User user = userMapper.mapRow(rs);
+                user.setTitle(userTitleMapper.mapRow(rs));
+                listOfUsers.add(user);
+            }
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return listOfUsers;
+
+    }
 }

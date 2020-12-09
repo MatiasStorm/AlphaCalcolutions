@@ -6,6 +6,7 @@ import easyon.alphacalcolutions.model.UserTitle;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class UserService {
@@ -37,5 +38,9 @@ public class UserService {
 
     public boolean deleteUser(int userId){
         return dataFacade.deleteUser(userId);
+    }
+
+    public List<User> searchUser(String search) {
+        return dataFacade.getUserSearch(search);
     }
 }
