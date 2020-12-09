@@ -5,15 +5,16 @@
 
 <div th:replace="/includes/topPart :: topPart"></div>
 
-<div class="container justify-content-left">
-    <a th:href="'/task/gannt?projectId=' + ${project.projectId}">
-        <button class="btn btn-primary btn-lg">Display GANNT diagram</button>
-    </a>
-</div>
-<div class="container justify-content-left">
+<h1 th:text="${project.title}" class="text-align-center mt-2"></h1>
+
+
+<div class="container justify-content-space-between">
     <button class="btn btn-primary btn-lg"
             th:onclick="'document.location.href=\'/task/create?projectId=' + ${project.projectId} + '\''">Add new task
     </button>
+    <a th:href="'/task/gannt?projectId=' + ${project.projectId}">
+        <button class="btn btn-primary btn-lg">Display GANNT diagram</button>
+    </a>
 </div>
 
 
