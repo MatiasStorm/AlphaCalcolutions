@@ -13,8 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class TaskDAOTest extends AbstractDAOTest{
     private TaskDAO taskDAO = new TaskDAO(con);
 
-    @Test
-    void createTask() throws ParseException, CreateUserHasTaskException, CreateTaskHasDependencyException {
+    private Task getTaskObject(){
         Task t = new Task();
         t.setTitle("New Task");
         t.setTaskLeaderId(2);
@@ -23,16 +22,38 @@ class TaskDAOTest extends AbstractDAOTest{
         t.setEndDate("2020-01-01");
         t.setTaskDependencyIds(new int[]{3,4});
         t.setProjectId(1);
+        return t;
+    }
 
+    @Test
+    void createTask() throws CreateUserHasTaskException, CreateTaskHasDependencyException {
+
+        Task t = getTaskObject();
         Task actualTask = taskDAO.createTask(t);
 
         assertNotNull(actualTask);
         assertEquals(6, actualTask.getTaskId());
 
         actualTask = taskDAO.getTaskById(actualTask.getTaskId());
-        assertNotNull(actualTask);
-        assertEquals(t.getAssignedUserIds().length, actualTask.getAssignedUserIds().length);
-        assertEquals(t.getTaskDependencyIds().length, actualTask.getTaskDependencyIds().length);
+        assertEquals(t, actualTask);
+    }
+
+    @Test
+    void createTaskWithWrongDependencies(){
+        Task t = getTaskObject();
+        t.setTaskDependencyIds(new int[]{-23, 1000, 9392});
+        assertThrows(CreateTaskHasDependencyException.class, () -> {
+            taskDAO.createTask(t);
+        });
+    }
+
+    @Test
+    void createTaskWithWrongAssignedUsers(){
+        Task t = getTaskObject();
+        t.setAssignedUserIds(new int[]{-23, 1000, 9392});
+        assertThrows(CreateUserHasTaskException.class, () -> {
+            taskDAO.createTask(t);
+        });
     }
 
     @Test
