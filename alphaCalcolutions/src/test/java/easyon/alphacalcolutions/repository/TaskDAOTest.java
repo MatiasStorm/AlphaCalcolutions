@@ -67,6 +67,7 @@ class TaskDAOTest extends AbstractDAOTest{
         expectedTask.setProjectId(1);
         taskDAO.updateTask(expectedTask);
         Task actualTask = taskDAO.getTaskById(expectedTask.getTaskId());
+        expectedTask.setAssignedUserIds(new int[]{2,4});
         assertEquals(expectedTask, actualTask);
     }
 

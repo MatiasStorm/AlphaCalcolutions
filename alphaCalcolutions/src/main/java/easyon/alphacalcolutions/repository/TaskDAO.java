@@ -13,6 +13,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.stream.IntStream;
 
 public class TaskDAO {
     private TaskMapper taskMapper = new TaskMapper();
@@ -81,25 +82,34 @@ public class TaskDAO {
 
     private void createUserHasTask(Task task) throws CreateUserHasTaskException {
         try {
-            for (int i = 0; i < task.getAssignedUserIds().length; i++) {
-                String insertStatement = "INSERT INTO user_has_task (user_id, task_id) VALUES (?, ?)";
-                PreparedStatement ps = con.prepareStatement(insertStatement);
-                ps.setInt(1, (int) Array.get(task.getAssignedUserIds(), i));
-                ps.setInt(2, task.getTaskId());
-                ps.executeUpdate();
+            if(!IntStream.of(task.getAssignedUserIds()).anyMatch(x -> x == task.getTaskLeaderId())){
+                insertIntoUserHasTask(new int[] {task.getTaskLeaderId()}, task.getTaskId());
             }
+            insertIntoUserHasTask(task.getAssignedUserIds(), task.getTaskId());
         }
         catch (SQLException e){
             throw new CreateUserHasTaskException();
         }
     }
+
+    private void insertIntoUserHasTask(int[] userIds, int taskId) throws SQLException {
+        for (int i = 0; i < userIds.length; i++) {
+            String insertStatement = "INSERT INTO user_has_task (user_id, task_id) VALUES (?, ?)";
+            PreparedStatement ps = con.prepareStatement(insertStatement);
+            ps.setInt(1, userIds[i]);
+            ps.setInt(2, taskId);
+            ps.executeUpdate();
+        }
+    }
+
     private void createTaskHasDependency(Task task) throws CreateTaskHasDependencyException {
         try {
-            for (int i = 0; i < task.getTaskDependencyIds().length; i++) {
+            int[] dependencies = task.getTaskDependencyIds();
+            for (int i = 0; i < dependencies.length; i++) {
                 String insertStatement = "INSERT INTO task_has_dependency (dependant_task_id, dependency_task_id) VALUES (?, ?)";
                 PreparedStatement ps = con.prepareStatement(insertStatement);
                 ps.setInt(1, task.getTaskId());
-                ps.setInt(2, (int) Array.get(task.getTaskDependencyIds(), i));
+                ps.setInt(2, dependencies[i]);
                 ps.executeUpdate();
             }
         }
