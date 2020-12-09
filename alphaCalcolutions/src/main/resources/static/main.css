@@ -3,6 +3,10 @@ body, html {
     padding: 0;
 }
 
+* {
+    font-family: arial;
+}
+
 a:active, a:hover, a:visited, a:link, a{
     color: black;
     text-decoration: none;
@@ -247,6 +251,25 @@ a:active, a:hover, a:visited, a:link, a{
 .mx-5 {
     margin-left: 5rem !important;
     margin-right: 5rem !important;
+}
+
+.ml-0 {
+    margin-left: 0rem !important;
+}
+.ml-1 {
+    margin-left: 1rem !important;
+}
+.ml-2 {
+    margin-left: 2rem !important;
+}
+.ml-3 {
+    margin-left: 3rem !important;
+}
+.ml-4 {
+    margin-left: 4rem !important;
+}
+.ml-5 {
+    margin-left: 5rem !important;
 }
 
 .mt-0 {
