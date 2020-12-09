@@ -5,20 +5,22 @@
 
 <div th:replace="/includes/topPart :: topPart"></div>
 
-<div class="container justify-content-left">
+<div class="container m-0">
+    <form class="row w-50" action="/user" method="get">
+        <b>Search in users:</b>
+        <input class="input my-1" type="search" name="search" placeholder="Search..."/>
+        <button class="btn btn-sm btn-primary">Search</button>
+        <a href="/user">
+            <button type="button" class="btn btn-sm btn-secondary">Reset</button>
+        </a>
+    </form>
+
+</div>
+
+<div class="container justify-content-left my-0">
     <button class="btn btn-primary btn-lg" onclick="document.location.href='/user/create'">Create new User</button>
 </div>
 
-<form name="searchBar" action="/user" method="get">
-    <div class="displayFlexFix">
-        <button class="searchButton">Search</button>
-        <input class="searchField" type="search" name="search" ;>
-    </div>
-</form>
-
-<form name="updateBar" action="/user">
-    <button> Update</button>
-</form>
 
 <div class="container">
     <div th:each="user, iter : ${userList}" class="card w-100 mb-1" th:object="${user}">
