@@ -17,8 +17,8 @@
 </div>
 
 
-<div class="container">
-    <div th:each="task,iter : ${taskList}" th:object="${task}" class="card mt-1">
+<div class="container justify-content-left">
+    <div th:each="task,iter : ${taskList}" th:object="${task}" class="card m-1">
         <div class="card-header background-primary">
             <h4 class="p-0 m-0" th:text="*{title}"></h4>
         </div>
