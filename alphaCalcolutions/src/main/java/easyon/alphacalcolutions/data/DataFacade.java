@@ -91,7 +91,7 @@ public class DataFacade implements IDataFacade {
 
             int businessDays = calcBusinessDays(startDate, endDate);
 
-            int totalHoursWorked = (int) businessDays * 8;
+            int totalHoursWorked = businessDays * 8;
 
             System.out.println(businessDays);
 
