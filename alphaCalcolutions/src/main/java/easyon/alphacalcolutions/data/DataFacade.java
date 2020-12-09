@@ -104,60 +104,45 @@ public class DataFacade implements IDataFacade {
 
         ArrayList<Task> tasks = getTaskList(projectId);
 
-        HashMap<String, Integer> hashMap = new HashMap<>();
-
-        for (UserTitle userTitle : USER_DAO.getUserTitleList()) {
-            hashMap.put(userTitle.getUserTitle(), 0);
-        }
-
+        HashMap<String, Integer> titleHours = new HashMap<>();
 
         for (Task task : tasks) {
-            for (User u : task.getAssignedUsers()) {
+            for (User user : task.getAssignedUsers()) {
+                if (!titleHours.containsKey(user.getTitle().getUserTitle())){
+                    titleHours.put(user.getTitle().getUserTitle(), 0);
+                }
                 LocalDate startDate = task.getStartDate();
                 LocalDate endDate = task.getEndDate();
-                int oldValue = hashMap.get(u.getTitle().getUserTitle());
+                int oldValue = titleHours.get(user.getTitle().getUserTitle());
                 int hours = (int) ChronoUnit.DAYS.between(startDate, endDate) * 8;
-                hashMap.replace(u.getTitle().getUserTitle(), oldValue + hours);
+                titleHours.replace(user.getTitle().getUserTitle(), oldValue + hours);
 
             }
         }
-        return hashMap;
+        return titleHours;
     }
 
-    //Try to split title hours out on each worker
+
     public HashMap<User, Integer> getUserHours(int projectId) {
         Project project = getProject(projectId);
-        ArrayList<Task> tasks = getTaskList(projectId);
         ArrayList<User> users = USER_DAO.getUsersByIds(project.getAssignedUserIds());
+        ArrayList<Task> tasks = getTaskList(projectId);
+        HashMap<User, Integer> userHours = new HashMap<>();
 
-        HashMap<String, Integer> hashMap = new HashMap<>();
-        HashMap<User, Integer> hashMap1 = new HashMap<>();
-
-
-        for (User user : users) {
-            hashMap.put(user.getUsername(), 0);
+        for (User user : users){
+            userHours.put(user, 0);
         }
-
 
         for (Task task : tasks) {
             for (User user : task.getAssignedUsers()) {
                 LocalDate startDate = task.getStartDate();
                 LocalDate endDate = task.getEndDate();
-                int oldValue = hashMap.get(user.getUsername());
+                int oldValue = userHours.get(user);
                 int hours = (int) ChronoUnit.DAYS.between(startDate, endDate) * 8;
-                hashMap.replace(user.getUsername(), oldValue + hours);
+                userHours.replace(user, oldValue + hours);
             }
         }
-
-        for (Map.Entry<String, Integer> entry : hashMap.entrySet()){
-            for(User user : users){
-                if (user.getUsername().equals(entry.getKey())){
-                    hashMap1.put(user, entry.getValue());
-                }
-            }
-        }
-
-        return hashMap1;
+        return userHours;
     }
 
     //----------------------------- TASK -------------------------------------
