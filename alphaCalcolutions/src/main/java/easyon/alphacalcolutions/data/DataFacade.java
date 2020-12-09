@@ -11,11 +11,14 @@ import easyon.alphacalcolutions.repository.exception.CreateTaskHasDependencyExce
 import easyon.alphacalcolutions.repository.exception.CreateUserHasTaskException;
 import org.springframework.stereotype.Component;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Predicate;
+import java.util.stream.Stream;
 
 @Component
 public class DataFacade implements IDataFacade {
@@ -84,8 +87,13 @@ public class DataFacade implements IDataFacade {
         for (Task task : getTaskList(projectId)) {
             LocalDate startDate = task.getStartDate();
             LocalDate endDate = task.getEndDate();
-            int daysWorked = (int) ChronoUnit.DAYS.between(startDate, endDate);
-            int totalHoursWorked = daysWorked * 8;
+
+            int businessDays = calcBusinessDays(startDate, endDate);
+
+            int totalHoursWorked = (int) businessDays * 8;
+
+            System.out.println(businessDays);
+
             for (User user : task.getAssignedUsers()) {
                 int hourlySalary = user.getHourlySalary();
                 projectTotalCost += totalHoursWorked * hourlySalary;
@@ -94,10 +102,23 @@ public class DataFacade implements IDataFacade {
         return projectTotalCost;
     }
 
+    public int calcBusinessDays(LocalDate startDate, LocalDate endDate){
+        int daysWorked = (int) ChronoUnit.DAYS.between(startDate, endDate) +1;
+
+        Predicate<LocalDate> isWeekend = date -> date.getDayOfWeek() == DayOfWeek.SATURDAY
+                || date.getDayOfWeek() == DayOfWeek.SUNDAY;
+
+        long businessDays = Stream.iterate(startDate, date -> date.plusDays(1)).limit(daysWorked)
+                .filter(isWeekend.negate()).count();
+        return (int) businessDays;
+    }
+
     public int getProjectDuration(int projectId) {
         Project project = getProject(projectId);
         if (project.getStartDate() == null || project.getEndDate() == null) return 0;
-        return (int) ChronoUnit.DAYS.between(project.getStartDate(), project.getEndDate());
+        LocalDate startDate = project.getStartDate();
+        LocalDate endDate = project.getEndDate();
+        return calcBusinessDays(startDate, endDate);
     }
 
     public HashMap<String, Integer> getTitleHours(int projectId) {
