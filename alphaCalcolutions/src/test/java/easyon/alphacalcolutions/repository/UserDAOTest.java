@@ -80,4 +80,21 @@ class UserDAOTest extends AbstractDAOTest{
         User u = userDAO.getUserById(1);
         assertNull(u);
     }
+
+    @Test
+    void getUserSearchSingleUser() {
+        List<User> users = userDAO.getUserSearch("John");
+        assertEquals(1, users.size());
+        assertEquals("John", users.get(0).getFirstName());
+    }
+
+    @Test
+    void getUserSearchMoreUsers() {
+        String searchPhrase = "Doe";
+        List<User> users = userDAO.getUserSearch(searchPhrase);
+        assertEquals(2, users.size());
+        for(User u : users){
+            assertEquals(searchPhrase, u.getLastName());
+        }
+    }
 }

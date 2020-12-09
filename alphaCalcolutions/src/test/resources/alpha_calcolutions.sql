@@ -105,10 +105,10 @@ VALUES ('Graphical designer');
 
 INSERT INTO `user`(user_first_name, user_last_name, user_title_id, user_hourly_salary, user_username, user_password)
 VALUES
-    ('First_name', 'Last_name', 1, 120, 'username', 'password'),
+    ('Jimbo', 'Jackson', 1, 120, 'username', 'password'),
     ('John', 'Doe', 1, 120, 'username2', 'password'),
     ('Jane', 'Doe', 1, 122, 'username3', 'password'),
-    ('Jørgen', 'Jensen', 2, 120, 'username4', 'password');
+    ('Jens', 'Jensen', 2, 120, 'username4', 'password');
 
 
 INSERT INTO `project`(project_title, project_leader_id)
