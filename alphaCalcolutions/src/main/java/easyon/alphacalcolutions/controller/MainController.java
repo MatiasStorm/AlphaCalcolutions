@@ -128,6 +128,13 @@ public class MainController {
         return "redirect:/task?projectId=" + projectId;
     }
 
+    @GetMapping("task/gannt")
+    public String ganntDiagram(@RequestParam int projectId, Model model){
+        model.addAttribute("taskList", taskService.getTaskList(projectId));
+        model.addAttribute("project", projectService.getProject(projectId));
+        return "ganntDiagram";
+    }
+
     @GetMapping("/user")
     public String users(Model model){
         model.addAttribute("userList" , userService.getUserList());

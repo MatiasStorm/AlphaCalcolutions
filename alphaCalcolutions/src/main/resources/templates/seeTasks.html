@@ -6,7 +6,9 @@
 <div th:replace="/includes/topPart :: topPart"></div>
 
 <div class="container justify-content-left">
-    <button class="btn btn-primary btn-lg">Display GANNT diagram</button>
+    <a th:href="'/task/gannt?projectId=' + ${project.projectId}">
+        <button class="btn btn-primary btn-lg">Display GANNT diagram</button>
+    </a>
 </div>
 <div class="container justify-content-left">
     <button class="btn btn-primary btn-lg"
