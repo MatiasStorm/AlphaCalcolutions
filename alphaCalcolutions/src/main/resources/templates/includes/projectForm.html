@@ -16,15 +16,15 @@
             <label class="label">Project leader</label>
             <select class="input" type="text" th:field="*{projectLeaderId}" required>
                 <option th:each="user : ${userList}" th:value="${user.userId}"
-                        th:text="${user.firstName} + ' ' + ${user.lastName}"></option>
+                        th:text="${user.firstName} + ' ' + ${user.lastName} + ' - ' + ${user.title.userTitle}"></option>
             </select>
         </div>
 
         <div class="row">
             <label class="label">Assign project members</label>
-            <select class="input" type="text" th:field="*{assignedUserIds}" multiple id="multipleSelect">
+            <select class="input" type="text" th:field="*{assignedUserIds}" multiple th:size="${userList.size()} > 10 ? '10' : ${userList.size()}" id="multipleSelect">
                 <option th:each="user : ${userList}" th:value="${user.userId}"
-                        th:text="${user.firstName} + ' ' + ${user.lastName}"></option>
+                        th:text="${user.firstName} + ' ' + ${user.lastName} + ' - ' + ${user.title.userTitle}"></option>
             </select>
         </div>
 

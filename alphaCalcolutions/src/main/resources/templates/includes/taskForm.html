@@ -17,20 +17,20 @@
         <label class="label">Task leader:</label>
         <select class="input" type="text" th:field="*{taskLeaderId}" required>
             <option th:each="user : ${userList}" th:value="${user.userId}"
-                    th:text="${user.firstName} + ' ' + ${user.lastName}"></option>
+                    th:text="${user.firstName} + ' ' + ${user.lastName} + ' - ' + ${user.title.userTitle}"></option>
         </select>
     </div>
     <div class="row">
         <label class="label">Assign task members:</label>
-        <select class="input" type="text" th:field="*{assignedUserIds}" multiple id="multipleSelectUser">
+        <select class="input" type="text" th:field="*{assignedUserIds}" th:size="${userList.size()} > 10 ? '10' : ${userList.size()}" multiple id="multipleSelectUser">
             <option th:each="user : ${userList}" th:value="${user.userId}"
-                    th:text="${user.firstName} + ' ' + ${user.lastName}"></option>
+                    th:text="${user.firstName} + ' ' + ${user.lastName} + ' - ' + ${user.title.userTitle}"></option>
         </select>
     </div>
 
     <div class="row">
         <label class="label">Assign task dependencies:</label>
-        <select class="input" type="text" th:field="*{taskDependencyIds}" multiple id="multipleSelectTask">
+        <select class="input" type="text" th:field="*{taskDependencyIds}" th:size="${taskList.size()} > 10 ? '10' : ${taskList.size()}" multiple id="multipleSelectTask">
             <option th:each="dependencyTask : ${taskList}" th:value="${dependencyTask.taskId}"
                     th:text="${dependencyTask.title}" th:data="${dependencyTask.endDate}"></option>
         </select>
