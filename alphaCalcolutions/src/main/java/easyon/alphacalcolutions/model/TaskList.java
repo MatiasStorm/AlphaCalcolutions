@@ -6,10 +6,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class TaskList {
-    ArrayList<Task> tasks;
+    private ArrayList<Task> tasks;
     private final int workHoursPerDay = 8;
-    HashMap<UserTitle, Integer> titleHours = null;
-    HashMap<User, Integer> userHours = null;
+    private HashMap<UserTitle, Integer> titleHours = null;
+    private HashMap<User, Integer> userHours = null;
+    private Integer grandTotalHours = null;
 
     public TaskList(ArrayList<Task> tasks){
         this.tasks = tasks;
@@ -56,5 +57,19 @@ public class TaskList {
             }
         }
         return userHours;
+    }
+
+    public int getGrandTotalHours(){
+        if(grandTotalHours != null){
+            return grandTotalHours;
+        }
+        grandTotalHours = 0;
+        for (Task task : tasks) {
+            for (User user : task.getAssignedUsers()) {
+                int hours = DateUtil.daysBetween(task.getStartDate(), task.getEndDate()) * workHoursPerDay;
+                grandTotalHours += hours;
+            }
+        }
+        return grandTotalHours;
     }
 }
