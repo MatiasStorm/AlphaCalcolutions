@@ -1,16 +1,12 @@
-package easyon.alphacalcolutions.repository;
+package easyon.alphacalcolutions.data.repository;
 
-import easyon.alphacalcolutions.mapper.TaskMapper;
-import easyon.alphacalcolutions.model.Project;
+import easyon.alphacalcolutions.data.mapper.TaskMapper;
 import easyon.alphacalcolutions.model.Task;
-import easyon.alphacalcolutions.repository.exception.CreateTaskHasDependencyException;
-import easyon.alphacalcolutions.repository.exception.CreateUserHasTaskException;
+import easyon.alphacalcolutions.data.repository.exception.CreateTaskHasDependencyException;
+import easyon.alphacalcolutions.data.repository.exception.CreateUserHasTaskException;
 
-import java.lang.reflect.Array;
 import java.sql.*;
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.stream.IntStream;
@@ -114,7 +110,7 @@ public class TaskDAO {
             }
         }
         catch (SQLException e){
-            throw new CreateTaskHasDependencyException();
+            throw new CreateTaskHasDependencyException("Could not create task dependencies");
         }
     }
 

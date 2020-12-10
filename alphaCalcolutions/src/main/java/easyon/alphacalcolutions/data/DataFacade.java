@@ -4,11 +4,11 @@ import easyon.alphacalcolutions.model.Project;
 import easyon.alphacalcolutions.model.Task;
 import easyon.alphacalcolutions.model.UserTitle;
 import easyon.alphacalcolutions.model.User;
-import easyon.alphacalcolutions.repository.ProjectDAO;
-import easyon.alphacalcolutions.repository.TaskDAO;
-import easyon.alphacalcolutions.repository.UserDAO;
-import easyon.alphacalcolutions.repository.exception.CreateTaskHasDependencyException;
-import easyon.alphacalcolutions.repository.exception.CreateUserHasTaskException;
+import easyon.alphacalcolutions.data.repository.ProjectDAO;
+import easyon.alphacalcolutions.data.repository.TaskDAO;
+import easyon.alphacalcolutions.data.repository.UserDAO;
+import easyon.alphacalcolutions.data.repository.exception.CreateTaskHasDependencyException;
+import easyon.alphacalcolutions.data.repository.exception.CreateUserHasTaskException;
 import org.springframework.stereotype.Component;
 
 import java.time.DayOfWeek;
@@ -16,8 +16,6 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
@@ -114,7 +112,7 @@ public class DataFacade implements IDataFacade {
         return (int) businessDays;
     }
 
-    public int getProjectDuration(int projectId) {
+    public int getProjectDuration(int projectId) { // Flyt til project model
         Project project = getProject(projectId);
         if (project.getStartDate() == null || project.getEndDate() == null) return 0;
         LocalDate startDate = project.getStartDate();

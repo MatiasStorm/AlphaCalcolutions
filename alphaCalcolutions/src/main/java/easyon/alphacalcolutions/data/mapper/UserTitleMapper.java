@@ -1,4 +1,4 @@
-package easyon.alphacalcolutions.mapper;
+package easyon.alphacalcolutions.data.mapper;
 
 import easyon.alphacalcolutions.model.UserTitle;
 

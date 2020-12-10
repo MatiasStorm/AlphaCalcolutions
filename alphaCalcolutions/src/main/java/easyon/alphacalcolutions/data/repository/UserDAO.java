@@ -1,7 +1,7 @@
-package easyon.alphacalcolutions.repository;
+package easyon.alphacalcolutions.data.repository;
 
-import easyon.alphacalcolutions.mapper.UserMapper;
-import easyon.alphacalcolutions.mapper.UserTitleMapper;
+import easyon.alphacalcolutions.data.mapper.UserMapper;
+import easyon.alphacalcolutions.data.mapper.UserTitleMapper;
 import easyon.alphacalcolutions.model.UserTitle;
 import easyon.alphacalcolutions.model.User;
 

@@ -1,4 +1,4 @@
-package easyon.alphacalcolutions.repository.exception;
+package easyon.alphacalcolutions.data.repository.exception;
 
 public class CreateUserHasTaskException extends Exception{
 }

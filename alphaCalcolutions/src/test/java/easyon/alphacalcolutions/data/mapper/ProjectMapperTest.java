@@ -1,4 +1,4 @@
-package easyon.alphacalcolutions.mapper;
+package easyon.alphacalcolutions.data.mapper;
 
 import easyon.alphacalcolutions.model.Project;
 import org.junit.jupiter.api.BeforeEach;
@@ -8,8 +8,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import javax.sql.rowset.serial.SerialArray;
-import java.sql.Array;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;

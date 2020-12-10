@@ -1,4 +1,4 @@
-package easyon.alphacalcolutions.repository;
+package easyon.alphacalcolutions.data.repository;
 
 import org.apache.ibatis.jdbc.ScriptRunner;
 import org.junit.jupiter.api.AfterAll;

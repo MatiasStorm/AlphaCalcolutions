@@ -1,6 +1,6 @@
-package easyon.alphacalcolutions.repository;
+package easyon.alphacalcolutions.data.repository;
 
-import easyon.alphacalcolutions.mapper.ProjectMapper;
+import easyon.alphacalcolutions.data.mapper.ProjectMapper;
 import easyon.alphacalcolutions.model.Project;
 
 import java.lang.reflect.Array;

@@ -1,4 +1,4 @@
-package easyon.alphacalcolutions.repository;
+package easyon.alphacalcolutions.data.repository;
 
 import easyon.alphacalcolutions.model.Project;
 import org.junit.jupiter.api.Test;

@@ -4,11 +4,10 @@ import easyon.alphacalcolutions.model.Project;
 import easyon.alphacalcolutions.model.Task;
 import easyon.alphacalcolutions.model.UserTitle;
 import easyon.alphacalcolutions.model.User;
-import easyon.alphacalcolutions.repository.exception.CreateTaskHasDependencyException;
-import easyon.alphacalcolutions.repository.exception.CreateUserHasTaskException;
+import easyon.alphacalcolutions.data.repository.exception.CreateTaskHasDependencyException;
+import easyon.alphacalcolutions.data.repository.exception.CreateUserHasTaskException;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public interface IDataFacade {
 

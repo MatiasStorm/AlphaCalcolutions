@@ -2,14 +2,11 @@ package easyon.alphacalcolutions.service;
 
 import easyon.alphacalcolutions.data.DataFacade;
 import easyon.alphacalcolutions.model.Task;
-import easyon.alphacalcolutions.model.User;
-import easyon.alphacalcolutions.repository.exception.CreateTaskHasDependencyException;
-import easyon.alphacalcolutions.repository.exception.CreateUserHasTaskException;
+import easyon.alphacalcolutions.data.repository.exception.CreateTaskHasDependencyException;
+import easyon.alphacalcolutions.data.repository.exception.CreateUserHasTaskException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 
 @Service
