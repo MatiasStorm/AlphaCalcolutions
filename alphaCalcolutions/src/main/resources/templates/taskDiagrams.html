@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/includes/head :: head(title = 'GANNT Diagram')"></head>
+
+<body>
+    <div th:replace="/includes/topPart :: topPart"></div>
+
+    <a class="ml-2" th:href="'/task?projectId=' + ${project.projectId}">
+        <button class="mt-1 btn btn-sm btn-secondary">Go back</button>
+    </a>
+
+    <h1 class="text-align-center m-0 p-0" th:text="'Diagrams for \'' + ${project.title} + '\''"></h1>
+
+    <h2 class="text-align-center">Gantt Diagram of Project Tasks</h2>
+    <div id="ganttDiagram" class="m-2"></div>
+
+    <h2 class="text-align-center">Timeline Diagram by Title</h2>
+    <div id="titleTimelineDiagram" class="m-2"></div>
+
+    <h2 class="text-align-center">Timeline Diagram by User</h2>
+    <div id="userTimelineDiagram" class="m-2"></div>
+</body>
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript" th:inline="javascript">
+    google.charts.load('current', {'packages':['gantt', 'timeline']});
+    google.charts.setOnLoadCallback(drawCharts);
+
+    function drawCharts(){
+        drawGanttDiagram();
+        drawTitleTimelineDiagram();
+        drawUserTimelineDiagram();
+    }
+
+    function drawGanttDiagram() {
+        let data = new google.visualization.DataTable();
+        data.addColumn('string', 'Task ID');
+        data.addColumn('string', 'Task Name');
+        data.addColumn('string', 'Resource');
+        data.addColumn('date', 'Start Date');
+        data.addColumn('date', 'End Date');
+        data.addColumn('number', 'Duration');
+        data.addColumn('number', 'Percent Complete');
+        data.addColumn('string', 'Dependencies');
+
+        let rows = []
+        const tasks = [[${taskList.tasks}]]
+        for (let task of tasks){
+            rows.push([task.taskId + "", task.title, task.taskDependencyIds.join(","), new Date(task.startDate), new Date(task.endDate), null, 0, task.taskDependencyIds.join(",")])
+        }
+        data.addRows(rows)
+
+        let options = {
+            height: 43 * tasks.length + 40
+        };
+
+        let chart = new google.visualization.Gantt(document.getElementById('ganttDiagram'));
+
+        chart.draw(data, options);
+    }
+
+    function drawTitleTimelineDiagram() {
+        let chart = new google.visualization.Timeline(document.getElementById('titleTimelineDiagram'));
+        let dataTable = new google.visualization.DataTable();
+        dataTable.addColumn({ type: 'string', id: 'Position' });
+        dataTable.addColumn({ type: 'string', id: 'Name' });
+        dataTable.addColumn({ type: 'date', id: 'Start' });
+        dataTable.addColumn({ type: 'date', id: 'End' });
+
+        let rows = []
+        let row
+        const tasks = [[${taskList.tasks}]]
+        for (let task of tasks){
+            for(let user of task.assignedUsers){
+                row = [user.title.userTitle, task.title, new Date(task.startDate), new Date(task.endDate) ]
+                if (!rows.find(r => r[0] === row[0] && r[1] === row[1])){
+                    rows.push(row)
+                }
+            }
+        }
+        let options = {
+            height: 43 * tasks.length + 40
+        };
+        dataTable.addRows(rows);
+
+        chart.draw(dataTable, options);
+    }
+
+    function drawUserTimelineDiagram(){
+        let chart = new google.visualization.Timeline(document.getElementById('userTimelineDiagram'));
+        let dataTable = new google.visualization.DataTable();
+        dataTable.addColumn({ type: 'string', id: 'Position' });
+        dataTable.addColumn({ type: 'string', id: 'Name' });
+        dataTable.addColumn({ type: 'date', id: 'Start' });
+        dataTable.addColumn({ type: 'date', id: 'End' });
+
+        let rows = []
+        const tasks = [[${taskList.tasks}]]
+        let name;
+        for (let task of tasks){
+            for(let user of task.assignedUsers){
+                name = user.firstName + " " + user.lastName + " - " + user.title.userTitle
+                rows.push([name, task.title, new Date(task.startDate), new Date(task.endDate) ])
+            }
+        }
+        let options = {
+            height: 43 * tasks.length + 40
+        };
+        dataTable.addRows(rows);
+
+        chart.draw(dataTable, options);
+
+    }
+</script>
+</html>

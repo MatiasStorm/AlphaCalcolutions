@@ -16,8 +16,8 @@
     <button class="btn btn-primary btn-lg"
             th:onclick="'document.location.href=\'/task/create?projectId=' + ${project.projectId} + '\''">+ Add new task
     </button>
-    <a th:href="'/task/gannt?projectId=' + ${project.projectId}">
-        <button class="btn btn-primary btn-lg">Display GANNT diagram</button>
+    <a th:href="'/task/diagram?projectId=' + ${project.projectId}">
+        <button class="btn btn-primary btn-lg">View Diagrams</button>
     </a>
 </div>
 

@@ -11,7 +11,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.context.request.WebRequest;
 
 import java.util.List;
 
@@ -125,11 +124,11 @@ public class MainController {
         return "redirect:/task?projectId=" + projectId;
     }
 
-    @GetMapping("task/gannt")
+    @GetMapping("task/diagram")
     public String ganntDiagram(@RequestParam int projectId, Model model){
         model.addAttribute("taskList", taskService.getTaskList(projectId));
         model.addAttribute("project", projectService.getProject(projectId));
-        return "ganntDiagram";
+        return "taskDiagrams";
     }
 
     @GetMapping("/user")
