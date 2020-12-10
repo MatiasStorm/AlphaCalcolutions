@@ -1,12 +1,9 @@
 package easyon.alphacalcolutions.model;
 
-import java.text.ParseException;
-import java.time.DayOfWeek;
+import easyon.alphacalcolutions.util.DateUtil;
+
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
-import java.util.function.Predicate;
-import java.util.stream.Stream;
 
 public class Project{
     private int projectId;
@@ -111,17 +108,7 @@ public class Project{
 
     public int getProjectDuration() {
         if (getStartDate() == null || getEndDate() == null) return 0;
-        return calcBusinessDays(startDate, endDate);
+        return DateUtil.businessDaysBetween(startDate, endDate);
     }
 
-    public int calcBusinessDays(LocalDate startDate, LocalDate endDate){
-        int daysWorked = (int) ChronoUnit.DAYS.between(startDate, endDate) +1;
-
-        Predicate<LocalDate> isWeekend = date -> date.getDayOfWeek() == DayOfWeek.SATURDAY
-                || date.getDayOfWeek() == DayOfWeek.SUNDAY;
-
-        long businessDays = Stream.iterate(startDate, date -> date.plusDays(1)).limit(daysWorked)
-                .filter(isWeekend.negate()).count();
-        return (int) businessDays;
-    }
 }

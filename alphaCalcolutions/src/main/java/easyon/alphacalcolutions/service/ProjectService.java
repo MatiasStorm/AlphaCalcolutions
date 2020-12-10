@@ -4,10 +4,9 @@ import easyon.alphacalcolutions.data.DataFacade;
 import easyon.alphacalcolutions.model.Project;
 import easyon.alphacalcolutions.model.Task;
 import easyon.alphacalcolutions.model.User;
+import easyon.alphacalcolutions.util.DateUtil;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -24,7 +23,27 @@ public class ProjectService {
         dataFacade.createProject(project);
     }
 
-    public ArrayList<Project> getProjectList() {return dataFacade.getProjectList();}
+    public ArrayList<Project> getProjectList() {
+        ArrayList<Project> projects = dataFacade.getProjectList();
+        for (Project project : projects) {
+            project.setProjectCost(getProjectCost(project.getProjectId()));
+        }
+        return projects;
+    }
+
+    private int getProjectCost(int projectId) {
+        int projectTotalCost = 0;
+        int businessDays, totalHoursWorked, hourlySalary;
+        for (Task task : dataFacade.getTaskList(projectId)) {
+            businessDays = DateUtil.businessDaysBetween(task.getStartDate(), task.getEndDate());
+            totalHoursWorked = businessDays * 8;
+            for (User user : task.getAssignedUsers()) {
+                hourlySalary = user.getHourlySalary();
+                projectTotalCost += totalHoursWorked * hourlySalary;
+            }
+        }
+        return projectTotalCost;
+    }
 
     public Project getProject(int projectId) {return dataFacade.getProject(projectId);}
 

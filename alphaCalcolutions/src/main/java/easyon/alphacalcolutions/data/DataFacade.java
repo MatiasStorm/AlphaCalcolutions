@@ -68,9 +68,6 @@ public class DataFacade implements IDataFacade {
 
     public ArrayList<Project> getProjectList() {
         ArrayList<Project> projects = PROJECT_DAO.getProjectList();
-        for (Project project : projects) {
-            project.setProjectCost(getProjectCost(project.getProjectId()));
-        }
         return projects;
     }
 
@@ -79,37 +76,7 @@ public class DataFacade implements IDataFacade {
         return PROJECT_DAO.getProject(projectId);
     }
 
-    public int getProjectCost(int projectId) {
-        int projectTotalCost = 0;
 
-        for (Task task : getTaskList(projectId)) {
-            LocalDate startDate = task.getStartDate();
-            LocalDate endDate = task.getEndDate();
-
-            int businessDays = calcBusinessDays(startDate, endDate);
-
-            int totalHoursWorked = businessDays * 8;
-
-            System.out.println(businessDays);
-
-            for (User user : task.getAssignedUsers()) {
-                int hourlySalary = user.getHourlySalary();
-                projectTotalCost += totalHoursWorked * hourlySalary;
-            }
-        }
-        return projectTotalCost;
-    }
-
-    public int calcBusinessDays(LocalDate startDate, LocalDate endDate){
-        int daysWorked = (int) ChronoUnit.DAYS.between(startDate, endDate) +1;
-
-        Predicate<LocalDate> isWeekend = date -> date.getDayOfWeek() == DayOfWeek.SATURDAY
-                || date.getDayOfWeek() == DayOfWeek.SUNDAY;
-
-        long businessDays = Stream.iterate(startDate, date -> date.plusDays(1)).limit(daysWorked)
-                .filter(isWeekend.negate()).count();
-        return (int) businessDays;
-    }
 
     public HashMap<String, Integer> getTitleHours(int projectId) {
 
