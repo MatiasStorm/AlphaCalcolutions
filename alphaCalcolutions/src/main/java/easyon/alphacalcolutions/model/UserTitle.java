@@ -13,6 +13,11 @@ public class UserTitle {
                 && userTitle.equals(ut.getUserTitle());
     }
 
+    @Override
+    public int hashCode() {
+        return userTitleId;
+    }
+
     public int getUserTitleId() {
         return userTitleId;
     }
