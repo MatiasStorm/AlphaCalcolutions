@@ -70,7 +70,6 @@ public class DataFacade implements IDataFacade {
         ArrayList<Project> projects = PROJECT_DAO.getProjectList();
         for (Project project : projects) {
             project.setProjectCost(getProjectCost(project.getProjectId()));
-            project.setProjectDuration(getProjectDuration(project.getProjectId()));
         }
         return projects;
     }
@@ -110,14 +109,6 @@ public class DataFacade implements IDataFacade {
         long businessDays = Stream.iterate(startDate, date -> date.plusDays(1)).limit(daysWorked)
                 .filter(isWeekend.negate()).count();
         return (int) businessDays;
-    }
-
-    public int getProjectDuration(int projectId) { // Flyt til project model
-        Project project = getProject(projectId);
-        if (project.getStartDate() == null || project.getEndDate() == null) return 0;
-        LocalDate startDate = project.getStartDate();
-        LocalDate endDate = project.getEndDate();
-        return calcBusinessDays(startDate, endDate);
     }
 
     public HashMap<String, Integer> getTitleHours(int projectId) {
