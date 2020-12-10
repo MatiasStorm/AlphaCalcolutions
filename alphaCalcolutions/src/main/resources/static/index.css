@@ -1,9 +1,7 @@
 .imgHeader {
-    max-height: 100%;
-    max-width: 100%;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: auto;
+    object-fit: cover;
+    height: 100vh;
+    width: 100%;
 }
 
 .boxLoginText {
