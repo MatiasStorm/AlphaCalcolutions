@@ -78,50 +78,6 @@ public class DataFacade implements IDataFacade {
 
 
 
-    public HashMap<String, Integer> getTitleHours(int projectId) {
-
-        ArrayList<Task> tasks = getTaskList(projectId);
-
-        HashMap<String, Integer> titleHours = new HashMap<>();
-
-        for (Task task : tasks) {
-            for (User user : task.getAssignedUsers()) {
-                if (!titleHours.containsKey(user.getTitle().getUserTitle())){
-                    titleHours.put(user.getTitle().getUserTitle(), 0);
-                }
-                LocalDate startDate = task.getStartDate();
-                LocalDate endDate = task.getEndDate();
-                int oldValue = titleHours.get(user.getTitle().getUserTitle());
-                int hours = (int) ChronoUnit.DAYS.between(startDate, endDate) * 8;
-                titleHours.replace(user.getTitle().getUserTitle(), oldValue + hours);
-
-            }
-        }
-        return titleHours;
-    }
-
-
-    public HashMap<User, Integer> getUserHours(int projectId) {
-        Project project = getProject(projectId);
-        ArrayList<User> users = USER_DAO.getUsersByIds(project.getAssignedUserIds());
-        ArrayList<Task> tasks = getTaskList(projectId);
-        HashMap<User, Integer> userHours = new HashMap<>();
-
-        for (User user : users){
-            userHours.put(user, 0);
-        }
-
-        for (Task task : tasks) {
-            for (User user : task.getAssignedUsers()) {
-                LocalDate startDate = task.getStartDate();
-                LocalDate endDate = task.getEndDate();
-                int oldValue = userHours.get(user);
-                int hours = (int) ChronoUnit.DAYS.between(startDate, endDate) * 8;
-                userHours.replace(user, oldValue + hours);
-            }
-        }
-        return userHours;
-    }
 
     //----------------------------- TASK -------------------------------------
 
@@ -130,7 +86,6 @@ public class DataFacade implements IDataFacade {
     }
 
     public ArrayList<Task> getTaskList(int projectId) {
-
         ArrayList<Task> taskList = TASK_DAO.getTaskList(projectId);
         for (Task task : taskList) {
             task.setTaskLeader(getUserById(task.getTaskLeaderId()));

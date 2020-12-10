@@ -7,6 +7,11 @@ import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 public class DateUtil {
+
+    public static int daysBetween(LocalDate startDate, LocalDate endDate){
+        return (int) ChronoUnit.DAYS.between(startDate, endDate);
+    }
+
     public static int businessDaysBetween(LocalDate startDate, LocalDate endDate){
         int daysWorked = (int) ChronoUnit.DAYS.between(startDate, endDate) +1;
 

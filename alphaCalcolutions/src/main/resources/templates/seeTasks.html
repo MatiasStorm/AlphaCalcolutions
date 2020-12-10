@@ -23,7 +23,7 @@
 
 
 <div class="container justify-content-left">
-    <div th:each="task,iter : ${taskList}" th:object="${task}" class="card m-1">
+    <div th:each="task,iter : ${taskList.tasks}" th:object="${task}" class="card m-1">
         <div class="card-header background-primary">
             <h4 class="p-0 m-0" th:text="*{title}"></h4>
         </div>
@@ -63,13 +63,13 @@
 
 <div class="container">
     <h2>Project Hours:</h2>
-    <div th:each="title : ${titleHours}" class="card w-100 mb-1">
+    <div th:each="title : ${taskList.titleHours}" class="card w-100 mb-1">
         <div class="card-body ">
             <div class="row m-0 p-0 justify-content-space-between">
                 <h4 class="p-0 m-0" th:text="${title.key}"></h4>
                 <h4 class="p-0 m-0" th:text="'Total Hours: ' + ${title.value}"></h4>
             </div>
-            <div th:each="user : ${userHours}" class="row m-0 p-0">
+            <div th:each="user : ${taskList.userHours}" class="row m-0 p-0">
                 <div th:if="${title.key == user.key.title.userTitle}">
                     <p th:text="${user.key.firstName} + ' ' + ${user.key.lastName} + ' - ' + ${user.value} + ' Hours'"></p>
                 </div>

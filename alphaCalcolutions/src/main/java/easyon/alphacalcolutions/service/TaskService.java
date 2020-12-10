@@ -4,6 +4,7 @@ import easyon.alphacalcolutions.data.DataFacade;
 import easyon.alphacalcolutions.model.Task;
 import easyon.alphacalcolutions.data.repository.exception.CreateTaskHasDependencyException;
 import easyon.alphacalcolutions.data.repository.exception.CreateUserHasTaskException;
+import easyon.alphacalcolutions.model.TaskList;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -31,8 +32,9 @@ public class TaskService {
         }
     }
 
-    public ArrayList<Task> getTaskList(int projectId){
-        ArrayList<Task> taskList  = dataFacade.getTaskList(projectId);
+    public TaskList getTaskList(int projectId){
+        ArrayList<Task> tasks  = dataFacade.getTaskList(projectId);
+        TaskList taskList = new TaskList(tasks);
         return taskList;
     }
 

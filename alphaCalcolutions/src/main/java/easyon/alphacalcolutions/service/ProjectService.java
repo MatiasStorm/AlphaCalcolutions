@@ -59,14 +59,4 @@ public class ProjectService {
     public void deleteProject(int projectId) {
         dataFacade.deleteProject(projectId);
     }
-
-    public HashMap<String , Integer> getTitleHours(int projectId){
-        return dataFacade.getTitleHours(projectId);
-    }
-
-    public HashMap<User , Integer> getUserHours(int projectId){
-        return dataFacade.getUserHours(projectId);
-    }
-
-
 }
