@@ -79,8 +79,6 @@ public class MainController {
 
     @GetMapping("/task")
     public String seeTasks(Model model, @RequestParam int projectId){
-//        model.addAttribute("userHours", projectService.getUserHours(projectId));
-//        model.addAttribute("titleHours", projectService.getTitleHours(projectId));
         model.addAttribute("taskList", taskService.getTaskList(projectId));
         model.addAttribute("project", projectService.getProject(projectId));
         return "seeTasks";
@@ -90,7 +88,7 @@ public class MainController {
     public String createTask(Model model ,Task task, @RequestParam int projectId){
         model.addAttribute("task", task);
         model.addAttribute("userList", projectService.getAssignedUsersFromProject(projectId));
-        model.addAttribute("taskList", taskService.getTaskList(projectId));
+        model.addAttribute("taskList", taskService.getTaskList(projectId).getTasks());
         model.addAttribute("projectName", projectService.getProject(projectId).getTitle());
         return "createTask";
     }
@@ -108,7 +106,7 @@ public class MainController {
         Task task = taskService.getTaskById(taskId);
         model.addAttribute("task", task);
         model.addAttribute("userList", projectService.getAssignedUsersFromProject(task.getProjectId()));
-        model.addAttribute("taskList", taskService.getTaskList(task.getProjectId()));
+        model.addAttribute("taskList", taskService.getTaskList(task.getProjectId()).getTasks());
         model.addAttribute("projectName", "InsertProjectName");
         return "editTask";
     }
