@@ -32,9 +32,8 @@
         data.addColumn('string', 'Dependencies');
 
         let rows = []
-        const tasks = [[${taskList}]]
+        const tasks = [[${taskList.tasks}]]
         for (let task of tasks){
-            console.log([task.taskId + "", task.title, task.taskDependencyIds.join(","), new Date(task.startDate), new Date(task.endDate), null, 0, task.taskDependencyIds.join(",")])
             rows.push([task.taskId + "", task.title, task.taskDependencyIds.join(","), new Date(task.startDate), new Date(task.endDate), null, 0, task.taskDependencyIds.join(",")])
         }
         data.addRows(rows)
