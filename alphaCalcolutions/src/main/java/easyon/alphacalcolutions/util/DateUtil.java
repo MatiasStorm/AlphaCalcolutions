@@ -9,10 +9,16 @@ import java.util.stream.Stream;
 public class DateUtil {
 
     public static int daysBetween(LocalDate startDate, LocalDate endDate){
-        return (int) ChronoUnit.DAYS.between(startDate, endDate);
+        /**
+         * Returns days between startDate and endDate inclusive.
+         */
+        return (int) ChronoUnit.DAYS.between(startDate, endDate) + 1;
     }
 
     public static int businessDaysBetween(LocalDate startDate, LocalDate endDate){
+        /**
+         * Returns business days between startDate and endDate inclusive.
+         */
         int daysWorked = (int) ChronoUnit.DAYS.between(startDate, endDate) +1;
 
         Predicate<LocalDate> isWeekend = date -> date.getDayOfWeek() == DayOfWeek.SATURDAY
