@@ -2,8 +2,8 @@ package easyon.alphacalcolutions.data.repository;
 
 import easyon.alphacalcolutions.data.mapper.TaskMapper;
 import easyon.alphacalcolutions.model.Task;
-import easyon.alphacalcolutions.data.repository.exception.CreateTaskHasDependencyException;
-import easyon.alphacalcolutions.data.repository.exception.CreateUserHasTaskException;
+import easyon.alphacalcolutions.model.exception.CreateTaskHasDependencyException;
+import easyon.alphacalcolutions.model.exception.CreateUserHasTaskException;
 
 import java.sql.*;
 import java.text.ParseException;

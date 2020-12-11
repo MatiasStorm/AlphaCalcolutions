@@ -7,17 +7,11 @@ import easyon.alphacalcolutions.model.User;
 import easyon.alphacalcolutions.data.repository.ProjectDAO;
 import easyon.alphacalcolutions.data.repository.TaskDAO;
 import easyon.alphacalcolutions.data.repository.UserDAO;
-import easyon.alphacalcolutions.data.repository.exception.CreateTaskHasDependencyException;
-import easyon.alphacalcolutions.data.repository.exception.CreateUserHasTaskException;
+import easyon.alphacalcolutions.model.exception.CreateTaskHasDependencyException;
+import easyon.alphacalcolutions.model.exception.CreateUserHasTaskException;
 import org.springframework.stereotype.Component;
 
-import java.time.DayOfWeek;
-import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.function.Predicate;
-import java.util.stream.Stream;
 
 @Component
 public class DataFacade implements IDataFacade {

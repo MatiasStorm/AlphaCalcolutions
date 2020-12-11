@@ -1,8 +1,8 @@
 package easyon.alphacalcolutions.data.repository;
 
 import easyon.alphacalcolutions.model.Task;
-import easyon.alphacalcolutions.data.repository.exception.CreateTaskHasDependencyException;
-import easyon.alphacalcolutions.data.repository.exception.CreateUserHasTaskException;
+import easyon.alphacalcolutions.model.exception.CreateTaskHasDependencyException;
+import easyon.alphacalcolutions.model.exception.CreateUserHasTaskException;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;

@@ -4,8 +4,8 @@ import easyon.alphacalcolutions.model.Project;
 import easyon.alphacalcolutions.model.Task;
 import easyon.alphacalcolutions.model.UserTitle;
 import easyon.alphacalcolutions.model.User;
-import easyon.alphacalcolutions.data.repository.exception.CreateTaskHasDependencyException;
-import easyon.alphacalcolutions.data.repository.exception.CreateUserHasTaskException;
+import easyon.alphacalcolutions.model.exception.CreateTaskHasDependencyException;
+import easyon.alphacalcolutions.model.exception.CreateUserHasTaskException;
 
 import java.util.ArrayList;
 

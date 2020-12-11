@@ -1,4 +1,4 @@
-package easyon.alphacalcolutions.data.repository.exception;
+package easyon.alphacalcolutions.model.exception;
 
 public class CreateTaskHasDependencyException extends Exception{
     public CreateTaskHasDependencyException(String msg){
