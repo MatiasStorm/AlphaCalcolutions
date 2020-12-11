@@ -65,10 +65,7 @@ public class TaskList {
         }
         grandTotalHours = 0;
         for (Task task : tasks) {
-            for (User user : task.getAssignedUsers()) {
-                int hours = DateUtil.daysBetween(task.getStartDate(), task.getEndDate()) * workHoursPerDay;
-                grandTotalHours += hours;
-            }
+            grandTotalHours += DateUtil.daysBetween(task.getStartDate(), task.getEndDate()) * workHoursPerDay * task.getAssignedUsers().size();
         }
         return grandTotalHours;
     }

@@ -60,9 +60,7 @@ public class Project{
     }
 
     public void setStartDate(String startDate) {
-        if (startDate != null) {
-            this.startDate = LocalDate.parse(startDate);
-        }
+        this.startDate = startDate == null ? null : LocalDate.parse(startDate);
     }
 
     public LocalDate getEndDate() {
@@ -70,9 +68,7 @@ public class Project{
     }
 
     public void setEndDate(String endDate) {
-        if (endDate != null) {
-            this.endDate = LocalDate.parse(endDate);
-        }
+        this.endDate = endDate == null ? null : LocalDate.parse(endDate);
     }
 
     public int getProjectCost() {
@@ -107,7 +103,7 @@ public class Project{
     }
 
     public int getProjectDuration() {
-        if (getStartDate() == null || getEndDate() == null) return 0;
+        if (startDate == null || endDate == null) return 0;
         return DateUtil.businessDaysBetween(startDate, endDate);
     }
 
