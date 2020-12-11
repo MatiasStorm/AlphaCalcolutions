@@ -41,5 +41,9 @@ public interface IDataFacade {
     void createTask(Task task) throws CreateUserHasTaskException, CreateTaskHasDependencyException;
     ArrayList<Task> getTaskList(int projectId);
     Task getTaskById(int taskId);
+
+    void updateProject(Project project);
+
+    void deleteProject(int projectId);
 }
 

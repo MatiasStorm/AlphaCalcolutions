@@ -1,6 +1,7 @@
 package easyon.alphacalcolutions.service;
 
 import easyon.alphacalcolutions.data.DataFacade;
+import easyon.alphacalcolutions.data.IDataFacade;
 import easyon.alphacalcolutions.model.Project;
 import easyon.alphacalcolutions.model.Task;
 import easyon.alphacalcolutions.model.User;
@@ -13,9 +14,9 @@ import java.util.HashMap;
 @Service
 public class ProjectService {
 
-    private final DataFacade dataFacade;
+    private final IDataFacade dataFacade;
 
-    public ProjectService(DataFacade dataFacade) {
+    public ProjectService(IDataFacade dataFacade) {
         this.dataFacade = dataFacade;
     }
 
