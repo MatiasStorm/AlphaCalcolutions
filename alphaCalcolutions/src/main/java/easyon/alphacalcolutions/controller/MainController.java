@@ -3,6 +3,8 @@ package easyon.alphacalcolutions.controller;
 import easyon.alphacalcolutions.model.Project;
 import easyon.alphacalcolutions.model.Task;
 import easyon.alphacalcolutions.model.User;
+import easyon.alphacalcolutions.model.exception.CreateTaskHasDependencyException;
+import easyon.alphacalcolutions.model.exception.CreateUserHasTaskException;
 import easyon.alphacalcolutions.service.ProjectService;
 import easyon.alphacalcolutions.service.TaskService;
 import easyon.alphacalcolutions.service.UserService;
@@ -94,9 +96,15 @@ public class MainController {
 
     @PostMapping("/task/create/submit")
     public String createTaskSubmit(Task task, Model model){
-        if (taskService.createTask(task)){
+        String errorMsg;
+        try {
+            taskService.createTask(task);
             return "redirect:/task?projectId=" + task.getProjectId();
         }
+         catch (CreateUserHasTaskException | CreateTaskHasDependencyException e) {
+            errorMsg = e.getMessage();
+        }
+        model.addAttribute("errorMsg", errorMsg);
         return createTask(model, task, task.getProjectId());
     }
 
@@ -112,9 +120,14 @@ public class MainController {
 
     @PostMapping("/task/edit/submit")
     public String editTaskSubmit(Task task, Model model){
-        if(taskService.updateTask(task)) {
+        String errorMsg;
+        try {
+            taskService.updateTask(task);
             return "redirect:/task?projectId=" + task.getProjectId();
+        } catch (CreateUserHasTaskException | CreateTaskHasDependencyException e) {
+            errorMsg = e.getMessage();
         }
+        model.addAttribute("errorMsg", errorMsg);
         return editTask(model, task.getTaskId());
     }
 

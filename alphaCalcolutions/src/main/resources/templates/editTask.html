@@ -9,7 +9,7 @@
 
 <div class="container justify-content-center">
     <form action="/task/edit/submit" method="post" class="w-25">
-        <div th:replace="/includes/taskForm :: taskForm(task=${task}, userList=${userList})"></div>
+        <div th:replace="/includes/taskForm :: taskForm(task=${task}, userList=${userList}, errorMsg=${errorMsg})"></div>
         <div class="row mt-2">
             <button class="btn btn-secondary btn-md px-2" type="button"
                     th:onclick="'document.location.href = \'/task?projectId=' + ${task.projectId} + '\''"

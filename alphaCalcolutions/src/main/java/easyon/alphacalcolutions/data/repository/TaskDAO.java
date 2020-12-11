@@ -110,7 +110,7 @@ public class TaskDAO {
             }
         }
         catch (SQLException e){
-            throw new CreateTaskHasDependencyException("Could not create task dependencies");
+            throw new CreateTaskHasDependencyException();
         }
     }
 

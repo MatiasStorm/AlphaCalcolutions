@@ -19,17 +19,8 @@ public class TaskService {
         this.dataFacade = dataFacade;
     }
 
-    public boolean createTask(Task task){
-        try {
-            dataFacade.createTask(task);
-            return true;
-        }
-        catch (CreateUserHasTaskException ex){
-            return false;
-        }
-        catch (CreateTaskHasDependencyException ex){
-            return false;
-        }
+    public void createTask(Task task) throws CreateUserHasTaskException, CreateTaskHasDependencyException {
+        dataFacade.createTask(task);
     }
 
     public TaskList getTaskList(int projectId){
@@ -43,17 +34,8 @@ public class TaskService {
     }
 
 
-    public boolean updateTask(Task task) {
-        try {
-            dataFacade.updateTask(task);
-            return true;
-        }
-        catch (CreateUserHasTaskException ex){
-            return false;
-        }
-        catch (CreateTaskHasDependencyException ex){
-            return false;
-        }
+    public void updateTask(Task task) throws CreateUserHasTaskException, CreateTaskHasDependencyException {
+        dataFacade.updateTask(task);
     }
 
     public void deleteTask(int taskId) {

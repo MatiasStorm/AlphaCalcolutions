@@ -6,7 +6,7 @@
     <title>Task Form</title>
 </head>
 <body>
-<div th:fragment="taskForm (task, userList)" th:object="${task}">
+<div th:fragment="taskForm (task, userList, errorMsg)" th:object="${task}">
     <input hidden th:field="*{taskId}">
     <div class="row m-0">
         <label class="label">Title:</label>
@@ -53,6 +53,10 @@
                name="endDate"
                th:value="*{endDate} != null ? *{#temporals.format(endDate, 'yyyy-MM-dd')} : ${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}"
                required>
+    </div>
+
+    <div class="row" th:if="${errorMsg}">
+        <label th:text="${errorMsg}" style="color: red"></label>
     </div>
 
     <input type="number" th:field="*{projectId}" hidden="true">
