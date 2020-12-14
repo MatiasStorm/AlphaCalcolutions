@@ -118,8 +118,8 @@ public class TaskDAO {
         ArrayList<Task> taskList = new ArrayList<>();
         try{
 
-            String selectStatment = getSelectStatement(" WHERE task.project_id=?");
-            PreparedStatement ps = con.prepareStatement(selectStatment);
+            String selectStatement = getSelectStatement(" WHERE task.project_id=?");
+            PreparedStatement ps = con.prepareStatement(selectStatement);
             ps.setInt(1, projectId);
             ResultSet rs = ps.executeQuery();
 
