@@ -138,7 +138,7 @@ public class MainController {
     }
 
     @GetMapping("task/diagram")
-    public String ganntDiagram(@RequestParam int projectId, Model model){
+    public String displayDiagrams(@RequestParam int projectId, Model model){
         model.addAttribute("taskList", taskService.getTaskList(projectId));
         model.addAttribute("project", projectService.getProject(projectId));
         return "taskDiagrams";
