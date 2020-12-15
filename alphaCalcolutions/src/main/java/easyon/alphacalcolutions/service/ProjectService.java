@@ -1,6 +1,5 @@
 package easyon.alphacalcolutions.service;
 
-import easyon.alphacalcolutions.data.DataFacade;
 import easyon.alphacalcolutions.data.IDataFacade;
 import easyon.alphacalcolutions.model.Project;
 import easyon.alphacalcolutions.model.Task;
@@ -9,7 +8,6 @@ import easyon.alphacalcolutions.util.DateUtil;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 @Service
 public class ProjectService {
@@ -50,7 +48,7 @@ public class ProjectService {
 
     public ArrayList<User> getAssignedUsersFromProject(int projectId){
         int[] assignedUsers = dataFacade.getProject(projectId).getAssignedUserIds();
-        return dataFacade.getUsersById(assignedUsers);
+        return dataFacade.getUsersByIds(assignedUsers);
     }
 
     public void updateProject(Project project) {

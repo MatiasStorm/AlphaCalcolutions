@@ -16,11 +16,11 @@ import java.sql.SQLException;
 public abstract class AbstractDAOTest {
     protected static Connection con;
     @BeforeAll
-    static void setupAll() throws SQLException, ClassNotFoundException {
+    static void setupAll() throws SQLException{
         createConnectionToH2();
     }
 
-    private static void createConnectionToH2() throws SQLException, ClassNotFoundException {
+    private static void createConnectionToH2() throws SQLException{
         String dbUrl = "jdbc:h2:~/alpha_calcolutions";
         String user = "sa";
         String pass = "";

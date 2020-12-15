@@ -24,8 +24,8 @@ public class UserService {
         return dataFacade.getUserList();
     }
 
-    public User getUserById(int employeeId){
-        return dataFacade.getUserById(employeeId);
+    public User getUserById(int userId){
+        return dataFacade.getUserById(userId);
     }
 
     public ArrayList<UserTitle> getUserTitleList(){

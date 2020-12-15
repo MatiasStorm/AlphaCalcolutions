@@ -18,9 +18,9 @@ public interface IDataFacade {
 
     ArrayList<User> getUserList();
 
-    User getUserById(int employeeId);
+    User getUserById(int userId);
 
-    ArrayList<User> getUsersById(int[] userIds);
+    ArrayList<User> getUsersByIds(int[] userIds);
 
     ArrayList<User> getUserSearch(String string);
 
@@ -36,14 +36,16 @@ public interface IDataFacade {
 
     Project getProject(int projectId);
 
-    //----------------------------- TASK -------------------------------------
-
-    void createTask(Task task) throws CreateUserHasTaskException, CreateTaskHasDependencyException;
-    ArrayList<Task> getTaskList(int projectId);
-    Task getTaskById(int taskId);
-
     void updateProject(Project project);
 
     void deleteProject(int projectId);
+
+    //----------------------------- TASK -------------------------------------
+
+    void createTask(Task task) throws CreateUserHasTaskException, CreateTaskHasDependencyException;
+
+    ArrayList<Task> getTaskList(int projectId);
+
+    Task getTaskById(int taskId);
 }
 

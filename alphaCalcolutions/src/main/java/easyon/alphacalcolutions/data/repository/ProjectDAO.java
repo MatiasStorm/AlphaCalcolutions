@@ -12,6 +12,14 @@ public class ProjectDAO {
     private ProjectMapper projectMapper = new ProjectMapper();
     private final Connection con;
 
+    public ProjectDAO(Connection con){
+        this.con = con;
+    }
+
+    private String getSelectStatement(){
+        return getSelectStatement("");
+    }
+
     private String getSelectStatement(String where){
         String selectStatement = "select project.*, sub_project.assigned_user_ids, MIN(task.task_start_date) as project_start_date, MAX(task.task_end_date) as project_end_date from project " +
                 "JOIN (select project.project_id, GROUP_CONCAT(user_has_project.user_id SEPARATOR ',') as assigned_user_ids from project " +
@@ -21,13 +29,7 @@ public class ProjectDAO {
         return selectStatement + where + " GROUP BY project.project_id";
     }
 
-    private String getSelectStatement(){
-        return getSelectStatement("");
-    }
 
-    public ProjectDAO(Connection con){
-        this.con = con;
-    }
 
     public void createProject(Project project) {
         try {

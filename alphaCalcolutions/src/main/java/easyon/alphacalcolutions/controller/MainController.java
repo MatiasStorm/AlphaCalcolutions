@@ -145,7 +145,7 @@ public class MainController {
     }
 
     @GetMapping("/user")
-    public String users(@RequestParam(required = false) String search, Model model){
+    public String searchUsers(@RequestParam(required = false) String search, Model model){
         model.addAttribute("userList" , userService.getUserList());
             if(search != null){
                 List<User> searchList = userService.searchUser(search);
