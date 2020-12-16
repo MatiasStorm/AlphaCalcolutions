@@ -30,6 +30,31 @@ public class UserDAO {
         this.con = con;
     }
 
+    public User login(String username, String password){
+        ArrayList<User> users = new ArrayList<>();
+        try{
+            String selectStatement = getSelectStatement(" WHERE user_username=? AND user_password=?");
+            PreparedStatement ps = con.prepareStatement(selectStatement);
+            ps.setString(1, username);
+            ps.setString(2, password);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()){
+                User user = userMapper.mapRow(rs);
+                user.setTitle(userTitleMapper.mapRow(rs));
+                users.add(user);
+            }
+
+            if (users.size() == 0){
+                return null;
+            }
+
+        } catch (SQLException ex) {
+           ex.printStackTrace();
+        }
+        return users.get(0);
+    }
+
     public User createUser(User user){
         try {
             String SQL = "INSERT INTO user (user_first_name, user_last_name, user_title_id, user_hourly_salary, user_username, user_password, is_admin) VALUES (?, ?, ?, ?, ?, ?, ?)";

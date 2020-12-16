@@ -22,6 +22,10 @@ public class DataFacade implements IDataFacade {
 
     //----------------------------- USER -------------------------------------
 
+   public User login(String username, String password){
+      return USER_DAO.login(username, password);
+   }
+
     public void createUser(User user) {
         USER_DAO.createUser(user);
     }
