@@ -43,4 +43,8 @@ public class UserService {
     public List<User> searchUser(String search) {
         return dataFacade.getUserSearch(search);
     }
+
+    public User login(String email, String pwd) {
+        return null;
+    }
 }

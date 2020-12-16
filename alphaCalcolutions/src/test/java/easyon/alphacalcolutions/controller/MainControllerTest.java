@@ -1,5 +1,6 @@
 package easyon.alphacalcolutions.controller;
 
+import easyon.alphacalcolutions.model.Task;
 import easyon.alphacalcolutions.model.User;
 import easyon.alphacalcolutions.model.UserTitle;
 import easyon.alphacalcolutions.service.ProjectService;
@@ -71,75 +72,17 @@ class MainControllerTest {
     }
 
     @Test
-    void editProject() {
-
+    void createTaskSubmit() throws Exception {
+        mockMvc.perform(post("/task/create/submit").param("projectId", "1"))
+                .andExpect(status().is(302))
+                .andExpect(redirectedUrl("/task?projectId=1"));
     }
 
-    @Test
-    void seeProjects() {
-    }
 
     @Test
-    void createProjectSubmit() {
-    }
-
-    @Test
-    void editProjectSubmit() {
-    }
-
-    @Test
-    void deleteProject() {
-    }
-
-    @Test
-    void seeTasks() {
-    }
-
-    @Test
-    void createTask() {
-    }
-
-    @Test
-    void createTaskSubmit() {
-    }
-
-    @Test
-    void editTask() {
-    }
-
-    @Test
-    void editTaskSubmit() {
-    }
-
-    @Test
-    void deleteTask() {
-    }
-
-    @Test
-    void ganntDiagram() {
-    }
-
-    @Test
-    void users() {
-    }
-
-    @Test
-    void createUser() {
-    }
-
-    @Test
-    void createUserSubmit() {
-    }
-
-    @Test
-    void editUser() {
-    }
-
-    @Test
-    void editUserSubmit() {
-    }
-
-    @Test
-    void testEditUserSubmit() {
+    void createUserSubmit() throws Exception {
+        mockMvc.perform(post("/user/create/submit"))
+                .andExpect(status().is(302))
+                .andExpect(redirectedUrl("/user"));
     }
 }
