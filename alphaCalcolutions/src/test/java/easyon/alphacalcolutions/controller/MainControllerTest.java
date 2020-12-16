@@ -11,8 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import static org.mockito.BDDMockito.given;
@@ -47,14 +50,28 @@ class MainControllerTest {
     }
 
     @Test
-    void indexSubmit() throws Exception {
+    void indexSubmitNoLogin() throws Exception {
         mockMvc.perform(post("/index/submit"))
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString("Username eller Password er forkert")));
+    }
+
+    @Test
+    void indexSubmitWithLogin() throws Exception {
+        String username = "username";
+        String password = "password";
+        MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
+        body.add("username", username);
+        body.add("password", password);
+        given(userService.login(username, password)).willReturn(new User());
+        mockMvc.perform(post("/index/submit")
+                        .params(body))
                 .andExpect(status().is(302))
                 .andExpect(redirectedUrl("/project"));
     }
 
     @Test
-    void createProject() throws Exception {
+    void createProjectUnauthorized() throws Exception {
         ArrayList<User> userList = new ArrayList<>();
         User u = new User();
         u.setFirstName("John");
@@ -67,8 +84,8 @@ class MainControllerTest {
         given(userService.getUserList()).willReturn(userList);
 
         mockMvc.perform(get("/project/create"))
-                .andExpect(status().isOk())
-                .andExpect(content().string(containsString(u.getFirstName())));
+                .andExpect(status().is(302))
+                .andExpect(redirectedUrl("/"));
     }
 
     @Test
