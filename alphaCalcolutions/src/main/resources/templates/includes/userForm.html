@@ -28,7 +28,7 @@
 
     <div class="row">
         <label class="label">Hourly Salary (DKK)</label>
-        <input class="input" type="number" th:field="*{hourlySalary}" required>
+        <input class="input" type="number" th:field="*{hourlySalary}" required min="0" max="20000">
     </div>
 
     <div class="row">

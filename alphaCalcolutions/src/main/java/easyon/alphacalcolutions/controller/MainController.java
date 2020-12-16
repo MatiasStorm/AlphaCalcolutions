@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.context.request.WebRequest;
 
 import java.util.List;
 
@@ -35,8 +36,28 @@ public class MainController {
     }
 
     @PostMapping("/index/submit")
-    public String indexSubmit(){
+    public String indexSubmit(WebRequest request, Model model){
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+
+        User user = userService.login(username, password);
+        if(user == null){
+            model.addAttribute("loginError", true);
+            return "index";
+        }
+        setSessionInfo(request, user);
         return "redirect:/project";
+    }
+
+    @GetMapping("/logout")
+    public String logout(WebRequest request){
+        setSessionInfo(request, null);
+        return "redirect:/";
+    }
+
+    private void setSessionInfo(WebRequest request, User user) {
+        // Place user info on session
+        request.setAttribute("user", user, WebRequest.SCOPE_SESSION);
     }
 
     @GetMapping("/project/create")
@@ -54,9 +75,14 @@ public class MainController {
     }
 
     @GetMapping("/project")
-    public String seeProjects(Model model){
+    public String seeProjects(Model model, WebRequest request){
+        User loggedInUser = (User) request.getAttribute("user", WebRequest.SCOPE_SESSION);
+        if (loggedInUser == null) { // If your aren't logged in, redirect to index.html
+            return "redirect:/";
+        }
         model.addAttribute("projectList", projectService.getProjectList());
         model.addAttribute("singleProject", projectService.getProject(2));
+        model.addAttribute("isAdmin", loggedInUser.getAdmin());
         return "seeProjects";
     }
 
@@ -138,14 +164,14 @@ public class MainController {
     }
 
     @GetMapping("task/diagram")
-    public String ganntDiagram(@RequestParam int projectId, Model model){
+    public String displayDiagrams(@RequestParam int projectId, Model model){
         model.addAttribute("taskList", taskService.getTaskList(projectId));
         model.addAttribute("project", projectService.getProject(projectId));
         return "taskDiagrams";
     }
 
     @GetMapping("/user")
-    public String users(@RequestParam(required = false) String search, Model model){
+    public String searchUsers(@RequestParam(required = false) String search, Model model){
         model.addAttribute("userList" , userService.getUserList());
             if(search != null){
                 List<User> searchList = userService.searchUser(search);

@@ -8,9 +8,6 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
-/*
-    Design pattern: Singleton
- */
 public class DBManager {
     private static String user;
     private static String password;

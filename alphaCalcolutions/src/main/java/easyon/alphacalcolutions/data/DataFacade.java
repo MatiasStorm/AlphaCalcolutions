@@ -15,7 +15,6 @@ import java.util.ArrayList;
 
 @Component
 public class DataFacade implements IDataFacade {
-
     private final UserDAO USER_DAO = new UserDAO(DBManager.getConnection());
     private final ProjectDAO PROJECT_DAO = new ProjectDAO(DBManager.getConnection());
     private final TaskDAO TASK_DAO = new TaskDAO(DBManager.getConnection());
@@ -35,7 +34,7 @@ public class DataFacade implements IDataFacade {
         return USER_DAO.getUserById(userId);
     }
 
-    public ArrayList<User> getUsersById(int[] userIds) {
+    public ArrayList<User> getUsersByIds(int[] userIds) {
         return USER_DAO.getUsersByIds(userIds);
     }
 
@@ -83,7 +82,7 @@ public class DataFacade implements IDataFacade {
         ArrayList<Task> taskList = TASK_DAO.getTaskList(projectId);
         for (Task task : taskList) {
             task.setTaskLeader(getUserById(task.getTaskLeaderId()));
-            task.setAssignedUsers(getUsersById(task.getAssignedUserIds()));
+            task.setAssignedUsers(getUsersByIds(task.getAssignedUserIds()));
         }
         return taskList;
     }

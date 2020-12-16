@@ -74,7 +74,7 @@ class StubDataFacade implements IDataFacade {
     }
 
     @Override
-    public ArrayList<User> getUsersById(int[] userIds) {
+    public ArrayList<User> getUsersByIds(int[] userIds) {
         return null;
     }
 

@@ -12,7 +12,7 @@ Navigate to `DateNRate/DateNRate/src/main/resources` and create a new file calle
 
 Fill it with the following:
 ```
-url=jdbc:mysql://localhost:3306/alph_calcolutions?serverTimezone=UTC
+url=jdbc:mysql://localhost:3306/alpha_calcolutions?serverTimezone=UTC
 user=[username]
 password=[password]
 ```
