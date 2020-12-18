@@ -197,13 +197,20 @@ public class UserDAO {
     public ArrayList<User> getUserSearch(String search) {
         ArrayList<User> listOfUsers = new ArrayList<>();
         try {
-            String whereClause = "WHERE user.user_first_name LIKE ? OR user.user_last_name LIKE ?";
+            String[] searched = search.split(" ");
+            String whereClause = "WHERE ";
+            whereClause += "user.user_first_name LIKE ? OR user.user_last_name LIKE ? ";
+            for (int i = 1; i < searched.length; i++) {
+               whereClause += "OR " + "user.user_first_name LIKE ? OR user.user_last_name LIKE ? ";
+            }
             String statement = getSelectStatement(whereClause);
             PreparedStatement ps = con.prepareStatement(statement);
-            search =  "%"+search+"%";
-            ps.setString(1, search);
-            ps.setString(2, search);
-
+            int i = 0;
+            for (String s: searched) {
+                ps.setString(i+1, "%"+s+"%");
+                ps.setString(i+2, "%" +s +"%");
+                i+=2;
+            }
 
             ResultSet rs = ps.executeQuery();
 
