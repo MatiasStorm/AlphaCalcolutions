@@ -33,7 +33,7 @@ public class UserDAO {
     public User login(String username, String password){
         ArrayList<User> users = new ArrayList<>();
         try{
-            String selectStatement = getSelectStatement(" WHERE user_username=? AND user_password=?");
+            String selectStatement = getSelectStatement(" WHERE BINARY user_username=? AND user_password=?");
             PreparedStatement ps = con.prepareStatement(selectStatement);
             ps.setString(1, username);
             ps.setString(2, password);
