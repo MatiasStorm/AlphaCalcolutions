@@ -62,11 +62,6 @@ public class MainController {
         request.setAttribute("user", user, WebRequest.SCOPE_SESSION);
     }
 
-//    private HashMap loginCheck(WebRequest request){
-//        HashMap log
-//    }
-
-
     @GetMapping("/project/create")
     public String createProject(Model model, Project project, WebRequest request){
         User loggedInUser = (User) request.getAttribute("user", WebRequest.SCOPE_SESSION);
