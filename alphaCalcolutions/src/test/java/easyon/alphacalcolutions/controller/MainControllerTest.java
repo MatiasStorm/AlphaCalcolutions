@@ -136,4 +136,24 @@ class MainControllerTest {
                 .andExpect(status().is(302))
                 .andExpect(redirectedUrl("/user"));
     }
+
+    @Test
+    void allEndpointAccessibility() throws Exception {
+        String[] getEndpoints = { "/project", "/project/create", "/project/edit?projectId=1",
+                                "/task?projectId=1", "/task/create?projectId=1", "/task/edit?projectId=1&taskId=1",
+                                "/user", "/user/create", "/user/edit?userId=1" };
+        String[] postEndpoints = {"/task/create/submit","/task/edit/submit","/project/edit/submit",
+                                  "/project/create/submit", "/user/create/submit", "/user/edit/submit",
+                                  "/project/delete?projectId=1", "/user/delete?userId=1", "/task/delete?taskId=1&projectId=1"};
+        for (String endpoint : getEndpoints){
+            mockMvc.perform(get(endpoint))
+                    .andExpect(status().is(302))
+                    .andExpect(redirectedUrl("/"));
+        }
+        for (String endpoint : postEndpoints){
+            mockMvc.perform(post(endpoint))
+                    .andExpect(status().is(302))
+                    .andExpect(redirectedUrl("/"));
+        }
+    }
 }
