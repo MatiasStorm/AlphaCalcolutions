@@ -10,13 +10,14 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 import static org.mockito.BDDMockito.given;
 import static org.hamcrest.Matchers.containsString;
@@ -41,6 +42,23 @@ class MainControllerTest {
 
     @MockBean
     private TaskService taskService;
+
+
+    private MockHttpSession getRegularSession(){
+        MockHttpSession session = new MockHttpSession();
+        User u = new User();
+        u.setAdmin(false);
+        session.setAttribute("user", u);
+        return session;
+    }
+
+    private MockHttpSession getAdminSession(){
+        MockHttpSession session = new MockHttpSession();
+        User u = new User();
+        u.setAdmin(true);
+        session.setAttribute("user", u);
+        return session;
+    }
 
     @Test
     void index() throws Exception {
@@ -72,6 +90,20 @@ class MainControllerTest {
 
     @Test
     void createProjectUnauthorized() throws Exception {
+        mockMvc.perform(get("/project/create"))
+                .andExpect(status().is(302))
+                .andExpect(redirectedUrl("/"));
+    }
+
+    @Test
+    void createProjectRegularUser() throws Exception {
+        mockMvc.perform(get("/project/create").session(getRegularSession()))
+                .andExpect(status().is(302))
+                .andExpect(redirectedUrl("/"));
+    }
+
+    @Test
+    void createProjectAdminUser() throws Exception {
         ArrayList<User> userList = new ArrayList<>();
         User u = new User();
         u.setFirstName("John");
@@ -83,22 +115,24 @@ class MainControllerTest {
 
         given(userService.getUserList()).willReturn(userList);
 
-        mockMvc.perform(get("/project/create"))
-                .andExpect(status().is(302))
-                .andExpect(redirectedUrl("/"));
+        mockMvc.perform(get("/project/create").session(getAdminSession()))
+                .andExpect(status().is(200));
     }
 
     @Test
     void createTaskSubmit() throws Exception {
-        mockMvc.perform(post("/task/create/submit").param("projectId", "1"))
+        MockHttpServletRequestBuilder request =
+                MockMvcRequestBuilders.post("/task/create/submit")
+                .param("projectId", "1")
+                .session(getRegularSession());
+        mockMvc.perform(request)
                 .andExpect(status().is(302))
                 .andExpect(redirectedUrl("/task?projectId=1"));
     }
 
-
     @Test
     void createUserSubmit() throws Exception {
-        mockMvc.perform(post("/user/create/submit"))
+        mockMvc.perform(post("/user/create/submit").session(getAdminSession()))
                 .andExpect(status().is(302))
                 .andExpect(redirectedUrl("/user"));
     }
