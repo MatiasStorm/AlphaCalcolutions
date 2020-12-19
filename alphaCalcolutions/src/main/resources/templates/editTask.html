@@ -8,7 +8,7 @@
 <h2 class="text-align-center" th:text="'Edit task for project \'' + ${projectName} + '\'' "></h2>
 
 <div class="container justify-content-center">
-    <form action="/task/edit/submit" method="post" class="w-25">
+    <form action="/task/edit/submit" method="post">
         <div th:replace="/includes/taskForm :: taskForm(task=${task}, userList=${userList}, errorMsg=${errorMsg})"></div>
         <div class="row mt-2">
             <button class="btn btn-secondary btn-md px-2" type="button"

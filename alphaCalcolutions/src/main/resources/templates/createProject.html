@@ -6,7 +6,7 @@
     <div th:replace="/includes/topPart :: topPart"></div>
     <h2 style="text-align: center">Create new project:</h2>
     <div class="container justify-content-center">
-        <form action="/project/create/submit" method="post" class="w-25">
+        <form action="/project/create/submit" method="post">
             <div th:replace="/includes/projectForm :: projectForm(project=${project}, userList=${userList})"></div>
 
             <div class="row mt-2">

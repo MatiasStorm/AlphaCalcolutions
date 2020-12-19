@@ -9,7 +9,7 @@
 <h2 class="text-align-center">Create new User</h2>
 
 <div class="container justify-content-center">
-    <form action="/user/create/submit" th:object="${user}" method="post" class="w-25">
+    <form action="/user/create/submit" th:object="${user}" method="post">
         <div th:replace="/includes/userForm :: userForm(user = ${user}, userTitleList = ${userTitleList})"></div>
         <div class="row mt-2">
             <button class="btn btn-secondary btn-md px-2" type="button" onclick="document.location.href = '/user'">
