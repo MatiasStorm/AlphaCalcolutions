@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.request.WebRequest;
 
-import java.nio.file.WatchEvent;
-import java.util.HashMap;
 import java.util.List;
 
 @Controller
@@ -101,53 +99,59 @@ public class MainController {
     }
 
     @PostMapping("/project/create/submit")
-    public String createProjectSubmit(Project project){
+    public String createProjectSubmit(Project project, WebRequest request){
+        if (authorizedAdmin(request)) {
+            return "redirect:/";
+        }
         projectService.createProject(project);
         return "redirect:/task?projectId=" + project.getProjectId();
     }
 
     @PostMapping("/project/edit/submit")
-    public String editProjectSubmit(Project project){
+    public String editProjectSubmit(Project project, WebRequest request){
+        if (authorizedAdmin(request)) {
+            return "redirect:/";
+        }
         projectService.updateProject(project);
         return "redirect:/project";
     }
 
     @PostMapping("/project/delete")
-    public String deleteProject(@RequestParam int projectId){
+    public String deleteProject(@RequestParam int projectId, WebRequest request){
+        if (authorizedAdmin(request)) {
+            return "redirect:/";
+        }
         projectService.deleteProject(projectId);
         return "redirect:/project";
     }
 
     @GetMapping("/task")
     public String seeTasks(Model model, @RequestParam int projectId, WebRequest request){
-        User loggedInUser = (User) request.getAttribute("user", WebRequest.SCOPE_SESSION);
-        if (loggedInUser == null) { // If your aren't logged in, redirect to index.html
+        if (authorized(request)) { // If your aren't logged in, redirect to index.html
             return "redirect:/";
         }
         model.addAttribute("taskList", taskService.getTaskList(projectId));
         model.addAttribute("project", projectService.getProject(projectId));
-        model.addAttribute("isAdmin", loggedInUser.getAdmin());
-
         return "seeTasks";
     }
 
     @GetMapping("/task/create")
     public String createTask(Model model ,Task task, @RequestParam int projectId, WebRequest request){
-        User loggedInUser = (User) request.getAttribute("user", WebRequest.SCOPE_SESSION);
-        if (loggedInUser == null) { // If your aren't logged in, redirect to index.html
+        if (authorized(request)) { // If your aren't logged in, redirect to index.html
             return "redirect:/";
         }
         model.addAttribute("task", task);
         model.addAttribute("userList", projectService.getAssignedUsersFromProject(projectId));
         model.addAttribute("taskList", taskService.getTaskList(projectId).getTasks());
         model.addAttribute("projectName", projectService.getProject(projectId).getTitle());
-        model.addAttribute("isAdmin", loggedInUser.getAdmin());
-
         return "createTask";
     }
 
     @PostMapping("/task/create/submit")
     public String createTaskSubmit(Task task, Model model, WebRequest request){
+        if (authorized(request)) {
+            return "redirect:/";
+        }
         String errorMsg;
         try {
             taskService.createTask(task);
@@ -162,8 +166,7 @@ public class MainController {
 
     @GetMapping("/task/edit")
     public String editTask(Model model, @RequestParam int taskId, WebRequest request){
-        User loggedInUser = (User) request.getAttribute("user", WebRequest.SCOPE_SESSION);
-        if (loggedInUser == null) { // If your aren't logged in, redirect to index.html
+        if (authorized(request)) { // If your aren't logged in, redirect to index.html
             return "redirect:/";
         }
         Task task = taskService.getTaskById(taskId);
@@ -171,13 +174,14 @@ public class MainController {
         model.addAttribute("userList", projectService.getAssignedUsersFromProject(task.getProjectId()));
         model.addAttribute("taskList", taskService.getTaskList(task.getProjectId()).getTasks());
         model.addAttribute("projectName", "InsertProjectName");
-        model.addAttribute("isAdmin", loggedInUser.getAdmin());
-
         return "editTask";
     }
 
     @PostMapping("/task/edit/submit")
     public String editTaskSubmit(Task task, Model model, WebRequest request){
+        if (authorized(request)) {
+            return "redirect:/";
+        }
         String errorMsg;
         try {
             taskService.updateTask(task);
@@ -190,30 +194,30 @@ public class MainController {
     }
 
     @PostMapping("/task/delete")
-    public String deleteTask(int taskId, int projectId){
+    public String deleteTask(int taskId, int projectId, WebRequest request){
+        if (authorized(request)) {
+            return "redirect:/";
+        }
         taskService.deleteTask(taskId);
         return "redirect:/task?projectId=" + projectId;
     }
 
     @GetMapping("task/diagram")
     public String displayDiagrams(@RequestParam int projectId, Model model, WebRequest request){
-        User loggedInUser = (User) request.getAttribute("user", WebRequest.SCOPE_SESSION);
-        if (loggedInUser == null) { // If your aren't logged in, redirect to index.html
+        if (authorized(request)) { // If your aren't logged in, redirect to index.html
             return "redirect:/";
         }
         model.addAttribute("taskList", taskService.getTaskList(projectId));
         model.addAttribute("project", projectService.getProject(projectId));
-        model.addAttribute("isAdmin", loggedInUser.getAdmin());
-
         return "taskDiagrams";
     }
 
     @GetMapping("/user")
     public String searchUsers(@RequestParam(required = false) String search, Model model, WebRequest request){
-        User loggedInUser = (User) request.getAttribute("user", WebRequest.SCOPE_SESSION);
-        if (loggedInUser == null) { // If your aren't logged in, redirect to index.html
+        if (authorizedAdmin(request)) { // If your aren't logged in, redirect to index.html
             return "redirect:/";
         }
+        User loggedInUser = (User) request.getAttribute("user", WebRequest.SCOPE_SESSION);
         model.addAttribute("userList" , userService.getUserList());
             if(search != null){
                 List<User> searchList = userService.searchUser(search);
@@ -226,10 +230,10 @@ public class MainController {
 
     @GetMapping("/user/create")
     public String createUser(Model model, User user, WebRequest request) {
-        User loggedInUser = (User) request.getAttribute("user", WebRequest.SCOPE_SESSION);
-        if (loggedInUser == null) { // If your aren't logged in, redirect to index.html
+        if (authorizedAdmin(request)) { // If your aren't logged in, redirect to index.html
             return "redirect:/";
         }
+        User loggedInUser = (User) request.getAttribute("user", WebRequest.SCOPE_SESSION);
         model.addAttribute("user", user);
         model.addAttribute("userTitleList", userService.getUserTitleList());
         model.addAttribute("isAdmin", loggedInUser.getAdmin());
@@ -238,17 +242,20 @@ public class MainController {
     }
 
     @PostMapping("/user/create/submit")
-    public String createUserSubmit(User user) {
+    public String createUserSubmit(User user, WebRequest request) {
+        if (authorizedAdmin(request)) {
+            return "redirect:/";
+        }
         userService.createUser(user);
         return "redirect:/user";
     }
 
     @GetMapping("/user/edit")
     public String editUser(Model model, @RequestParam int userId, WebRequest request){
-        User loggedInUser = (User) request.getAttribute("user", WebRequest.SCOPE_SESSION);
-        if (loggedInUser == null) { // If your aren't logged in, redirect to index.html
+        if (authorizedAdmin(request)) { // If your aren't logged in, redirect to index.html
             return "redirect:/";
         }
+        User loggedInUser = (User) request.getAttribute("user", WebRequest.SCOPE_SESSION);
         model.addAttribute("user", userService.getUserById(userId));
         model.addAttribute("userTitleList", userService.getUserTitleList());
         model.addAttribute("isAdmin", loggedInUser.getAdmin());
@@ -257,15 +264,33 @@ public class MainController {
     }
 
     @PostMapping("/user/edit/submit")
-    public String editUserSubmit(User user){
+    public String editUserSubmit(User user, WebRequest request){
+        if (authorizedAdmin(request)) {
+            return "redirect:/";
+        }
         userService.updateUser(user);
         return "redirect:/user";
     }
 
     @PostMapping("/user/delete")
-    public String editUserSubmit(int userId){
+    public String editUserSubmit(int userId, WebRequest request){
+        if (authorizedAdmin(request)) {
+            return "redirect:/";
+        }
         userService.deleteUser(userId);
         return "redirect:/user";
+    }
+
+    private boolean authorizedAdmin(WebRequest request){
+        if (!authorized(request)){
+            return false;
+        }
+        User u = (User) request.getAttribute("user", WebRequest.SCOPE_SESSION);
+        return u.getAdmin();
+    }
+
+    private boolean authorized(WebRequest request){
+        return request.getAttribute("user", WebRequest.SCOPE_SESSION) == null;
     }
 }
 

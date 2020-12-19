@@ -97,4 +97,30 @@ class UserDAOTest extends AbstractDAOTest{
             assertEquals(searchPhrase, u.getLastName());
         }
     }
+
+    @Test
+    void loginValid(){
+        User u = userDAO.login("username", "password");
+        assertNotNull(u);
+        assertEquals("username", u.getUsername());
+        assertEquals("password", u.getPassword());
+    }
+
+    @Test
+    void loginInvalidCase(){
+        User u = userDAO.login("Username", "Password");
+        assertNull(u);
+    }
+
+    @Test
+    void loginInvalidUsername(){
+        User u = userDAO.login("wrontUsername", "password");
+        assertNull(u);
+    }
+
+    @Test
+    void loginInvalidPassword(){
+        User u = userDAO.login("username", "wrongPassword");
+        assertNull(u);
+    }
 }

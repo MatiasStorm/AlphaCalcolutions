@@ -31,28 +31,22 @@ public class UserDAO {
     }
 
     public User login(String username, String password){
-        ArrayList<User> users = new ArrayList<>();
+        User user = null;
         try{
-            String selectStatement = getSelectStatement(" WHERE BINARY user_username=? AND user_password=?");
-            PreparedStatement ps = con.prepareStatement(selectStatement);
+            String selectStatement = getSelectStatement(" WHERE user_username=? AND user_password=?");
+            PreparedStatement ps = con.prepareStatement(selectStatement, ResultSet.TYPE_SCROLL_SENSITIVE);
             ps.setString(1, username);
             ps.setString(2, password);
             ResultSet rs = ps.executeQuery();
 
-            while (rs.next()){
-                User user = userMapper.mapRow(rs);
+            if (rs.next()){
+                user = userMapper.mapRow(rs);
                 user.setTitle(userTitleMapper.mapRow(rs));
-                users.add(user);
             }
-
-            if (users.size() == 0){
-                return null;
-            }
-
         } catch (SQLException ex) {
            ex.printStackTrace();
         }
-        return users.get(0);
+        return user;
     }
 
     public User createUser(User user){
