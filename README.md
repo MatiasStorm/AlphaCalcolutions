@@ -4,14 +4,14 @@ The 2. semester exam project of the computer science education at [KEA](https://
 We were given the assignment to develop a project management system for the company
 [Alpha Solutions](https://www.alpha-solutions.com/da).
 
-The system should aleast include the follwing features:
+The system should at least include the follwing features:
 - Create a data model for project and time dimensions. (Create the right tables in your database)
 - Create a webinterface for CRUD operations, of project, tasks and users.
 - Time distribution on workdays
 
 Supplementary features, not required:
 - Project visualization via a GANTT diagram.
-- Introduct resource types and supply an overview of how many hours each resource work each day.
+- Introduce resource types and supply an overview of how many hours each resource work each day.
 - Overview of the work load on each employee on each day of the project.
 
 ## Progress/Implementation:
@@ -62,11 +62,11 @@ Navigate to `AlphaCalcolutions/alphaCalcolutions` and execute:
  
 Finally navigate to [localhost:8080](http://localhost:8080) to use the website.
 
-Regular user credentials: 
-Username = `Frje` 
+**Regular user credentials:**  
+Username = `Frje`  
 Password = `Frje` 
 
-Admin user credentials: 
+**Admin user credentials:**   
 Username = `Heha`  
 Password = `Heha`  
 
