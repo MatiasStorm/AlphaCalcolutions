@@ -25,7 +25,7 @@ services:
             MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
             MYSQL_USER: ${MYSQL_USER}
             MYSQL_HOST: ${MYSQL_HOST}
-        command: java -jar /build/target/*.jar
+        command: mvn spring-boot:run
         working_dir: /src
         volumes:
             - .:/src/

@@ -6,18 +6,8 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh 'mvn install'
-                sh 'mvn clean package'
-            }
-        }
-        stage('Test') {
-            steps {
-                echo "Testing...."
-            }
-        }
-        stage('Deploy') {
-            steps {
-                echo "Deploying...."
+                sh "docker-compose build"
+                sh "docker-compose up -d"
             }
         }
     }
