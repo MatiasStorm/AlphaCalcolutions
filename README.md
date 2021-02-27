@@ -1,6 +1,6 @@
 # AlphaCalcolutions
 The 2. semester exam project of the computer science education at [KEA](https://kea.dk/)
-
+ 
 We were given the assignment to develop a project management system for the company
 [Alpha Solutions](https://www.alpha-solutions.com/da).
 
