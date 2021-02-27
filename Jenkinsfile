@@ -1,16 +1,9 @@
 pipeline {
     agent any
-    tools {
-        maven 'Maven1'
-    }
     stages {
-        stage('Test') {
-            steps {
-                sh "pwd"
-            }
-        }
         stage('Build') {
             steps {
+                sh "cd docker"
                 sh "docker-compose build"
                 sh "docker-compose up -d"
             }
