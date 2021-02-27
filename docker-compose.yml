@@ -16,14 +16,16 @@ services:
           - ./database.sql:/docker-entrypoint-initdb.d/1.sql
 
     spring-boot:
-        image: adoptopenjdk/maven-openjdk11
+        build:
+            context: .
+            dockerfile: ./Dockerfile
         container_name: spring-boot
         environment:
             MYSQL_DATABASE: ${MYSQL_DATABASE}
             MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
             MYSQL_USER: ${MYSQL_USER}
             MYSQL_HOST: ${MYSQL_HOST}
-        command: mvn clean package spring-boot:run
+        command: java -jar /build/target/*.jar
         working_dir: /src
         volumes:
             - .:/src/
