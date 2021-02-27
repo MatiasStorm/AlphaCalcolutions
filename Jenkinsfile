@@ -4,6 +4,11 @@ pipeline {
         maven 'Maven1'
     }
     stages {
+        stage('Test') {
+            steps {
+                sh "pwd"
+            }
+        }
         stage('Build') {
             steps {
                 sh "docker-compose build"
