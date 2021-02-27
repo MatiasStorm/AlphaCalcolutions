@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
-<head th:replace="/includes/head :: head(title = 'GANNT Diagram')"></head>
+<head th:replace="includes/head :: head(title = 'GANNT Diagram')"></head>
 
 <body>
-    <div th:replace="/includes/topPart :: topPart"></div>
+    <div th:replace="includes/topPart :: topPart"></div>
 
     <a class="ml-2" th:href="'/task?projectId=' + ${project.projectId}">
         <button class="mt-1 btn btn-sm btn-secondary">Go back</button>

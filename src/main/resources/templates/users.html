@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
-<head th:replace="/includes/head :: head(title = 'Users')"></head>
+<head th:replace="includes/head :: head(title = 'Users')"></head>
 
-<div th:replace="/includes/topPart :: topPart"></div>
+<div th:replace="includes/topPart :: topPart"></div>
 
 <div class="container m-0">
     <form class="row w-50" action="/user" method="get">
@@ -46,7 +46,7 @@
                 <button class="btn btn-danger btn-sm" th:id="'activateModal' + ${iter.index}">Delete</button>
             </span>
         </div>
-        <div th:replace="/includes/confirmModal :: confirmModal(title = 'Are you sure you want to delete user: \'' + *{firstName} + ' ' + *{lastName} + '\'',
+        <div th:replace="includes/confirmModal :: confirmModal(title = 'Are you sure you want to delete user: \'' + *{firstName} + ' ' + *{lastName} + '\'',
                                                                  action = '/user/delete?userId=' + *{userId},
                                                                  submitText = 'Delete',
                                                                  num = ${iter.index},

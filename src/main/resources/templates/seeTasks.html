@@ -1,9 +1,9 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
-<head th:replace="/includes/head :: head(title = 'Project: ' + ${project.title})"></head>
+<head th:replace="includes/head :: head(title = 'Project: ' + ${project.title})"></head>
 <body>
 
-<div th:replace="/includes/topPart :: topPart"></div>
+<div th:replace="includes/topPart :: topPart"></div>
 
 <a href="/project">
    <button class="ml-2 mt-1 btn btn-secondary btn-sm">Go back</button>
@@ -16,7 +16,7 @@
     <button class="btn btn-primary btn-lg"
             th:onclick="'document.location.href=\'/task/create?projectId=' + ${project.projectId} + '\''">+ Add new task
     </button>
-    <a th:href="'/task/diagram?projectId=' + ${project.projectId}">
+    <a th:href="'task/diagram?projectId=' + ${project.projectId}">
         <button class="btn btn-primary btn-lg">View Diagrams</button>
     </a>
 </div>
@@ -52,7 +52,7 @@
                 <button th:id="'activateModal' + ${iter.index}" class="btn btn-danger btn-sm mx-1">Delete</button>
             </div>
         </div>
-        <div th:replace="/includes/confirmModal :: confirmModal(title = 'Are you sure you want to delete: \'' + *{title} + '\'',
+        <div th:replace="includes/confirmModal :: confirmModal(title = 'Are you sure you want to delete: \'' + *{title} + '\'',
                                                                  action = '/task/delete?taskId=' + *{taskId} + '&projectId=' + *{projectId},
                                                                  submitText = 'Delete',
                                                                  num = ${iter.index},

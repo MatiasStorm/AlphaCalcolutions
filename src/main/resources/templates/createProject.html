@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
-<head th:replace="/includes/head :: head(title = 'Create Project')"></head>
+<head th:replace="includes/head :: head(title = 'Create Project')"></head>
 <body>
-    <div th:replace="/includes/topPart :: topPart"></div>
+    <div th:replace="includes/topPart :: topPart"></div>
     <h2 style="text-align: center">Create new project:</h2>
     <div class="container justify-content-center">
         <form action="/project/create/submit" method="post">
-            <div th:replace="/includes/projectForm :: projectForm(project=${project}, userList=${userList})"></div>
+            <div th:replace="includes/projectForm :: projectForm(project=${project}, userList=${userList})"></div>
 
             <div class="row mt-2">
                 <button class="btn btn-secondary btn-md px-2" type="button" onclick="document.location.href = '/project'">
