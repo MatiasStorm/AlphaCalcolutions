@@ -1,5 +1,6 @@
 FROM adoptopenjdk/maven-openjdk11
-COPY ./src /build/src
-COPY pom.xml /build
+EXPOSE 8080
+COPY ./ /build/
+#COPY pom.xml /build
 WORKDIR /build
 RUN mvn dependency:go-offline
